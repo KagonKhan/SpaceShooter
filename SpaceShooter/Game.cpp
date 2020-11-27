@@ -10,7 +10,7 @@ void Game::initWindow() {
 void Game::update() {
 
 }
-
+ 
 void Game::render() {
 	window->clear();
 
