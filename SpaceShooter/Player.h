@@ -11,12 +11,12 @@ class Player {
 	float movementSpeed, attackSpeed, attackTime, projectileSpeed;
 	sf::Vector2f movement;
 
+	std::vector<sf::RectangleShape*> projectiles;
 
 
-
-
+	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
-
+	void updateProjectiles(const float& dt);
 
 public:
 	Player(std::string filePath);
