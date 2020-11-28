@@ -40,6 +40,12 @@ void Projectile::setDirection(float rotation) {
 
 void Projectile::update(const float& dt) {
 	move(dt);
+
+
+	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+
+
 }
 
 

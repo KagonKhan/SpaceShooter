@@ -10,10 +10,10 @@ Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 
 	boundaries = windowBoundaries;
 
-	movementSpeed = 50.f;
-	attackSpeed = 441.f; // aps
+	movementSpeed = 75.f;
+	attackSpeed = 500; // aps
 	attackTime = 0.f;
-	projectileSpeed = 350.f;
+	projectileSpeed = 50;
 }
 
 void Player::updateAttack(const float& dt) {
