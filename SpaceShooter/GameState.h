@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
 #include "Player.h"
+#include "Enemy.h"
 class GameState : public State {
 
 
@@ -11,7 +12,7 @@ class GameState : public State {
 	float backgroundTime;
 	int bgIndex;
 
-
+	std::vector<Enemy*> enemies;
 	Player* player;
 
 	void initBackground();
