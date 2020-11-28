@@ -159,3 +159,46 @@ inline bool operator !=(const Vector2<T>& left, const Vector2<T>& right)
 {
     return (left.x != right.x) || (left.y != right.y);
 }
+
+
+
+
+
+
+
+
+
+/*=======================================================  MY OVERLOADS ========================================================*/
+
+
+
+template <typename T>
+inline bool operator &(const sf::Vector2<T>& left, const sf::Vector2<T>& right) {
+    return (left.x * right.x + left.y * right.y);
+}
+
+
+//can you even?
+template <typename T>
+inline sf::Vector2<T> operator *(const sf::Vector2<T>& left, const sf::Vector2<T>& right) {
+    return sf::Vector2<T>();
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////
+template <typename T>
+inline std::ostream& operator <<(std::ostream& out, const sf::Vector2<T>& vector) {
+    out << vector.x << ", " << vector.y;
+    return out;
+}

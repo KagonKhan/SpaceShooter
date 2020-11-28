@@ -247,6 +247,55 @@ bool operator ==(const Vector2<T>& left, const Vector2<T>& right);
 template <typename T>
 bool operator !=(const Vector2<T>& left, const Vector2<T>& right);
 
+
+
+
+/*=======================================================  MY OVERLOADS ========================================================*/
+
+
+////////////////////////////////////////////////////////////
+/// \relates Vector2
+/// \brief Overload of unary operator <<
+/// This operator prints out x, y values;
+/// </summary>
+/// <returns>Output Stream</returns>
+////////////////////////////////////////////////////////////
+template <typename T>
+std::ostream& operator <<(std::ostream& out, const sf::Vector2<T>& vector);
+
+
+////////////////////////////////////////////////////////////
+/// \relates Vector2
+/// \brief Overload of binary operator &
+/// This operator calculates the dot product of 2 vectors;
+/// </summary>
+/// <returns>Scalar value</returns>
+////////////////////////////////////////////////////////////
+
+template <typename T>
+bool operator &(const Vector2<T>& left, const Vector2<T>& right);
+
+
+// can you even?
+template <typename T>
+bool operator *(const Vector2<T>& left, const Vector2<T>& right);
+
+template <typename T>
+bool operator *=(const Vector2<T>& left, const Vector2<T>& right);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include <SFML/System/Vector2.inl>
 
 // Define the most common types

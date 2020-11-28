@@ -41,7 +41,6 @@ void GameState::update(const float& dt) {
 void GameState::updateBackground(const float& dt) {
 	backgroundTime += dt;
 
-	std::cout << 1 / dt << "\n";
 
 	//change every second
 	if (backgroundTime >1.f) {

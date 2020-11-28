@@ -19,11 +19,17 @@ class Player {
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
 
+
+
 public:
 	Player(std::string filePath, sf::Vector2u boundaries);
 	~Player() {};
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
+	
+	
+	
+	friend std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector);
 };
 
