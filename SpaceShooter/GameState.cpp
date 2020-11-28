@@ -3,10 +3,13 @@
 
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : State(window, states) {
 	initBackground();
+
+	initPlayer();
+
 	backgroundTime = 0.f;
+
 	bgIndex = 0;
 }
-
 
 void GameState::initBackground() {
 	std::string path = "../Resources/background/space";
@@ -20,21 +23,28 @@ void GameState::initBackground() {
 	}
 }
 
+void GameState::initPlayer() {
+	player = new Player("../Resources/sprites/playerSprite.png");
+}
+
 
 void GameState::update(const float& dt) {
-
-	updateBackground(dt);
+	updateSFMLEvents();
 
 	updateMousePosition();
+	
+	updateBackground(dt);
 
-	updateSFMLEvents();
+	player->update(dt);
 }
 
 void GameState::updateBackground(const float& dt) {
 	backgroundTime += dt;
+
 	std::cout << 1 / dt << "\n";
+
 	//change every second
-	if (backgroundTime > 1.f) {
+	if (backgroundTime >1.f) {
 
 		bgIndex >= 5 ? bgIndex = 0 : bgIndex++;
 		backgroundTime = 0.f;
@@ -43,4 +53,5 @@ void GameState::updateBackground(const float& dt) {
 
 void GameState::render() {
 	window->draw(backgroundSprites[bgIndex]);
+	player->render(window);
 }
