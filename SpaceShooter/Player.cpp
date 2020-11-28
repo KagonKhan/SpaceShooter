@@ -12,9 +12,9 @@ Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 	boundaries = windowBoundaries;
 
 	movementSpeed = 50.f;
-	attackSpeed = 50.f;
+	attackSpeed = 1.f; // aps
 	attackTime = 0.f;
-	projectileSpeed = 550.f;
+	projectileSpeed = 350.f;
 }
 
 void Player::updateAttack(const float& dt) {
@@ -25,7 +25,7 @@ void Player::updateAttack(const float& dt) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 			projectiles.push_back(new sf::RectangleShape());
 			projectiles.back()->setSize(sf::Vector2f(10.f, 50.f));
-			projectiles.back()->setPosition(playerSprite.getPosition());
+			projectiles.back()->setPosition(playerSprite.getPosition().x + playerSprite.getGlobalBounds().width/2.f - projectiles.back()->getSize().x/2.f, playerSprite.getPosition().y);
 			projectiles.back()->setFillColor(sf::Color::Magenta);
 			projectiles.back()->setOutlineThickness(1.f);
 			projectiles.back()->setOutlineColor(sf::Color::White);
@@ -37,15 +37,7 @@ void Player::updateAttack(const float& dt) {
 void Player::updateMovement(const float& dt) {
 	movement *= 0.93f;
 
-	//Normalize movement
-	float length = std::sqrtf(std::powf(movement.x, 2) + std::powf(movement.y, 2));
-	int test = 0;
-	if (length) {
-
-		test = movement & movement;
-	}
-
-	std::cout << test << "\n";
+	//Normalize movement/????
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		movement.x -= movementSpeed;
@@ -122,10 +114,11 @@ void Player::update(const float& dt) {
 }
 
 void Player::render(sf::RenderWindow* window) {
-	window->draw(playerSprite);
-
 	for (auto x : projectiles)
 		window->draw(*x);
+	window->draw(playerSprite);
+
+
 }
 
 
