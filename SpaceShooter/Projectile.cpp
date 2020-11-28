@@ -6,7 +6,10 @@ Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color
 	projectileRectangle.setFillColor(color);
 	projectileRectangle.setOutlineColor(outlineColor);
 	projectileRectangle.setOutlineThickness(outlineThickness);
-	projectileSpeed = speed;
+	projectileSpeed = speed*3;
+
+
+		projectileRectangle.move(15 * sin(rand()%2), 0);
 
 }
 
@@ -46,6 +49,18 @@ void Projectile::move(const float& dt) {
 	sf::Vector2f direction(sin((projectileRectangle.getRotation() * 3.1415926 / 180.f)), -cos((projectileRectangle.getRotation() * 3.1415926 / 180.f)));
 	projectileRectangle.move(direction * projectileSpeed * dt);
 
+
+	//SWARM PROJECTILES
+	projectileRectangle.rotate(2*cos(rand() * 10));
+
+	//if (projectileRectangle.getPosition().x >= 1890)
+	//	rotate = true;
+
+	//if(rotate)
+	//	projectileRectangle.rotate(-1.f);
+
+	//if (projectileRectangle.getRotation() > -90 || projectileRectangle.getRotation() < 270)
+	//	rotate = false;
 }
 
 void Projectile::render(sf::RenderWindow* window) {

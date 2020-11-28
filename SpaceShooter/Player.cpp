@@ -11,7 +11,7 @@ Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 	boundaries = windowBoundaries;
 
 	movementSpeed = 50.f;
-	attackSpeed = 5555.f; // aps
+	attackSpeed = 441.f; // aps
 	attackTime = 0.f;
 	projectileSpeed = 350.f;
 }
@@ -30,6 +30,28 @@ void Player::updateAttack(const float& dt) {
 			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
 
 			playerProjectiles.back()->setDirection(45);
+
+
+
+			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+
+			playerProjectiles.back()->setDirection(-45);
+
+
+
+			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+
+			playerProjectiles.back()->setDirection(0);
+
+
+
+			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+
+			playerProjectiles.back()->setDirection(0);
+
+
+
+
 
 			attackTime = 0.f;
 		}

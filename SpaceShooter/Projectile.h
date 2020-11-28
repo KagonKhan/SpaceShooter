@@ -15,6 +15,9 @@ class Projectile {
 	void move(const float& dt);
 
 
+	float i = 0;
+	bool rotate = false;
+
 public:
 
 	Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color = sf::Color::White, float outlineThickness = 0.f, sf::Color outlineColor = sf::Color::Black, float speed = 200.f);
