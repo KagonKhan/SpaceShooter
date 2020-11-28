@@ -6,8 +6,8 @@ class GameState : public State {
 
 
 	//USE SPRITESHEETS ZZZ
-	sf::Texture backgroundTextures[6];
-	sf::Sprite backgroundSprites[6];
+	sf::Texture backgroundTexture;
+	sf::Sprite backgroundSprite, backgroundSpriteV2;
 
 	float backgroundTime;
 	int bgIndex;
@@ -17,9 +17,7 @@ class GameState : public State {
 
 	void initBackground();
 	void initPlayer();
-
-
-	void updateBackground(const float& dt);
+	void initEnemies();
 
 public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);

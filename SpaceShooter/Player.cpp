@@ -1,19 +1,24 @@
 #include "Player.h"
 
-Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
-	playerTexture.loadFromFile(filePath);
-	playerSprite.setTexture(playerTexture);
-	playerSprite.setPosition((windowBoundaries.x - playerSprite.getGlobalBounds().width) / 2.f, windowBoundaries.y - playerSprite.getGlobalBounds().height);
+Player::Player(std::string filePath, sf::Vector2f windowBoundaries) : 
+		Entity(filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f){
+
+	entitySprite.setPosition(
+		(windowBoundaries.x - entitySprite.getGlobalBounds().width) / 2.f,
+		windowBoundaries.y - entitySprite.getGlobalBounds().height
+	);
+
+	engine.loadFromFile("../Resources/art/Engine_exhaust/Engine_exhaust1_frames.psd");
+	engineSPrite.setTexture(engine);
+}
 
 
-	sf::Keyboard::setVirtualKeyboardVisible(true);
+void Player::update(const float& dt) {
+	updateAttack(dt);
 
-	boundaries = windowBoundaries;
+	updateMovement(dt);
 
-	movementSpeed = 75.f;
-	attackSpeed = 500; // aps
-	attackTime = 0.f;
-	projectileSpeed = 50;
+	updateProjectiles(dt);
 }
 
 void Player::updateAttack(const float& dt) {
@@ -24,8 +29,8 @@ void Player::updateAttack(const float& dt) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
 			sf::Vector2f size(10.f, 50.f);
-			sf::Vector2f position(playerSprite.getPosition().x + playerSprite.getGlobalBounds().width / 2.f - size.x / 2.f,
-				playerSprite.getPosition().y);
+			sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
+				entitySprite.getPosition().y);
 
 			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
 
@@ -76,42 +81,42 @@ void Player::updateMovement(const float& dt) {
 
 	//Change speed variable to a vector
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		movement.y -= movementSpeed / 1.5f; 
+		movement.y -= movementSpeed / 1.5f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		movement.y += movementSpeed / 1.5f;
 
 
 
 
-	if (playerSprite.getPosition().x < 150 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 150 - playerSprite.getGlobalBounds().width && movement.x > 0)
+	if (entitySprite.getPosition().x < 150 && movement.x < 0 || entitySprite.getPosition().x > boundaries.x - 150 - entitySprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.85f;
 
-	if (playerSprite.getPosition().x < 100 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 100 - playerSprite.getGlobalBounds().width && movement.x > 0)
+	if (entitySprite.getPosition().x < 100 && movement.x < 0 || entitySprite.getPosition().x > boundaries.x - 100 - entitySprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.65f;
 
-	if (playerSprite.getPosition().x < 50 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 50 - playerSprite.getGlobalBounds().width && movement.x > 0)
+	if (entitySprite.getPosition().x < 50 && movement.x < 0 || entitySprite.getPosition().x > boundaries.x - 50 - entitySprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.45f;
 
-	if (playerSprite.getPosition().x < 10 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 10 - playerSprite.getGlobalBounds().width && movement.x > 0)
+	if (entitySprite.getPosition().x < 10 && movement.x < 0 || entitySprite.getPosition().x > boundaries.x - 10 - entitySprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.0f;
 
-	
-	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 60 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 90.f && movement.y < 0)
+
+	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height - 60 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 90.f && movement.y < 0)
 		movement.y *= 0.85f;
 
-	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 40 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 60.f && movement.y < 0)
+	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height - 40 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 60.f && movement.y < 0)
 		movement.y *= 0.65f;
 
 
-	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 20 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 30.f && movement.y < 0)
+	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height - 20 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 30.f && movement.y < 0)
 		movement.y *= 0.45f;
 
-	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 10 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
+	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height - 10 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
 		movement.y *= 0.f;
 
 
 
-	playerSprite.move(movement * dt);
+	entitySprite.move(movement * dt);
 }
 
 void Player::updateProjectiles(const float& dt) {
@@ -129,29 +134,14 @@ void Player::updateProjectiles(const float& dt) {
 	}
 }
 
-
-void Player::update(const float& dt) {
-	updateMovement(dt);
-	updateAttack(dt);
-	updateProjectiles(dt);
-}
-
 void Player::render(sf::RenderWindow* window) {
 	for (auto x : playerProjectiles)
 		x->render(window);
 
-	window->draw(playerSprite);
+	window->draw(entitySprite);
 
 
 }
-
-
-
-
-
-
-
-
 
 
 std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector){

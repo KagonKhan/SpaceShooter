@@ -4,17 +4,17 @@
 
 #include "Projectile.h"
 #include "SFML/Graphics.hpp"
+#include "Entity.h"
 
-class Player {
-	sf::Texture playerTexture;
-	sf::Sprite playerSprite;
 
-	float movementSpeed, attackSpeed, attackTime, projectileSpeed;
-	sf::Vector2f movement;
+class Player : public Entity {
+
 
 	std::vector<Projectile*> playerProjectiles;
 
-	sf::Vector2u boundaries;
+	sf::Texture engine;
+	sf::Sprite engineSPrite;
+
 
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
@@ -23,7 +23,7 @@ class Player {
 
 
 public:
-	Player(std::string filePath, sf::Vector2u boundaries);
+	Player(std::string filePath, sf::Vector2f boundaries);
 	~Player() {};
 
 	void update(const float& dt);

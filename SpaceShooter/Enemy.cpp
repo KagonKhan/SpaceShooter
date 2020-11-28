@@ -47,3 +47,20 @@ Enemy::Enemy(std::string filePath, float maxhp, sf::Vector2f windowBoundaries) :
 	attackTime = 0.f;
 	movementSpeed = 20.f;
 }
+
+void Enemy::update(const float& dt) {
+	updateAttack(dt);
+	updateMovement(dt);
+	updateProjectiles(dt);
+}
+
+void Enemy::render(sf::RenderWindow* window) {
+	for (auto x : enemyProjectile)
+		x->render(window);
+
+	window->draw(entitySprite);
+}
+
+void Enemy::setPosition(sf::Vector2f position) {
+	entitySprite.setPosition(position);
+}

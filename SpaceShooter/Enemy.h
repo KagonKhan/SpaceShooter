@@ -14,11 +14,11 @@ class Enemy : public Entity {
 
 public:
 	Enemy(std::string filePath, float maxhp, sf::Vector2f windowBoundaries);
-	~Enemy();
+	~Enemy() {};
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
-
+	void setPosition(sf::Vector2f position);
 
 };
 
