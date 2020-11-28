@@ -7,21 +7,28 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 	initPlayer();
 	initEnemies();
 
-
-	backgroundTime = 0.f;
-
-	bgIndex = 0;
+	nebulisIndex = 0;
 }
 
 void GameState::initBackground() {
-	std::string path = "../Resources/art/Stars-Nebulae/Stars.png";
+	std::string starsPath = "../Resources/art/Stars-Nebulae/Stars.png";
+	std::string nebulis = "../Resources/art/Stars-Nebulae/Nebula";
 
-	backgroundTexture.loadFromFile(path);
+	for (int i = 0; i < 2; i++) {
+		nebulaeTextures[i].loadFromFile(nebulis + std::to_string(i + 1) + ".png");
+		nebulaeSprites[i].setTexture(nebulaeTextures[i]);
+		nebulaeSprites[i].setPosition(0, -700);
+	}
+
+
+	backgroundTexture.loadFromFile(starsPath);
 	backgroundTexture.setRepeated(true);
 
 	backgroundSprite.setTexture(backgroundTexture);
 	backgroundSpriteV2.setTexture(backgroundTexture);
 
+	
+	
 	// LEARN ABOUT VIEWS
 
 
@@ -42,12 +49,25 @@ void GameState::initEnemies() {
 	}
 }
 
+void GameState::spawnNebulis() {
+	srand(time(NULL));
+	nebulisIndex = rand() % 3;
+
+	nebulaeSprites[nebulisIndex].setScale(rand() % 10 / 5.f, rand() % 10 / 5.f);
+
+	nebulaeSprites[nebulisIndex].setPosition(200+rand() % 1520, -700);
+}
+
 
 void GameState::update(const float& dt) {
 	updateSFMLEvents();
 
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);
+	nebulaeSprites[nebulisIndex].move(0, 0.5f);
+	if (nebulaeSprites[nebulisIndex].getPosition().y > 2000)
+		spawnNebulis();
+
 
 	if (backgroundSprite.getPosition().y > window->getSize().y)
 		backgroundSprite.setPosition(0, -1024);
@@ -63,9 +83,17 @@ void GameState::update(const float& dt) {
 
 
 void GameState::render() {
+
+
+
 	window->draw(backgroundSprite);
 	window->draw(backgroundSpriteV2);
+	window->draw(nebulaeSprites[nebulisIndex]);
+
+
+
 	player->render(window);
+
 
 
 	for (auto& enemy : enemies)

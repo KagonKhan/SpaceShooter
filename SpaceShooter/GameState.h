@@ -8,9 +8,9 @@ class GameState : public State {
 	//USE SPRITESHEETS ZZZ
 	sf::Texture backgroundTexture;
 	sf::Sprite backgroundSprite, backgroundSpriteV2;
+	sf::Texture nebulaeTextures[3];
+	sf::Sprite nebulaeSprites[3];
 
-	float backgroundTime;
-	int bgIndex;
 
 	std::vector<Enemy*> enemies;
 	Player* player;
@@ -18,6 +18,9 @@ class GameState : public State {
 	void initBackground();
 	void initPlayer();
 	void initEnemies();
+
+	void spawnNebulis();
+	int nebulisIndex;
 
 public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);
