@@ -11,10 +11,10 @@ Game::~Game() {
 }
 
 void Game::initWindow() {
-	window = new sf::RenderWindow(sf::VideoMode(1920, 1024), "Space Shooter");
+	sf::ContextSettings settings;
+	settings.antialiasingLevel = 10;
+	window = new sf::RenderWindow(sf::VideoMode(1920, 1024), "Space Shooter",7U, settings);
 	window->setFramerateLimit(120);
-	window->setMouseCursorGrabbed(false);
-	window->setVerticalSyncEnabled(true);
 }
 
 void Game::initStates() {

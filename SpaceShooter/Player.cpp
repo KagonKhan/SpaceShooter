@@ -1,9 +1,11 @@
 #include "Player.h"
 
-Player::Player(std::string filePath) {
+Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 	playerTexture.loadFromFile(filePath);
 	playerSprite.setTexture(playerTexture);
-	playerSprite.setPosition(550.f, 600.f);
+	playerSprite.setPosition((windowBoundaries.x - playerSprite.getGlobalBounds().width) / 2.f, windowBoundaries.y - playerSprite.getGlobalBounds().height);
+
+	boundaries = windowBoundaries;
 
 	movementSpeed = 150.f;
 	attackSpeed = 5000.f;
@@ -37,16 +39,16 @@ void Player::updateMovement(const float& dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		movement.x += movementSpeed;
 
-	if (playerSprite.getPosition().x < 150 && movement.x < 0 || playerSprite.getPosition().x > 730 && movement.x > 0)
+	if (playerSprite.getPosition().x < 150 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 150 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement *= 0.85f;
 
-	if (playerSprite.getPosition().x < 100 && movement.x < 0 || playerSprite.getPosition().x > 780 && movement.x > 0)
+	if (playerSprite.getPosition().x < 100 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 100 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement *= 0.65f;
 
-	if (playerSprite.getPosition().x < 50 && movement.x < 0 || playerSprite.getPosition().x > 890 && movement.x > 0)
+	if (playerSprite.getPosition().x < 50 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 50 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement *= 0.45f;
 
-	if (playerSprite.getPosition().x < 20 && movement.x < 0 || playerSprite.getPosition().x > 920 && movement.x > 0)
+	if (playerSprite.getPosition().x < 20 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 20 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement *= 0.0f;
 
 	playerSprite.move(movement * dt);

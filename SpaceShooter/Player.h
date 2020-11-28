@@ -13,13 +13,14 @@ class Player {
 
 	std::vector<sf::RectangleShape*> projectiles;
 
+	sf::Vector2u boundaries;
 
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
 
 public:
-	Player(std::string filePath);
+	Player(std::string filePath, sf::Vector2u boundaries);
 	~Player() {};
 
 	void update(const float& dt);

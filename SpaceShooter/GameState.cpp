@@ -24,7 +24,7 @@ void GameState::initBackground() {
 }
 
 void GameState::initPlayer() {
-	player = new Player("../Resources/sprites/playerSprite.png");
+	player = new Player("../Resources/sprites/playerSprite.png", window->getSize());
 }
 
 
