@@ -11,7 +11,7 @@ Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 
 	boundaries = windowBoundaries;
 
-	movementSpeed = 100.f;
+	movementSpeed = 50.f;
 	attackSpeed = 50.f;
 	attackTime = 0.f;
 	projectileSpeed = 550.f;
@@ -37,6 +37,15 @@ void Player::updateAttack(const float& dt) {
 void Player::updateMovement(const float& dt) {
 	movement *= 0.93f;
 
+	//Normalize movement
+	float length = std::sqrtf(std::powf(movement.x, 2) + std::powf(movement.y, 2));
+	int test = 0;
+	if (length) {
+
+		test = movement & movement;
+	}
+
+	std::cout << test << "\n";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		movement.x -= movementSpeed;
@@ -57,10 +66,6 @@ void Player::updateMovement(const float& dt) {
 		movement.y += movementSpeed / 1.5f;
 
 
-	//Normalize movement
-	float length = std::sqrtf(std::powf(movement.x, 2) + std::powf(movement.y, 2));
-
-	std::cout << movement << "\n";
 
 
 	if (playerSprite.getPosition().x < 150 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 150 - playerSprite.getGlobalBounds().width && movement.x > 0)
@@ -72,8 +77,22 @@ void Player::updateMovement(const float& dt) {
 	if (playerSprite.getPosition().x < 50 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 50 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.45f;
 
-	if (playerSprite.getPosition().x < 20 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 20 - playerSprite.getGlobalBounds().width && movement.x > 0)
+	if (playerSprite.getPosition().x < 10 && movement.x < 0 || playerSprite.getPosition().x > boundaries.x - 10 - playerSprite.getGlobalBounds().width && movement.x > 0)
 		movement.x *= 0.0f;
+
+	
+	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 60 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 90.f && movement.y < 0)
+		movement.y *= 0.85f;
+
+	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 40 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 60.f && movement.y < 0)
+		movement.y *= 0.65f;
+
+
+	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 20 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 30.f && movement.y < 0)
+		movement.y *= 0.45f;
+
+	if (playerSprite.getPosition().y > boundaries.y - playerSprite.getGlobalBounds().height - 10 && movement.y > 0 || playerSprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
+		movement.y *= 0.f;
 
 
 
