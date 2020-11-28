@@ -8,11 +8,10 @@ Player::Player(std::string filePath, sf::Vector2u windowBoundaries) {
 
 	sf::Keyboard::setVirtualKeyboardVisible(true);
 
-
 	boundaries = windowBoundaries;
 
 	movementSpeed = 50.f;
-	attackSpeed = 1.f; // aps
+	attackSpeed = 5555.f; // aps
 	attackTime = 0.f;
 	projectileSpeed = 350.f;
 }
@@ -23,12 +22,14 @@ void Player::updateAttack(const float& dt) {
 
 	if (attackTime >= 1.f)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-			projectiles.push_back(new sf::RectangleShape());
-			projectiles.back()->setSize(sf::Vector2f(10.f, 50.f));
-			projectiles.back()->setPosition(playerSprite.getPosition().x + playerSprite.getGlobalBounds().width/2.f - projectiles.back()->getSize().x/2.f, playerSprite.getPosition().y);
-			projectiles.back()->setFillColor(sf::Color::Magenta);
-			projectiles.back()->setOutlineThickness(1.f);
-			projectiles.back()->setOutlineColor(sf::Color::White);
+
+			sf::Vector2f size(10.f, 50.f);
+			sf::Vector2f position(playerSprite.getPosition().x + playerSprite.getGlobalBounds().width / 2.f - size.x / 2.f,
+				playerSprite.getPosition().y);
+
+			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+
+			playerProjectiles.back()->setDirection(45);
 
 			attackTime = 0.f;
 		}
@@ -92,16 +93,16 @@ void Player::updateMovement(const float& dt) {
 }
 
 void Player::updateProjectiles(const float& dt) {
-	for (unsigned i = 0; i < projectiles.size(); i++) {
-		projectiles[i]->move(0, -projectileSpeed * dt);
+	for (unsigned i = 0; i < playerProjectiles.size(); i++) {
+		playerProjectiles[i]->update(dt);
 
 
 		//CLEANING UP PROJECTILES
-		if (projectiles[i]->getPosition().y + projectiles[i]->getSize().y < 0.f) {
-			delete projectiles[i];
+		if (playerProjectiles[i]->getPosition().y + playerProjectiles[i]->getSize().y < 0.f) {
+			delete playerProjectiles[i];
 
 			//CHECK IF NECESSARY i--
-			projectiles.erase(projectiles.begin() + i--);
+			playerProjectiles.erase(playerProjectiles.begin() + i--);
 		}
 	}
 }
@@ -114,8 +115,9 @@ void Player::update(const float& dt) {
 }
 
 void Player::render(sf::RenderWindow* window) {
-	for (auto x : projectiles)
-		window->draw(*x);
+	for (auto x : playerProjectiles)
+		x->render(window);
+
 	window->draw(playerSprite);
 
 

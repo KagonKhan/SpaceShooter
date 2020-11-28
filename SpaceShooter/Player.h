@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Projectile.h"
 #include "SFML/Graphics.hpp"
 
 class Player {
@@ -11,7 +12,7 @@ class Player {
 	float movementSpeed, attackSpeed, attackTime, projectileSpeed;
 	sf::Vector2f movement;
 
-	std::vector<sf::RectangleShape*> projectiles;
+	std::vector<Projectile*> playerProjectiles;
 
 	sf::Vector2u boundaries;
 
