@@ -19,6 +19,12 @@ class GameState : public State {
 	void initPlayer();
 	void initEnemies();
 
+	void checkCollisions();
+
+
+	void updateBackground();
+
+
 	void spawnNebulis();
 	int nebulisIndex;
 

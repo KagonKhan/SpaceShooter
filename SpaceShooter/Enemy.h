@@ -13,7 +13,7 @@ class Enemy : public Entity {
 
 
 public:
-	Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries);
+	Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position);
 	~Enemy() {};
 
 	void update(const float& dt);

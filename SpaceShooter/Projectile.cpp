@@ -6,10 +6,10 @@ Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color
 	projectileRectangle.setFillColor(color);
 	projectileRectangle.setOutlineColor(outlineColor);
 	projectileRectangle.setOutlineThickness(outlineThickness);
-	projectileSpeed = speed*3;
+	projectileSpeed = speed;
 
 
-		projectileRectangle.move(15 * sin(rand()%2), 0);
+		//projectileRectangle.move(15 * sin(rand()%2), 0);
 
 }
 
@@ -42,10 +42,14 @@ void Projectile::update(const float& dt) {
 	move(dt);
 
 
-	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
-	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+//	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+//	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
 
 
+}
+
+sf::FloatRect Projectile::getBounds() {
+	return projectileRectangle.getGlobalBounds();
 }
 
 
@@ -57,7 +61,7 @@ void Projectile::move(const float& dt) {
 
 
 	//SWARM PROJECTILES
-	projectileRectangle.rotate(2*cos(rand() * 10));
+//	projectileRectangle.rotate(2*cos(rand() * 10));
 
 	//if (projectileRectangle.getPosition().x >= 1890)
 	//	rotate = true;

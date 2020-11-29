@@ -1,12 +1,8 @@
 #include "Player.h"
 
-Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries) :
-		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f){
+Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position) :
+		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f, position){
 
-	entitySprite.setPosition(
-		(windowBoundaries.x - entitySprite.getGlobalBounds().width) / 2.f,
-		windowBoundaries.y - entitySprite.getGlobalBounds().height
-	);
 
 	engine.loadFromFile("../Resources/art/Engine_exhaust/Engine_exhaust1_frames.psd");
 	engineSPrite.setTexture(engine);
@@ -32,25 +28,14 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
 				entitySprite.getPosition().y);
 
-			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
 
-			playerProjectiles.back()->setDirection(45);
-
-
-
-			playerProjectiles.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
-
-			playerProjectiles.back()->setDirection(-45);
-
-
-
-			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
 
 			playerProjectiles.back()->setDirection(0);
 
 
 
-			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
 
 			playerProjectiles.back()->setDirection(0);
 
@@ -147,4 +132,8 @@ void Player::render(sf::RenderWindow* window) {
 std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector){
 	outstream << vector.x << ", " << vector.y;
 	return outstream;
+}
+
+std::vector<Projectile*>& Player::getProjectiles() {
+	return playerProjectiles;
 }

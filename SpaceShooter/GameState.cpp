@@ -1,5 +1,20 @@
 #include "GameState.h"
 
+// TODO
+/*
+	Enemies shoot randomly, not all at once
+	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy
+	Player bullets get destroyed on hit
+	Player HP bar, collision
+	Enemy HP bar
+
+
+
+
+
+
+
+*/
 
 GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : State(window, states) {
 	initBackground();
@@ -39,16 +54,49 @@ void GameState::initBackground() {
 }
 
 void GameState::initPlayer() {
-	player = new Player("13B.png","../Resources/art/Example_ships/", (sf::Vector2f)window->getSize());
+	player = new Player("13B.png","../Resources/art/Example_ships/",
+		(sf::Vector2f)window->getSize(), sf::Vector2f(window->getSize())/2.f);
 }
 
 void GameState::initEnemies() {
 
 	//64 textures, instead of 1 single
 	for (int i = 0; i < 64; i++) {
-		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/", 100, (sf::Vector2f)window->getSize()));
-		enemies[i]->setPosition(sf::Vector2f(120 * (i % 16), 100 * ( i / 16)));
+		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
+			100, (sf::Vector2f)window->getSize(),
+			sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
+		);
 	}
+}
+
+void GameState::checkCollisions() {
+
+	std::vector<Projectile*> playerProjectiles = player->getProjectiles();
+
+	for(int p = 0 ; p < playerProjectiles.size(); p++)
+		for(int e = 0 ; e < enemies.size(); e++)
+			//If true, delete enemy and bullet
+			if (enemies[e]->checkHit(playerProjectiles[p]->getBounds())) {
+				delete enemies[e];
+				enemies.erase(enemies.begin() + e--);
+			//	delete playerProjectiles[p];
+			//	playerProjectiles.erase(playerProjectiles.begin() + p--);
+			}
+}
+
+void GameState::updateBackground() {
+	backgroundSprite.move(0, 1.f);
+	backgroundSpriteV2.move(0, 1.f);
+	nebulaeSprites[nebulisIndex].move(0, 0.5f);
+	if (nebulaeSprites[nebulisIndex].getPosition().y > 2000)
+		spawnNebulis();
+
+
+	if (backgroundSprite.getPosition().y > window->getSize().y)
+		backgroundSprite.setPosition(0, -1024);
+
+	if (backgroundSpriteV2.getPosition().y > window->getSize().y)
+		backgroundSpriteV2.setPosition(0, -1024);
 }
 
 void GameState::spawnNebulis() {
@@ -64,32 +112,15 @@ void GameState::spawnNebulis() {
 void GameState::update(const float& dt) {
 	updateSFMLEvents();
 
-
 	for (auto x : enemies)
 		x->update(dt);
-	enemies[rand() % enemies.size()]->shoot(dt);
-	enemies[rand() % enemies.size()]->shoot(dt);
-	enemies[rand() % enemies.size()]->shoot(dt);
-	enemies[rand() % enemies.size()]->shoot(dt);
 	
-
-	backgroundSprite.move(0, 1.f);
-	backgroundSpriteV2.move(0, 1.f);
-	nebulaeSprites[nebulisIndex].move(0, 0.5f);
-	if (nebulaeSprites[nebulisIndex].getPosition().y > 2000)
-		spawnNebulis();
-
-
-	if (backgroundSprite.getPosition().y > window->getSize().y)
-		backgroundSprite.setPosition(0, -1024);
-
-	if (backgroundSpriteV2.getPosition().y > window->getSize().y)
-		backgroundSpriteV2.setPosition(0, -1024);
-
-
+	updateBackground();
 	updateMousePosition();
-	
 	player->update(dt);
+
+
+	checkCollisions();
 }
 
 
