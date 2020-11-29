@@ -1,8 +1,14 @@
 #include "Enemy.h"
 
+Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries) :
+	Entity(fileName, filePath, windowBoundaries, 75.f, 50.f, 550.f, 100.f) {
+
+}
+
 void Enemy::updateAttack(const float& dt) {
+	srand(time(NULL));
 	attackTime += attackSpeed * dt;
-	if (attackTime >= 2 + rand() % 8) {
+	if (attackTime >= 1 ) {
 		sf::Vector2f size(10.f, 50.f);
 		sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
 			entitySprite.getPosition().y);
@@ -34,22 +40,9 @@ void Enemy::updateProjectiles(const float& dt) {
 	}
 }
 
-Enemy::Enemy(std::string filePath, float maxhp, sf::Vector2f windowBoundaries) :
-	Entity(filePath, windowBoundaries, 75.f, 500.f, 50.f, 100.f) {
-
-	entityTexture.loadFromFile(filePath);
-	entitySprite.setTexture(entityTexture);
-
-	hp = maxHp = maxhp;
-
-	attackSpeed = 0.5f;
-	projectileSpeed = 100;
-	attackTime = 0.f;
-	movementSpeed = 20.f;
-}
 
 void Enemy::update(const float& dt) {
-	updateAttack(dt);
+//	updateAttack(dt);
 	updateMovement(dt);
 	updateProjectiles(dt);
 }
@@ -63,4 +56,21 @@ void Enemy::render(sf::RenderWindow* window) {
 
 void Enemy::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
+}
+
+void Enemy::shoot(const float& dt) {
+
+	attackTime += attackSpeed * dt;
+	if (attackTime >= 11.f) {
+
+		sf::Vector2f size(10.f, 50.f);
+		sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
+			entitySprite.getPosition().y);
+
+		enemyProjectile.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
+		enemyProjectile.back()->setDirection(180);
+
+
+		attackTime = 0.f;
+	}
 }

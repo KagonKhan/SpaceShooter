@@ -39,12 +39,14 @@ void GameState::initBackground() {
 }
 
 void GameState::initPlayer() {
-	player = new Player("../Resources/art/Example_ships/13B.png", (sf::Vector2f)window->getSize());
+	player = new Player("13B.png","../Resources/art/Example_ships/", (sf::Vector2f)window->getSize());
 }
 
 void GameState::initEnemies() {
+
+	//64 textures, instead of 1 single
 	for (int i = 0; i < 64; i++) {
-		enemies.push_back(new Enemy("../Resources/art/Alien-Ships/Alien-Scout.png", 100, (sf::Vector2f)window->getSize()));
+		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/", 100, (sf::Vector2f)window->getSize()));
 		enemies[i]->setPosition(sf::Vector2f(120 * (i % 16), 100 * ( i / 16)));
 	}
 }
@@ -61,6 +63,15 @@ void GameState::spawnNebulis() {
 
 void GameState::update(const float& dt) {
 	updateSFMLEvents();
+
+
+	for (auto x : enemies)
+		x->update(dt);
+	enemies[rand() % enemies.size()]->shoot(dt);
+	enemies[rand() % enemies.size()]->shoot(dt);
+	enemies[rand() % enemies.size()]->shoot(dt);
+	enemies[rand() % enemies.size()]->shoot(dt);
+	
 
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);

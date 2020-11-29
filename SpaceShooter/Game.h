@@ -1,6 +1,8 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "GameState.h"
+#include "AssetManager.h"
+
 
 
 class Game {
@@ -8,10 +10,19 @@ class Game {
 	std::stack<State*> states;
 
 	sf::Clock deltaTimeClock;
+
+
+	AssetManager manager;
+
+
+
 	float dt;
 
 	void initWindow();
 	void initStates();
+
+
+
 
 	void update();
 	void updateDeltaTime();

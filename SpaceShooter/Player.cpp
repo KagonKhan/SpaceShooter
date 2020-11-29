@@ -1,7 +1,7 @@
 #include "Player.h"
 
-Player::Player(std::string filePath, sf::Vector2f windowBoundaries) : 
-		Entity(filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f){
+Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries) :
+		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f){
 
 	entitySprite.setPosition(
 		(windowBoundaries.x - entitySprite.getGlobalBounds().width) / 2.f,

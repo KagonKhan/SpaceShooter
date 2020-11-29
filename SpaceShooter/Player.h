@@ -23,7 +23,7 @@ class Player : public Entity {
 
 
 public:
-	Player(std::string filePath, sf::Vector2f boundaries);
+	Player(std::string fileName, std::string filePath, sf::Vector2f boundaries);
 	~Player() {};
 
 	void update(const float& dt);
