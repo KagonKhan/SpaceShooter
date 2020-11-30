@@ -40,10 +40,8 @@ void Projectile::setDirection(float rotation) {
 
 void Projectile::update(const float& dt) {
 	move(dt);
-
-
-//	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
-//	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
 
 
 }
@@ -61,7 +59,7 @@ void Projectile::move(const float& dt) {
 
 
 	//SWARM PROJECTILES
-//	projectileRectangle.rotate(2*cos(rand() * 10));
+	projectileRectangle.rotate(2*cos(rand() * 10));
 
 	//if (projectileRectangle.getPosition().x >= 1890)
 	//	rotate = true;

@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
-	Entity(fileName, filePath, windowBoundaries, 75.f, 50.f, 550.f, 100.f, position) {
+	Entity(fileName, filePath, windowBoundaries, 75.f, 555, 555, 555, position) {
 
 
 }

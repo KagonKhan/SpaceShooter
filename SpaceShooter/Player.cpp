@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position) :
-		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 50.f, 100.f, position){
+		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 550.f, 100.f, position){
 
 
 	engine.loadFromFile("../Resources/art/Engine_exhaust/Engine_exhaust1_frames.psd");
@@ -56,13 +56,6 @@ void Player::updateMovement(const float& dt) {
 		movement.x -= movementSpeed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		movement.x += movementSpeed;
-
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		movement.x -= movementSpeed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		movement.x += movementSpeed;
-
 
 	//Change speed variable to a vector
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))

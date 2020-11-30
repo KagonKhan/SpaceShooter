@@ -7,7 +7,7 @@
 	Player bullets get destroyed on hit
 	Player HP bar, collision
 	Enemy HP bar
-
+	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
 
 
 
@@ -62,10 +62,10 @@ void GameState::initEnemies() {
 
 	//64 textures, instead of 1 single
 	for (int i = 0; i < 64; i++) {
-		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
-			100, (sf::Vector2f)window->getSize(),
-			sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
-		);
+		//enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
+		//	100, (sf::Vector2f)window->getSize(),
+		//	sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
+		//);
 	}
 }
 
