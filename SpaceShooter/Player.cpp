@@ -1,11 +1,22 @@
 #include "Player.h"
+#include "Animator.h"
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
 	:	Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 550.f, 100.f, position){
 
+	entitySprite.setPosition(position);
+	engineSprite.setTexture(AssetManager::GetTexture("test.png","../Resources/art/Engine_exhaust/Exhaust/"));
+	engineSprite.setPosition(entitySprite.getPosition()+sf::Vector2f(entitySprite.getGlobalBounds().height, entitySprite.getGlobalBounds().width/2.f));
 
-	engine.loadFromFile("../Resources/art/Engine_exhaust/Engine_exhaust1_frames.psd");
-	engineSPrite.setTexture(engine);
+	engineSprite.setScale(2.f,2.f);
+
+	animator = new Animator(engineSprite);
+
+	
+	auto& engineAnimation = animator->CreateAnimation("engine", "../Resources/art/Engine_exhaust/Exhaust/", "test.png",sf::seconds(1), true);
+
+	engineAnimation.AddFrames(sf::Vector2i(0, 0), sf::Vector2i(32, 60), 8);
+
 }
 
 Player::~Player() {
@@ -14,11 +25,16 @@ Player::~Player() {
 }
 
 void Player::update(const float& dt) {
+
+	animator->Update(dt);
+
 	updateAttack(dt);
 
 	updateMovement(dt);
 
 	updateProjectiles(dt);
+
+	
 }
 
 void Player::updateAttack(const float& dt) {
@@ -97,7 +113,7 @@ void Player::updateMovement(const float& dt) {
 		movement.y *= 0.f;
 
 
-
+	engineSprite.move(movement * dt);
 	entitySprite.move(movement * dt);
 }
 
@@ -120,10 +136,26 @@ void Player::render(sf::RenderWindow* window) {
 	for (auto x : playerProjectiles)
 		x->render(window);
 
+	window->draw(engineSprite);
+
 	window->draw(entitySprite);
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector){
@@ -131,6 +163,3 @@ std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector){
 	return outstream;
 }
 
-std::vector<Projectile*>& Player::getProjectiles() {
-	return playerProjectiles;
-}

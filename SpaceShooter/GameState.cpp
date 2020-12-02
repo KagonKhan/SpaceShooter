@@ -27,10 +27,16 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 }
 
 GameState::~GameState() {
+	window->close();
+	std::cout << "DELETING GAMESTATE\n";
+	std::cout << "- deleting player\n";
 	delete player;
 
-	for (auto& it : enemies)
+
+	std::cout << "- deleting enemy\n";
+	for (auto& it : enemies) {
 		delete it;
+	}
 }
 
 void GameState::initBackground() {
@@ -61,8 +67,10 @@ void GameState::initBackground() {
 }
 
 void GameState::initPlayer() {
+
+	//FIX POSITION LATER
 	player = new Player("13B.png","../Resources/art/Example_ships/",
-		(sf::Vector2f)window->getSize(), sf::Vector2f(window->getSize())/2.f);
+		(sf::Vector2f)window->getSize(), sf::Vector2f(window->getSize().y - 200.f, window->getSize().x /2.f));
 }
 
 void GameState::initEnemies() {
@@ -96,6 +104,7 @@ void GameState::updateBackground() {
 		backgroundSpriteV2.setPosition(0, -1024);
 }
 
+
 void GameState::spawnNebulis() {
 	srand(time(NULL));
 	nebulisIndex = rand() % 3;
@@ -107,6 +116,7 @@ void GameState::spawnNebulis() {
 
 
 void GameState::update(const float& dt) {
+
 	updateSFMLEvents();
 	updateBackground();
 	updateMousePosition();

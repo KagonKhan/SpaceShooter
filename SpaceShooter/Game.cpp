@@ -6,10 +6,26 @@ Game::Game() {
 }
 
 Game::~Game() {
-	while (!states.empty())
-		delete states.top();
+	std::cout << "\nDELETING GAME\n";
+	std::cout << "\nstack empty?: " << states.empty();
 
+
+
+
+
+
+
+	while (!states.empty()) {
+
+		std::cout << "- deleting state\n";
+			delete states.top();
+			states.pop();
+		
+	}
+
+	std::cout << "- renderwindow\n";
 	window->~RenderWindow();
+	std::cout << "- deleting window\n";
 	delete window;
 }
 
@@ -28,6 +44,7 @@ void Game::initStates() {
 
 void Game::update() {
 	updateDeltaTime();
+
 
 
 	if (!states.empty())

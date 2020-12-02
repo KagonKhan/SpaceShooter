@@ -5,14 +5,14 @@
 #include "Projectile.h"
 #include "SFML/Graphics.hpp"
 #include "Entity.h"
-
+#include "Animator.h"
 
 class Player : public Entity {
 
 	//Fix later
-	sf::Texture engine;
-	sf::Sprite engineSPrite;
+	sf::Sprite engineSprite;
 
+	Animator* animator;
 
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
@@ -25,9 +25,6 @@ public:
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
-	std::vector<Projectile*>& getProjectiles();
-	
-
 
 	std::vector<Projectile*> playerProjectiles;
 

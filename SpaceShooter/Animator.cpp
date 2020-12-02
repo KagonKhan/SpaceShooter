@@ -1,7 +1,10 @@
 #include "Animator.h"
 
+
+
 Animator::Animator(sf::Sprite& sprite)
 	: m_Sprite(sprite), m_CurrentTime(), m_CurrentAnimation(nullptr){}
+
 
 Animator::Animation& Animator::CreateAnimation(const std::string& name, const std::string& filepath, const std::string& textureName, const sf::Time& duration, bool loop) {
 	m_Animations.push_back(Animator::Animation(name, filepath, textureName, duration, loop));

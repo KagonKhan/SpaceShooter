@@ -18,19 +18,19 @@ void Enemy::update(const float& dt) {
 }
 
 void Enemy::updateAttack(const float& dt) {
-	srand(time(NULL));
-	attackTime += attackSpeed * dt;
-	if (attackTime >= rand()%10+50 ) {
-		sf::Vector2f size(10.f, 50.f);
-		sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
-			entitySprite.getPosition().y);
+	//srand(time(NULL));
+	//attackTime += attackSpeed * dt;
+	//if (attackTime >= rand()%10+50 ) {
+	//	sf::Vector2f size(10.f, 50.f);
+	//	sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
+	//		entitySprite.getPosition().y);
 
-		enemyProjectile.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
-		enemyProjectile.back()->setDirection(180.f);
+	//	enemyProjectile.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
+	//	enemyProjectile.back()->setDirection(180.f);
 
 
-		attackTime = 0.f;
-	}
+	//	attackTime = 0.f;
+	//}
 }
 
 void Enemy::updateMovement(const float& dt) {

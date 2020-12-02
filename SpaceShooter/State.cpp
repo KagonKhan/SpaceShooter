@@ -1,29 +1,25 @@
 #include "State.h"
 
+State::State(sf::RenderWindow* window, std::stack<State*>* states) {
+	this->window = window;
+	this->states = states;
+}
+
 void State::updateMousePosition() {
 	mousePosition = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
 }
 
 void State::updateSFMLEvents() {
 	while (window->pollEvent(sfEvent))
-		switch (sfEvent.type) {
-
-		case sf::Keyboard::Escape:
-			delete states->top();
-
-		case sf::Event::KeyPressed: {
-			if(sf::Keyboard::Escape)
+		if (sfEvent.type == sf::Event::Closed) {
 			window->close();
 		}
-	}
 	
 }
 
-State::State(sf::RenderWindow* window, std::stack<State*>* states) {
-	this->window = window;
-	this->states = states;
-}
 
 State::~State() {
-	states->pop();
+	std::cout << "\nDELETING STATE\n";
+	std::cout << "- popping state\n";
+	//states->pop();
 }
