@@ -11,17 +11,12 @@ class Game {
 
 	sf::Clock deltaTimeClock;
 
-
 	AssetManager manager;
-
-
 
 	float dt;
 
 	void initWindow();
 	void initStates();
-
-
 
 
 	void update();

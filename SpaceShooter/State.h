@@ -20,7 +20,7 @@ protected:
 
 public:
 	State(sf::RenderWindow* window, std::stack<State*>* states);
-	virtual ~State() {};
+	virtual ~State();
 
 	virtual void update(const float& dt) = 0;
 	virtual void render() = 0;

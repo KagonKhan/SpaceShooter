@@ -8,7 +8,7 @@ AssetManager::AssetManager() {
 
     //if false, aborts = aborts if instances > 1
     assert(sInstance == nullptr);
-    sInstance = this;
+        sInstance = this;
 }
 
 //Returns a texture reference if filename found. If not, load file(filepath + filename)
@@ -16,11 +16,13 @@ sf::Texture& AssetManager::GetTexture(const std::string& filename, const std::st
 
     auto& textureMap = sInstance->m_Textures;
 
+    auto pairFound = textureMap.find(filename);
     // found a texture
-    if (textureMap.find(filename) != textureMap.end())
-        return textureMap[filename];
-
-    textureMap[filename].loadFromFile(filepath + filename);
-    return textureMap[filename];
-
+    if (pairFound != textureMap.end())
+        return pairFound->second;
+    else {
+        auto& texture = textureMap[filename];
+        textureMap[filename].loadFromFile(filepath + filename);
+        return texture;
+    }
 }

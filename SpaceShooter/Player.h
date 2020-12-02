@@ -9,9 +9,7 @@
 
 class Player : public Entity {
 
-
-	std::vector<Projectile*> playerProjectiles;
-
+	//Fix later
 	sf::Texture engine;
 	sf::Sprite engineSPrite;
 
@@ -21,15 +19,19 @@ class Player : public Entity {
 	void updateProjectiles(const float& dt);
 
 
-
 public:
-	Player(std::string fileName, std::string filePath, sf::Vector2f boundaries, sf::Vector2f position);
-	~Player() {};
+	Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position);
+	~Player();
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
 	std::vector<Projectile*>& getProjectiles();
 	
+
+
+	std::vector<Projectile*> playerProjectiles;
+
+
 	
 	friend std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector);
 };

@@ -6,6 +6,11 @@ Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector
 
 }
 
+Enemy::~Enemy() {
+	for (auto& it : enemyProjectile)
+		delete it;
+}
+
 void Enemy::update(const float& dt) {
 	updateAttack(dt);
 	updateMovement(dt);

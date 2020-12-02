@@ -30,7 +30,7 @@ class GameState : public State {
 
 public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);
-	~GameState() {};
+	~GameState();
 
 	void update(const float& dt);
 	void render();

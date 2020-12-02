@@ -54,6 +54,15 @@ std::string Animator::GetCurrentAnimationName() const {
 	return "";
 }
 
+Animator::Animation* Animator::FindAnimation(const std::string& name)
+{
+	for (auto it = m_Animations.begin(); it != m_Animations.end(); it++)
+		if (it->m_Name == name)
+			return &*it;
+
+	return nullptr;
+}
+
 void Animator::SwitchAnimation(Animator::Animation* animation) {
 
 	if (animation)
@@ -61,12 +70,4 @@ void Animator::SwitchAnimation(Animator::Animation* animation) {
 
 	m_CurrentAnimation = animation;
 	m_CurrentTime = 0; // reset the time;
-}
-
-Animator::Animation* Animator::findAnimation(const std::string& name) {
-	for (auto it = m_Animations.begin(); it != m_Animations.end(); it++)
-		if (it->m_Name == name)
-			return &*it;
-
-	return nullptr;
 }

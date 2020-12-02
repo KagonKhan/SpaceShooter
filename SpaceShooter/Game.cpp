@@ -1,11 +1,14 @@
 #include "Game.h"
-
+#include <exception>
 Game::Game() {
 	initWindow();
 	initStates();
 }
 
 Game::~Game() {
+	while (!states.empty())
+		delete states.top();
+
 	window->~RenderWindow();
 	delete window;
 }
@@ -16,7 +19,7 @@ void Game::initWindow() {
 	settings.antialiasingLevel = 10; // ????????????????????????????????????????????????????????????????????????????????????????????????
 
 	window = new sf::RenderWindow(sf::VideoMode(1920, 1024), "Space Shooter",7U, settings);
-	window->setFramerateLimit(120);
+	window->setFramerateLimit(75);
 }
 
 void Game::initStates() {
@@ -29,8 +32,17 @@ void Game::update() {
 
 	if (!states.empty())
 		states.top()->update(dt);
-	else
-		throw std::runtime_error("State stack empty!\n");
+	else {
+		try {
+			throw std::runtime_error("State stack empty!\n");
+		}
+		catch (std::runtime_error& e) {
+			std::cout << e.what();
+
+			window->close();
+		}
+	}
+
 }
 
 void Game::updateDeltaTime() {
@@ -42,9 +54,16 @@ void Game::render() {
 
 	if (!states.empty())
 		states.top()->render();
-	else
-		throw std::runtime_error("State stack empty!\n");
-
+	else {
+		try {
+			throw std::runtime_error("State stack empty!\n");
+		}
+		catch (std::runtime_error& e) {
+			std::cout << e.what();
+			
+			window->close();
+		}
+	}
 	window->display();
 }
 

@@ -19,6 +19,12 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{03377c8d-5518-481f-a373-f240fdfad083}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{2e734430-4634-4bf4-9d1c-7cd0a79ae47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Projectiles">
+      <UniqueIdentifier>{21266094-9ea4-4cd9-8d80-9fe08d845ef8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -36,9 +42,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -49,10 +52,13 @@
       <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="AssetManager.cpp">
-      <Filter>Resource Files</Filter>
+      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,9 +74,6 @@
     <ClInclude Include="Player.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Entity</Filter>
     </ClInclude>
@@ -81,10 +84,13 @@
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="AssetManager.h">
-      <Filter>Resource Files</Filter>
+      <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 #include "Entity.h"
-#include "AssetManager.h"
 
 
 bool Entity::checkHit(sf::FloatRect boundaries) {

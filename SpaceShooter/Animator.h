@@ -17,11 +17,8 @@ class Animator {
 	Animator::Animation* m_CurrentAnimation;
 
 
-	void SwitchAnimation(Animator::Animation* animation);
-
-	Animator::Animation* findAnimation(const std::string& name);
-
 public:
+
 	struct Animation {
 		std::string m_Name;
 		std::string m_Filepath;
@@ -52,6 +49,7 @@ public:
 
 
 	Animator(sf::Sprite& sprite);
+	~Animator() {};
 
 	Animator::Animation& CreateAnimation(const std::string& name, const std::string& filepath,
 		const std::string& textureName, const sf::Time& duration, bool loop = false);

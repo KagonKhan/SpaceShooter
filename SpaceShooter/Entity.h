@@ -1,5 +1,8 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+
+#include "AssetManager.h"
+
 class Entity {
 protected:
 

@@ -1,13 +1,17 @@
 #include "Player.h"
 
-Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position) :
-		Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 550.f, 100.f, position){
+Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
+	:	Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 550.f, 100.f, position){
 
 
 	engine.loadFromFile("../Resources/art/Engine_exhaust/Engine_exhaust1_frames.psd");
 	engineSPrite.setTexture(engine);
 }
 
+Player::~Player() {
+	for (auto& it : playerProjectiles)
+		delete it;
+}
 
 void Player::update(const float& dt) {
 	updateAttack(dt);

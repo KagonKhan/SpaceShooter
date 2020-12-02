@@ -9,6 +9,7 @@
 	Enemy HP bar
 	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
 
+	 LEARN ABOUT VIEWS
 
 
 
@@ -23,6 +24,13 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 	initEnemies();
 
 	nebulisIndex = 0;
+}
+
+GameState::~GameState() {
+	delete player;
+
+	for (auto& it : enemies)
+		delete it;
 }
 
 void GameState::initBackground() {
@@ -43,8 +51,7 @@ void GameState::initBackground() {
 	backgroundSpriteV2.setTexture(backgroundTexture);
 
 	
-	
-	// LEARN ABOUT VIEWS
+
 
 
 	backgroundSprite.setTextureRect({ 0, 0, 2000, 1024});
@@ -62,32 +69,22 @@ void GameState::initEnemies() {
 
 	//64 textures, instead of 1 single
 	for (int i = 0; i < 64; i++) {
-		//enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
-		//	100, (sf::Vector2f)window->getSize(),
-		//	sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
-		//);
+		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
+			100, (sf::Vector2f)window->getSize(),
+			sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
+		);
 	}
 }
 
 void GameState::checkCollisions() {
 
-	std::vector<Projectile*> playerProjectiles = player->getProjectiles();
-
-	for(int p = 0 ; p < playerProjectiles.size(); p++)
-		for(int e = 0 ; e < enemies.size(); e++)
-			//If true, delete enemy and bullet
-			if (enemies[e]->checkHit(playerProjectiles[p]->getBounds())) {
-				delete enemies[e];
-				enemies.erase(enemies.begin() + e--);
-			//	delete playerProjectiles[p];
-			//	playerProjectiles.erase(playerProjectiles.begin() + p--);
-			}
 }
 
 void GameState::updateBackground() {
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);
 	nebulaeSprites[nebulisIndex].move(0, 0.5f);
+
 	if (nebulaeSprites[nebulisIndex].getPosition().y > 2000)
 		spawnNebulis();
 
@@ -111,16 +108,14 @@ void GameState::spawnNebulis() {
 
 void GameState::update(const float& dt) {
 	updateSFMLEvents();
+	updateBackground();
+	updateMousePosition();
+	checkCollisions();
 
 	for (auto x : enemies)
 		x->update(dt);
-	
-	updateBackground();
-	updateMousePosition();
+
 	player->update(dt);
-
-
-	checkCollisions();
 }
 
 
