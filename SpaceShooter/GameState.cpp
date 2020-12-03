@@ -88,24 +88,19 @@ void GameState::initEnemies() {
 }
 
 
+void GameState::update(const float& dt) {
 
-//Does not throw exceptions
-void GameState::checkCollisions() {
-	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+	updateSFMLEvents();
+	updateBackground();
+	updateMousePosition();
+	checkCollisions();
 
-	for(int i = 0; i < enemies.size(); i++)
-		for (int j = 0; j < playerProjectiles.size(); j++) {
-			if (enemies[i] && playerProjectiles[j])
-			if (enemies[i]->checkHit(playerProjectiles[j]->getBounds())) {
-				delete enemies[i];
-				enemies.erase(enemies.begin() + i);
+	for (auto x : enemies)
+		x->update(dt);
 
-				delete playerProjectiles[j];
-				playerProjectiles.erase(playerProjectiles.begin() + j);
-				break;
-			}
-		}
+	player->update(dt);
 }
+
 
 void GameState::updateBackground() {
 	backgroundSprite.move(0, 1.f);
@@ -123,18 +118,6 @@ void GameState::updateBackground() {
 		backgroundSpriteV2.setPosition(0, -1024);
 }
 
-void GameState::update(const float& dt) {
-
-	updateSFMLEvents();
-	updateBackground();
-	updateMousePosition();
-	checkCollisions();
-
-	for (auto x : enemies)
-		x->update(dt);
-
-	player->update(dt);
-}
 
 
 void GameState::spawnNebulis() {
@@ -146,6 +129,23 @@ void GameState::spawnNebulis() {
 	nebulaeSprites[nebulisIndex].setPosition(200 + rand() % 1520, -700);
 }
 
+//Does not throw exceptions
+void GameState::checkCollisions() {
+	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+
+	for (int i = 0; i < enemies.size(); i++)
+		for (int j = 0; j < playerProjectiles.size(); j++) {
+			if (enemies[i] && playerProjectiles[j])
+				if (enemies[i]->checkHit(playerProjectiles[j]->getBounds())) {
+					delete enemies[i];
+					enemies.erase(enemies.begin() + i);
+
+					delete playerProjectiles[j];
+					playerProjectiles.erase(playerProjectiles.begin() + j);
+					break;
+				}
+		}
+}
 
 
 void GameState::render() {

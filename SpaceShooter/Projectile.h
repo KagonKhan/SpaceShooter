@@ -1,9 +1,10 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
+
 #include "Animator.h"
-
-
+#include "AssetManager.h"
 
 class Projectile {
 
@@ -15,11 +16,10 @@ class Projectile {
 	void move(const float& dt);
 
 
+	sf::Sound sound;
 
 
 	Animator* animator;
-
-
 
 
 

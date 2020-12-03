@@ -26,3 +26,18 @@ sf::Texture& AssetManager::GetTexture(const std::string& filename, const std::st
         return texture;
     }
 }
+
+sf::SoundBuffer& AssetManager::GetSoundBuffer(const std::string& filename, const std::string& filepath)
+{
+    auto& soundBufferMap = sInstance->m_SoundBuffers;
+
+    auto pairFound = soundBufferMap.find(filename);
+
+    if (pairFound != soundBufferMap.end())
+        return pairFound->second;
+    else {
+        auto& soundBuffer = soundBufferMap[filename];
+        soundBufferMap[filename].loadFromFile(filepath + filename);
+        return soundBuffer;
+    }
+}

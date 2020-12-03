@@ -14,6 +14,13 @@ Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color
 
 
 
+	//sBuffer.loadFromFile("../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/Laser_09.wav");
+		
+	
+	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav","../Resources/sounds/big_laser/"));
+	sound.setVolume(5);
+
+	sound.play();
 }
 
 
@@ -48,16 +55,17 @@ void Projectile::move(const float& dt) {
 
 	//not even sure why this exactly works - figure out later
 	sf::Vector2f direction = sf::Vector2f(sin((projectileSprite.getRotation() * 3.1415926 / 180.f)), -cos((projectileSprite.getRotation() * 3.1415926 / 180.f)));
-	projectileSprite.setRotation(direction.y);
+
 	projectileSprite.move(0,- projectileSpeed * dt);
 
+	projectileSprite.rotate(2 * cos(rand() * 10));
 	/*
 
 	//sf::Vector2f direction(sin((projectileRectangle.getRotation() * 3.1415926 / 180.f)), -cos((projectileRectangle.getRotation() * 3.1415926 / 180.f)));
 //projectileRectangle.move(direction * projectileSpeed * dt);
 
 	//SWARM PROJECTILES
-	projectileRectangle.rotate(2*cos(rand() * 10));
+	
 
 	//if (projectileRectangle.getPosition().x >= 1890)
 	//	rotate = true;

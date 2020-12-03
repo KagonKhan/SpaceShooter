@@ -2,7 +2,7 @@
 #include "Animator.h"
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 50.f, 55.f, 550.f, 100.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 80.f, 555.f, 550.f, 100.f, position){
 
 	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 
@@ -47,6 +47,8 @@ void Player::initAnimation() {
 }
 
 
+
+
 void Player::update(const float& dt) {
 
 	updateAttack(dt);
@@ -61,7 +63,6 @@ void Player::update(const float& dt) {
 
 }
 
-
 void Player::updateAttack(const float& dt) {
 	attackTime += attackSpeed * dt;
 
@@ -71,9 +72,9 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
+			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 300.f));
 
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
+			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 300.f));
 
 			attackTime = 0.f;
 		}
@@ -88,6 +89,7 @@ void Player::updateMovement(const float& dt) {
 		movement.x -= movementSpeed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		movement.x += movementSpeed;
+
 
 	//Change speed variable to a vector
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
@@ -123,8 +125,6 @@ void Player::updateMovement(const float& dt) {
 
 	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height + 40 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
 		movement.y *= 0.f;
-
-
 
 }
 
