@@ -84,8 +84,24 @@ void GameState::initEnemies() {
 	}
 }
 
-void GameState::checkCollisions() {
 
+
+//Throws exceptions
+void GameState::checkCollisions() {
+	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+
+	for(int i = 0; i < enemies.size(); i++)
+		for (int j = 0; j < playerProjectiles.size(); j++) {
+			if (enemies[i] && playerProjectiles[j])
+			if (enemies[i]->checkHit(playerProjectiles[j]->getBounds())) {
+				delete enemies[i];
+				enemies.erase(enemies.begin() + i);
+
+				delete playerProjectiles[j];
+				playerProjectiles.erase(playerProjectiles.begin() + j);
+				break;
+			}
+		}
 }
 
 void GameState::updateBackground() {

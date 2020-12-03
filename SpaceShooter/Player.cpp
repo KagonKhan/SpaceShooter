@@ -2,7 +2,7 @@
 #include "Animator.h"
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 50.f, 2.f, 550.f, 100.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 50.f, 55.f, 550.f, 100.f, position){
 
 	entitySprite.setPosition(position);
 	engineSprite.setTexture(AssetManager::GetTexture("test.png","../Resources/art/Engine_exhaust/Exhaust/"));
@@ -20,7 +20,7 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 }
 
 Player::~Player() {
-	for (auto& it : playerProjectiles)
+	for (auto& it : projectiles)
 		delete it;
 }
 
@@ -49,18 +49,25 @@ void Player::updateAttack(const float& dt) {
 				entitySprite.getPosition().y);
 
 
-			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
+			projectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
 
-			playerProjectiles.back()->setDirection(0);
+			projectiles.back()->setDirection(0);
+
+			
+			projectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
+
+			projectiles.back()->setDirection(-30);
+
+			
+			projectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
+
+			projectiles.back()->setDirection(30);
 
 
 
-			playerProjectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
+			projectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
 
-			playerProjectiles.back()->setDirection(0);
-
-
-
+			projectiles.back()->setDirection(0);
 
 
 			attackTime = 0.f;
@@ -118,22 +125,22 @@ void Player::updateMovement(const float& dt) {
 }
 
 void Player::updateProjectiles(const float& dt) {
-	for (unsigned i = 0; i < playerProjectiles.size(); i++) {
-		playerProjectiles[i]->update(dt);
+	for (unsigned i = 0; i < projectiles.size(); i++) {
+		projectiles[i]->update(dt);
 
 
 		//CLEANING UP PROJECTILES
-		if (playerProjectiles[i]->getPosition().y + playerProjectiles[i]->getSize().y < 0.f) {
-			delete playerProjectiles[i];
+		if (projectiles[i]->getPosition().y + projectiles[i]->getSize().y < 0.f) {
+			delete projectiles[i];
 
 			//CHECK IF NECESSARY i--
-			playerProjectiles.erase(playerProjectiles.begin() + i--);
+			projectiles.erase(projectiles.begin() + i--);
 		}
 	}
 }
 
 void Player::render(sf::RenderWindow* window) {
-	for (auto x : playerProjectiles)
+	for (auto x : projectiles)
 		x->render(window);
 
 	window->draw(engineSprite);
@@ -141,6 +148,10 @@ void Player::render(sf::RenderWindow* window) {
 	window->draw(entitySprite);
 
 
+}
+
+std::vector<Projectile*>* Player::getProjectiles() {
+	return &projectiles;
 }
 
 

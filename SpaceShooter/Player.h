@@ -18,6 +18,8 @@ class Player : public Entity {
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
 
+	std::vector<Projectile*> projectiles;
+
 
 public:
 	Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position);
@@ -26,7 +28,7 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
 
-	std::vector<Projectile*> playerProjectiles;
+	std::vector<Projectile*>* getProjectiles();
 
 
 	
