@@ -4,25 +4,39 @@
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
 	:	Entity(fileName, filePath, windowBoundaries, 50.f, 55.f, 550.f, 100.f, position){
 
-	entitySprite.setPosition(position);
-	engineSprite.setTexture(AssetManager::GetTexture("test.png","../Resources/art/Engine_exhaust/Exhaust/"));
-	engineSprite.setPosition(entitySprite.getPosition()+sf::Vector2f(entitySprite.getGlobalBounds().height, entitySprite.getGlobalBounds().width/2.f));
+	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 
-	engineSprite.setScale(2.f,2.f);
-
-	animator = new Animator(engineSprite);
-
-	
-	auto& engineAnimation = animator->CreateAnimation("engine", "../Resources/art/Engine_exhaust/Exhaust/", "test.png",sf::seconds(1), true);
-
-	engineAnimation.AddFrames(sf::Vector2i(0, 0), sf::Vector2i(32, 60), 8);
-
+	initSprites();
+	initAnimation();
 }
 
 Player::~Player() {
 	for (auto& it : projectiles)
 		delete it;
 }
+
+void Player::initSprites() {
+	engineSprite.setTexture(AssetManager::GetTexture("Exhaust_all.png", "../Resources/art/Engine_exhaust/Exhaust/"));
+	engineSprite.setPosition(entitySprite.getPosition() + sf::Vector2f(entitySprite.getGlobalBounds().height - 32.f, (entitySprite.getGlobalBounds().width - 3) / 2.f));
+	engineSprite.setScale(2.f, 1.5f);
+
+
+}
+
+void Player::initAnimation() {
+
+	animator = new Animator(engineSprite);
+
+
+	auto& engineAnimationBACKWARD = animator->CreateAnimation("BACKWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.25), false);
+	engineAnimationBACKWARD.AddFrames(sf::Vector2i(170, 0), sf::Vector2i(34, 64), 3);
+
+	auto& engineAnimationFORWARD = animator->CreateAnimation("FORWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.75), false);
+	engineAnimationFORWARD.AddFrames(sf::Vector2i(0, 0), sf::Vector2i(34, 64), 5);
+
+
+}
+
 
 void Player::update(const float& dt) {
 
@@ -34,8 +48,13 @@ void Player::update(const float& dt) {
 
 	updateProjectiles(dt);
 
-	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && animator->GetCurrentAnimationName() == "FORWARD")
+		animator->SwitchAnimation("BACKWARD");
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && animator->GetCurrentAnimationName() == "BACKWARD")
+		animator->SwitchAnimation("FORWARD");
 }
+
 
 void Player::updateAttack(const float& dt) {
 	attackTime += attackSpeed * dt;
@@ -56,12 +75,12 @@ void Player::updateAttack(const float& dt) {
 			
 			projectiles.push_back(new Projectile(size, position + sf::Vector2f(-30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
 
-			projectiles.back()->setDirection(-30);
+			projectiles.back()->setDirection(30);
 
 			
 			projectiles.push_back(new Projectile(size, position + sf::Vector2f(30.f, 40), sf::Color::Magenta, 2.f, sf::Color::Yellow, 500.f));
 
-			projectiles.back()->setDirection(30);
+			projectiles.back()->setDirection(-30);
 
 
 
@@ -121,6 +140,10 @@ void Player::updateMovement(const float& dt) {
 
 
 	engineSprite.move(movement * dt);
+	engineSprite2 = engineSprite;
+	engineSprite2.move(-45.f, 0.f);
+
+
 	entitySprite.move(movement * dt);
 }
 
@@ -144,11 +167,33 @@ void Player::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(engineSprite);
+	window->draw(engineSprite2);
 
 	window->draw(entitySprite);
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 std::vector<Projectile*>* Player::getProjectiles() {
 	return &projectiles;

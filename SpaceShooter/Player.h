@@ -10,9 +10,16 @@
 class Player : public Entity {
 
 	//Fix later
-	sf::Sprite engineSprite;
+	sf::Sprite engineSprite, engineSprite2;
 
 	Animator* animator;
+
+	
+
+	void initSprites();
+	void initAnimation();
+
+
 
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
