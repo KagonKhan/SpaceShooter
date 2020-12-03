@@ -1,62 +1,60 @@
 #include "Projectile.h"
-
+#include "AssetManager.h"
 Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, float outlineThickness, sf::Color outlineColor, float speed) {
-	projectileRectangle.setSize(size);
-	projectileRectangle.setPosition(position);
-	projectileRectangle.setFillColor(color);
-	projectileRectangle.setOutlineColor(outlineColor);
-	projectileRectangle.setOutlineThickness(outlineThickness);
+
 	projectileSpeed = speed;
 
+	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
+	projectileSprite.setPosition(position);
+	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 
-		//projectileRectangle.move(15 * sin(rand()%2), 0);
+	animator = new Animator(projectileSprite);
+	auto& animation = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
+	animation.AddFrames(sf::Vector2i(0,0),sf::Vector2i(95, 68), 3);
+
+
 
 }
 
-Projectile::Projectile(std::string filePath) {
-	projectileTexture.loadFromFile(filePath);
-	projectileSprite.setTexture(projectileTexture);
-	projectileSpeed = 200.f;
-}
 
 sf::Vector2f Projectile::getSize() {
-
-	return projectileRectangle.getSize();
+	return sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height);
 }
 
-sf::Vector2f Projectile::getPosition()
-{
-	return projectileRectangle.getPosition();
-}
-
-void Projectile::setColor(sf::Color color) {
-	projectileRectangle.setFillColor(color);
-}
-
-void Projectile::setDirection(float rotation) {
-	projectileRectangle.setRotation(rotation);
+sf::Vector2f Projectile::getPosition() {
+	return projectileSprite.getPosition();
 }
 
 
 void Projectile::update(const float& dt) {
 	move(dt);
-	projectileRectangle.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
-	projectileRectangle.setOutlineColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 255));;
+	animator->Update(dt);
+	projectileSprite.setRotation(270);
 
+
+	
 
 }
 
 sf::FloatRect Projectile::getBounds() {
-	return projectileRectangle.getGlobalBounds();
+	return projectileSprite.getGlobalBounds();
 }
 
 
 
 void Projectile::move(const float& dt) {
 
-	sf::Vector2f direction(sin((projectileRectangle.getRotation() * 3.1415926 / 180.f)), -cos((projectileRectangle.getRotation() * 3.1415926 / 180.f)));
-	projectileRectangle.move(direction * projectileSpeed * dt);
 
+
+	//not even sure why this exactly works - figure out later
+	sf::Vector2f direction = sf::Vector2f(sin((projectileSprite.getRotation() * 3.1415926 / 180.f)), -cos((projectileSprite.getRotation() * 3.1415926 / 180.f)));
+	projectileSprite.setRotation(direction.y);
+	projectileSprite.move(0,- projectileSpeed * dt);
+
+	/*
+
+	//sf::Vector2f direction(sin((projectileRectangle.getRotation() * 3.1415926 / 180.f)), -cos((projectileRectangle.getRotation() * 3.1415926 / 180.f)));
+//projectileRectangle.move(direction * projectileSpeed * dt);
 
 	//SWARM PROJECTILES
 	projectileRectangle.rotate(2*cos(rand() * 10));
@@ -69,8 +67,12 @@ void Projectile::move(const float& dt) {
 
 	//if (projectileRectangle.getRotation() > -90 || projectileRectangle.getRotation() < 270)
 	//	rotate = false;
+
+	*/
 }
 
 void Projectile::render(sf::RenderWindow* window) {
-	window->draw(projectileRectangle);
+//	window->draw(projectileRectangle);
+	window->draw(projectileSprite);
+
 }

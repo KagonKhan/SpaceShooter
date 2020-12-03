@@ -12,8 +12,7 @@
 	 LEARN ABOUT VIEWS
 
 
-
-
+	 //Figure out a better way to position sprites
 
 */
 
@@ -24,6 +23,10 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 	initEnemies();
 
 	nebulisIndex = 0;
+
+
+	view = sf::View(sf::FloatRect(0, 0, window->getSize().x, window->getSize().y));
+
 }
 
 GameState::~GameState() {
@@ -86,7 +89,7 @@ void GameState::initEnemies() {
 
 
 
-//Throws exceptions
+//Does not throw exceptions
 void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
 
@@ -120,17 +123,6 @@ void GameState::updateBackground() {
 		backgroundSpriteV2.setPosition(0, -1024);
 }
 
-
-void GameState::spawnNebulis() {
-	srand(time(NULL));
-	nebulisIndex = rand() % 3;
-
-	nebulaeSprites[nebulisIndex].setScale(rand() % 10 / 5.f, rand() % 10 / 5.f);
-
-	nebulaeSprites[nebulisIndex].setPosition(200+rand() % 1520, -700);
-}
-
-
 void GameState::update(const float& dt) {
 
 	updateSFMLEvents();
@@ -143,6 +135,17 @@ void GameState::update(const float& dt) {
 
 	player->update(dt);
 }
+
+
+void GameState::spawnNebulis() {
+	srand(time(NULL));
+	nebulisIndex = rand() % 3;
+
+	nebulaeSprites[nebulisIndex].setScale(rand() % 10 / 5.f, rand() % 10 / 5.f);
+
+	nebulaeSprites[nebulisIndex].setPosition(200 + rand() % 1520, -700);
+}
+
 
 
 void GameState::render() {
@@ -161,5 +164,9 @@ void GameState::render() {
 
 	for (auto& enemy : enemies)
 		enemy->render(window);
+
+
+
+	window->setView(view);
 
 }

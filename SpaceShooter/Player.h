@@ -14,7 +14,9 @@ class Player : public Entity {
 
 	Animator* animator;
 
-	
+
+	sf::RectangleShape hitbox;
+
 
 	void initSprites();
 	void initAnimation();
@@ -24,6 +26,8 @@ class Player : public Entity {
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
+	void updateAnimations(const float& dt);
+	void updateSprites(const float& dt);
 
 	std::vector<Projectile*> projectiles;
 

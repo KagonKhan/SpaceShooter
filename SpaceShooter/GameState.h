@@ -4,6 +4,9 @@
 #include "Enemy.h"
 class GameState : public State {
 
+	// View test
+	sf::View view;
+
 
 	//USE SPRITESHEETS ZZZ
 	sf::Texture backgroundTexture;

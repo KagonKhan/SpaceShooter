@@ -63,8 +63,6 @@ void Enemy::shoot(const float& dt) {
 			entitySprite.getPosition().y);
 
 		enemyProjectile.push_back(new Projectile(size, position, sf::Color::Magenta, 2.f, sf::Color::Yellow, 200.f));
-		enemyProjectile.back()->setDirection(180);
-
 
 		attackTime = 0.f;
 	}
