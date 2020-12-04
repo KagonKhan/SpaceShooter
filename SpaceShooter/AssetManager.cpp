@@ -27,6 +27,20 @@ sf::Texture& AssetManager::GetTexture(const std::string& filename, const std::st
     }
 }
 
+sf::Font& AssetManager::GetFont(const std::string& filename, const std::string& filepath) {
+    auto& fontMap = sInstance->m_Fonts;
+
+    auto pairFound = fontMap.find(filename);
+
+    if (pairFound != fontMap.end())
+        return pairFound->second;
+    else {
+        auto& fontBuffer = fontMap[filename];
+        fontMap[filename].loadFromFile(filepath + filename);
+        return fontBuffer;
+    }
+}
+
 sf::SoundBuffer& AssetManager::GetSoundBuffer(const std::string& filename, const std::string& filepath)
 {
     auto& soundBufferMap = sInstance->m_SoundBuffers;
