@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "Projectile.h"
 
 #include "AssetManager.h"
 
@@ -14,6 +15,7 @@ protected:
 
 public:
 	bool checkHit(sf::FloatRect boundaries);
+
 	Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position);
 	virtual ~Entity() {};
 };

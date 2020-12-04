@@ -1,7 +1,8 @@
 #include "Enemy.h"
 
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
-	Entity(fileName, filePath, windowBoundaries, 75.f, 555, 555, 555, position) {
+	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, 100.f, position) {
+
 
 
 }
@@ -68,6 +69,7 @@ void Enemy::shoot(const float& dt) {
 	}
 }
 
+
 void Enemy::render(sf::RenderWindow* window) {
 	for (auto x : enemyProjectile)
 		x->render(window);
@@ -79,3 +81,20 @@ void Enemy::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
 }
 
+
+
+
+
+
+bool Enemy::checkHit(const Projectile& projectile) {
+	if (hitbox.getGlobalBounds().intersects(projectile.getBounds())) {
+		hp -= projectile.getDamage();
+		return true;
+	}
+	return false;
+}
+
+
+float Enemy::getHP() const {
+	return hp;
+}

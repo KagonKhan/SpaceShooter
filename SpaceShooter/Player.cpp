@@ -5,7 +5,7 @@
 // CTRL K S WITH HIGHLIGHTED CODE - SURROUND A BLOCK OF CODE WITH
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 80.f, 555.f, 10.f, 600.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 80.f, 100.f, 500.f, 100.f, position){
 
 	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 

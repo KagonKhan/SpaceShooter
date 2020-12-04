@@ -1,11 +1,6 @@
 #include "Entity.h"
 
 
-bool Entity::checkHit(sf::FloatRect boundaries) {
-	if (hitbox.getGlobalBounds().intersects(boundaries))
-		return true;
-	return false;
-}
 
 Entity::Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position)
 	:	boundaries(boundaries), movementSpeed(movementSpeed), 
@@ -30,3 +25,12 @@ Entity::Entity(std::string fileName, std::string filePath, sf::Vector2f boundari
 	attackTime = 0.f;
 
 }
+
+
+bool Entity::checkHit(sf::FloatRect boundaries) {
+	if (hitbox.getGlobalBounds().intersects(boundaries))
+		return true;
+	return false;
+}
+
+

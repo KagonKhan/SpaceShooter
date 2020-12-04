@@ -3,13 +3,15 @@
 // TODO
 /*
 	Enemies shoot randomly, not all at once
-	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy
-	Player bullets get destroyed on hit
+	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy?
+	Player bullets get destroyed on hit - DONE
 	Player HP bar, collision
 	Enemy HP bar
 	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
 
-	 LEARN ABOUT VIEWS
+
+	Enemies in a list instead of a vector? Compare the performance
+	
 
 
 	 //Figure out a better way to position sprites
@@ -104,8 +106,6 @@ void GameState::update(const float& dt) {
 
 void GameState::updateBackground() {
 
-	std::cout << sf::Listener::getPosition().x << ", " << sf::Listener::getPosition().y << std::endl;
-
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);
 	nebulaeSprites[nebulisIndex].move(0, 0.5f);
@@ -139,9 +139,12 @@ void GameState::checkCollisions() {
 	for (int i = 0; i < enemies.size(); i++)
 		for (int j = 0; j < playerProjectiles.size(); j++) {
 			if (enemies[i] && playerProjectiles[j])
-				if (enemies[i]->checkHit(playerProjectiles[j]->getBounds())) {
-					delete enemies[i];
-					enemies.erase(enemies.begin() + i);
+				if (enemies[i]->checkHit(*playerProjectiles[j])) {
+					std::cout << enemies[i]->getHP() << std::endl;
+					if (enemies[i]->getHP() <= 0) {
+						delete enemies[i];
+						enemies.erase(enemies.begin() + i);
+					}
 
 					delete playerProjectiles[j];
 					playerProjectiles.erase(playerProjectiles.begin() + j);
