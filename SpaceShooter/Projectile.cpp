@@ -1,14 +1,17 @@
 #include "Projectile.h"
 #include "AssetManager.h"
 
-Projectile::Projectile(sf::Vector2f position, float speed, float rotation)
-			: projectileSpeed(speed), rotation(rotation) {
+Projectile::Projectile(sf::Vector2f position, float speed, float rotation, int directionY )
+			: projectileSpeed(speed), rotation(rotation), projectileDirection(directionY) {
 
 	initVariables();
 	initSprites(position);
 	initAnimations();
 	initSounds();
 }
+
+
+
 
 void Projectile::initVariables() {
 
@@ -24,8 +27,6 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 	projectileSprite.setRotation(rotation);
 }
-
-
 
 void Projectile::initAnimations() {
 	animator = new Animator(projectileSprite);
@@ -46,6 +47,7 @@ void Projectile::initSounds() {
 
 
 
+
 void Projectile::update(const float& dt) {
 	updateMovement(dt);
 	animator->Update(dt);
@@ -58,17 +60,7 @@ void Projectile::update(const float& dt) {
 
 void Projectile::updateMovement(const float& dt) {
 
-	
-	//not even sure why this exactly works - figure out later
-	sf::Vector2f direction = sf::Vector2f(sinf((projectileSprite.getRotation() * 3.1415926f / 180.f)), -cosf((projectileSprite.getRotation() * 3.1415926f / 180.f)));
-
-
-
-	projectileSprite.move(0,- projectileSpeed * dt);
-
-
-
-
+	projectileSprite.move(0,projectileDirection * projectileSpeed * dt);
 
 
 	// CIRCULAR PROJECTILES
@@ -95,17 +87,12 @@ void Projectile::updateMovement(const float& dt) {
 
 
 
+
 void Projectile::render(sf::RenderWindow* window) {
 //	window->draw(projectileRectangle);
 	window->draw(projectileSprite);
 
 }
-
-
-
-
-
-
 
 
 

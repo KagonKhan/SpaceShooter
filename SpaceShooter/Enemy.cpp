@@ -5,7 +5,7 @@
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
 	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, 100.f, position) {
 
-
+	entitySprite.setOrigin(entitySprite.getGlobalBounds().width / 2.f, entitySprite.getGlobalBounds().height / 2.f);
 
 }
 
@@ -22,15 +22,17 @@ void Enemy::update(const float& dt) {
 
 void Enemy::updateAttack(const float& dt) {
 	srand(static_cast<long int>(time(NULL)));
-	attackTime += attackSpeed * dt;
-	if (attackTime >= rand()%10+50 ) {
-		sf::Vector2f size(10.f, 50.f);
-		sf::Vector2f position(entitySprite.getPosition().x + entitySprite.getGlobalBounds().width / 2.f - size.x / 2.f,
-			entitySprite.getPosition().y);
 
-		enemyProjectile.push_back(new Projectile(position, 500.f, 90.f));
-		attackTime = 0.f;
-	}
+
+	attackTime += attackSpeed * dt;
+
+	//if(rand()%10 == 5)
+		if (attackTime >= 1.f) {
+			sf::Vector2f position(entitySprite.getPosition().x,	entitySprite.getPosition().y);
+
+			enemyProjectile.push_back(new Projectile(position, 500.f, -90.f, 1));
+			attackTime = 0.f;
+		}
 }
 
 void Enemy::updateMovement(const float& dt) {

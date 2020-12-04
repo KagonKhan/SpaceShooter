@@ -13,7 +13,7 @@ class Projectile {
 	float rotation;
 	float projectileSpeed;
 	float projectileDamage;
-
+	int projectileDirection;
 
 	sf::Sound sound;
 
@@ -45,7 +45,7 @@ class Projectile {
 public:
 
 
-	Projectile(sf::Vector2f position, float speed = 200.f, float rotation = 0.f);
+	Projectile(sf::Vector2f position, float speed = 200.f, float rotation = 0.f, int directionY = -1);
 
 	sf::Vector2f getSize() const ;
 	sf::Vector2f getPosition() const ;

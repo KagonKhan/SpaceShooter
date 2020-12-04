@@ -87,11 +87,10 @@ void GameState::initPlayer() {
 
 void GameState::initEnemies() {
 
-	//64 textures, instead of 1 single
 	for (int i = 0; i < 64; i++) {
 		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
 			100, (sf::Vector2f)window->getSize(),
-			sf::Vector2f(120.f * (i % 16), 100.f * (i / 16.f)))
+			sf::Vector2f(static_cast<float>(120 * (i % 16)), static_cast<float>(100 * (i / 16))))
 		);
 	}
 }
