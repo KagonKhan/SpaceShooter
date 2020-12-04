@@ -20,7 +20,7 @@ class Player : public Entity {
 
 	void initSprites();
 	void initAnimation();
-
+	void initListener();
 
 
 	void updateAttack(const float& dt);

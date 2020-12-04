@@ -103,6 +103,9 @@ void GameState::update(const float& dt) {
 
 
 void GameState::updateBackground() {
+
+	std::cout << sf::Listener::getPosition().x << ", " << sf::Listener::getPosition().y << std::endl;
+
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);
 	nebulaeSprites[nebulisIndex].move(0, 0.5f);

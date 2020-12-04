@@ -8,6 +8,8 @@ class AssetManager {
 	std::map <std::string, sf::Texture> m_Textures;
 	std::map <std::string, sf::SoundBuffer> m_SoundBuffers;
 
+	// Maybe add sf::Music feature? If necessary
+
 	//Asset Manager is a singleton so only this instance is allowed
 	//
 	static AssetManager* sInstance;

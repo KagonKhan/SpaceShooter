@@ -17,9 +17,13 @@ Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color
 	//sBuffer.loadFromFile("../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/Laser_09.wav");
 		
 	
-	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav","../Resources/sounds/big_laser/"));
-	sound.setVolume(5);
+	sound.setBuffer(AssetManager::GetSoundBuffer("Laser_09.wav","../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/"));
+	sound.setVolume(25);
 
+	sound.setRelativeToListener(true);
+	sound.setAttenuation(1);
+	sound.setMinDistance(600);
+	sound.setPosition(400, 500, 0);
 	sound.play();
 }
 
@@ -39,7 +43,7 @@ void Projectile::update(const float& dt) {
 	projectileSprite.setRotation(270);
 
 
-	
+	sound.setPosition(sf::Vector3f(projectileSprite.getPosition().x, projectileSprite.getPosition().y, 0));
 
 }
 

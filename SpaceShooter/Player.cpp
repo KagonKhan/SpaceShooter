@@ -1,13 +1,18 @@
 #include "Player.h"
 #include "Animator.h"
 
+// CTRL M O  /  CTRL M P - collapse open all
+// CTRL K S WITH HIGHLIGHTED CODE - SURROUND A BLOCK OF CODE WITH
+
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 80.f, 555.f, 550.f, 100.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 80.f, 555.f, 10.f, 600.f, position){
 
 	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 
 	initSprites();
 	initAnimation();
+	initListener();
+	
 }
 
 Player::~Player() {
@@ -46,6 +51,13 @@ void Player::initAnimation() {
 
 }
 
+void Player::initListener() {
+	//sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
+	//sf::Listener::setGlobalVolume(15);
+
+	//sf::Listener::setDirection(0, 1, -1);
+}
+
 
 
 
@@ -61,6 +73,9 @@ void Player::update(const float& dt) {
 
 	updateAnimations(dt);
 
+
+	sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
+
 }
 
 void Player::updateAttack(const float& dt) {
@@ -72,9 +87,9 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 300.f));
+			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
 
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 300.f));
+			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
 
 			attackTime = 0.f;
 		}
@@ -180,8 +195,6 @@ void Player::render(sf::RenderWindow* window) {
 
 	window->draw(engineSprite);
 	window->draw(engineSprite2);
-
-
 
 }
 
