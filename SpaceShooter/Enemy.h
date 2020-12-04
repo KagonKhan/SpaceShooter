@@ -20,7 +20,6 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
 	void setPosition(sf::Vector2f position);
-	void shoot(const float& dt);
 
 
 

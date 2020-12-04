@@ -87,9 +87,9 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), 900.f, 270.f));
 
-			projectiles.push_back(new Projectile(size, entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), sf::Color::Magenta, 2.f, sf::Color::Yellow, 900.f));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), 900.f, 270.f));
 
 			attackTime = 0.f;
 		}

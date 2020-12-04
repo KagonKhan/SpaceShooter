@@ -23,9 +23,9 @@ class Projectile {
 	float i = 0;
 	bool rotate = false;
 
+	sf::Vector2f position;
 
-
-	void initVariables(float speed);
+	void initVariables();
 	void initSprites(sf::Vector2f position);
 	void initSounds();
 	void initAnimations();
@@ -45,7 +45,7 @@ class Projectile {
 public:
 
 
-	Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color = sf::Color::White, float outlineThickness = 0.f, sf::Color outlineColor = sf::Color::Black, float speed = 200.f);
+	Projectile(sf::Vector2f position, float speed = 200.f, float rotation = 0.f);
 
 	sf::Vector2f getSize() const ;
 	sf::Vector2f getPosition() const ;

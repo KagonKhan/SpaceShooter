@@ -1,18 +1,20 @@
 #include "Projectile.h"
 #include "AssetManager.h"
 
-Projectile::Projectile(sf::Vector2f size, sf::Vector2f position, sf::Color color, float outlineThickness, sf::Color outlineColor, float speed) {
-	initVariables(speed);
+Projectile::Projectile(sf::Vector2f position, float speed, float rotation)
+			: projectileSpeed(speed), rotation(rotation) {
+
+	initVariables();
 	initSprites(position);
 	initAnimations();
 	initSounds();
 }
 
-void Projectile::initVariables(float speed) {
+void Projectile::initVariables() {
 
-	projectileSpeed = speed;
 	projectileDamage = 20.f;
 	rotate = false;
+
 }
 
 void Projectile::initSprites(sf::Vector2f position) {
@@ -20,7 +22,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-
+	projectileSprite.setRotation(rotation);
 }
 
 
@@ -56,9 +58,9 @@ void Projectile::update(const float& dt) {
 
 void Projectile::updateMovement(const float& dt) {
 
-	projectileSprite.setRotation(270);
+	
 	//not even sure why this exactly works - figure out later
-	sf::Vector2f direction = sf::Vector2f(sin((projectileSprite.getRotation() * 3.1415926 / 180.f)), -cos((projectileSprite.getRotation() * 3.1415926 / 180.f)));
+	sf::Vector2f direction = sf::Vector2f(sinf((projectileSprite.getRotation() * 3.1415926f / 180.f)), -cosf((projectileSprite.getRotation() * 3.1415926f / 180.f)));
 
 
 

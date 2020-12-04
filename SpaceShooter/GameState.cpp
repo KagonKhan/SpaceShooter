@@ -14,7 +14,14 @@
 	
 
 
-	 //Figure out a better way to position sprites
+	//Figure out a better way to position sprites
+
+
+
+
+	====================================================== TO DO:  CLEAN-UP ==================================================
+	Cleanup projectile class - obsolete functions
+
 
 */
 
@@ -27,7 +34,7 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 	nebulisIndex = 0;
 
 
-	view = sf::View(sf::FloatRect(0, 0, window->getSize().x, window->getSize().y));
+	view = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 
 }
 
@@ -67,7 +74,7 @@ void GameState::initBackground() {
 
 	backgroundSprite.setTextureRect({ 0, 0, 2000, 1024});
 	backgroundSpriteV2.setTextureRect({ 0, 0, 2000, 1024});
-	backgroundSpriteV2.setPosition(0, -1 * window->getSize().y);
+	backgroundSpriteV2.setPosition(0.f, static_cast<float>(-1 * window->getSize().y));
 	backgroundSpriteV2.setColor(sf::Color::White);
 }
 
@@ -84,7 +91,7 @@ void GameState::initEnemies() {
 	for (int i = 0; i < 64; i++) {
 		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
 			100, (sf::Vector2f)window->getSize(),
-			sf::Vector2f(120 * (i % 16), 100 * (i / 16)))
+			sf::Vector2f(120.f * (i % 16), 100.f * (i / 16.f)))
 		);
 	}
 }
@@ -124,20 +131,20 @@ void GameState::updateBackground() {
 
 
 void GameState::spawnNebulis() {
-	srand(time(NULL));
+	srand(static_cast<long int>(time(NULL)));
 	nebulisIndex = rand() % 3;
 
 	nebulaeSprites[nebulisIndex].setScale(rand() % 10 / 5.f, rand() % 10 / 5.f);
 
-	nebulaeSprites[nebulisIndex].setPosition(200 + rand() % 1520, -700);
+	nebulaeSprites[nebulisIndex].setPosition(200.f + static_cast<float>(rand() % 1520), -700.f);
 }
 
 //Does not throw exceptions
 void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
 
-	for (int i = 0; i < enemies.size(); i++)
-		for (int j = 0; j < playerProjectiles.size(); j++) {
+	for (unsigned int i = 0; i < enemies.size(); i++)
+		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
 			if (enemies[i] && playerProjectiles[j])
 				if (enemies[i]->checkHit(*playerProjectiles[j])) {
 					std::cout << enemies[i]->getHP() << std::endl;

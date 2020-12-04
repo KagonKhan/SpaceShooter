@@ -3,22 +3,7 @@
 #include "AssetManager.h"
 #include <list>
 class Animator {
-
-	struct Animation;
-
-	//returns animation with the passed name, or nullptr if not found
-	Animator::Animation* FindAnimation(const std::string& name);
-
-	void SwitchAnimation(Animator::Animation* animation);
-
-	sf::Sprite& m_Sprite;
-	float m_CurrentTime;
-	std::list<Animator::Animation> m_Animations;
-	Animator::Animation* m_CurrentAnimation;
-
-
 public:
-
 	struct Animation {
 		std::string m_Name;
 		std::string m_Filepath;
@@ -47,13 +32,26 @@ public:
 		}
 	};
 
+private:
+	//returns animation with the passed name, or nullptr if not found
+	Animator::Animation* FindAnimation(const std::string& name);
 
+	void SwitchAnimation(Animator::Animation* animation);
+
+	sf::Sprite& m_Sprite;
+	float m_CurrentTime;
+	std::list<Animator::Animation> m_Animations;
+	Animator::Animation* m_CurrentAnimation;
+
+
+public:
+
+	
 	Animator(sf::Sprite& sprite);
 	~Animator() {};
 
 	Animator::Animation& CreateAnimation(const std::string& name, const std::string& filepath,
 		const std::string& textureName, const sf::Time& duration, bool loop = false);
-
 
 
 	void Update(const float& dt);
