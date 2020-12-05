@@ -7,35 +7,42 @@ class GameState : public State {
 	// View test
 	sf::View view;
 
+	float timer;
+	int nebulisIndex;
+
 
 	//USE SPRITESHEETS ZZZ
-	sf::Texture backgroundTexture;
 	sf::Sprite backgroundSprite, backgroundSpriteV2;
-	sf::Texture nebulaeTextures[3];
 	sf::Sprite nebulaeSprites[3];
-
 
 	std::vector<Enemy*> enemies;
 	Player* player;
+
 
 	void initBackground();
 	void initPlayer();
 	void initEnemies();
 
-	void checkCollisions();
 
-
+	void update(const float& dt);
 	void updateBackground();
+	void updatePlayer(const float& dt);
+	void updateEnemies(const float& dt);
+	void updateLogic(const float& dt);
+
+
+	void render();
+	void renderBackgrounds();
+	void renderPlayer();
+	void renderEnemies();
 
 
 	void spawnNebulis();
-	int nebulisIndex;
+	void checkCollisions();
 
 public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);
 	~GameState();
 
-	void update(const float& dt);
-	void render();
 };
 

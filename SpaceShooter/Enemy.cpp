@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include <ctime>
-
+#include <iostream>
 
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
 	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, 100.f, position) {
@@ -21,12 +21,16 @@ void Enemy::update(const float& dt) {
 }
 
 void Enemy::updateAttack(const float& dt) {
-	srand(static_cast<long int>(time(NULL)));
+
+	// Good stuff - to remember
+	srand(static_cast<unsigned int>(reinterpret_cast<int>(this) * dt));
 
 
 	attackTime += attackSpeed * dt;
 
-	//if(rand()%10 == 5)
+	bool attack = rand() % 100 == rand() % 200;
+
+	if(attack)
 		if (attackTime >= 1.f) {
 			sf::Vector2f position(entitySprite.getPosition().x,	entitySprite.getPosition().y);
 
@@ -60,23 +64,6 @@ void Enemy::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(entitySprite);
-}
-
-void Enemy::setPosition(sf::Vector2f position) {
-	entitySprite.setPosition(position);
-}
-
-
-
-
-
-
-bool Enemy::checkHit(const Projectile& projectile) {
-	if (hitbox.getGlobalBounds().intersects(projectile.getBounds())) {
-		hp -= projectile.getDamage();
-		return true;
-	}
-	return false;
 }
 
 

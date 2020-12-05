@@ -1,20 +1,28 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Projectile.h"
 
+#include "Projectile.h"
 #include "AssetManager.h"
 
 class Entity {
-protected:
+private:
+	void initSprite(std::string filename, std::string filepath, sf::Vector2f position);
+	void initHitbox();
+	void initVariables();
 
+
+protected:
 	sf::Sprite entitySprite;
 	sf::RectangleShape hitbox;
-
-	float movementSpeed, attackSpeed, attackTime, projectileSpeed, hp, maxHp;
 	sf::Vector2f movement, boundaries;
 
+	float movementSpeed, attackSpeed, attackTime, projectileSpeed, hp, maxHp;
+
 public:
+	//Possibly obsolete
 	bool checkHit(sf::FloatRect boundaries);
+
+	bool checkHit(const Projectile& projectile);
 
 	Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position);
 	virtual ~Entity() {};

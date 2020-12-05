@@ -203,43 +203,8 @@ void Player::render(sf::RenderWindow* window) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 std::vector<Projectile*>* Player::getProjectiles() {
 	return &projectiles;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-std::ostream& operator<<(std::ostream& outstream, const sf::Vector2f& vector){
-	outstream << vector.x << ", " << vector.y;
-	return outstream;
-}
 

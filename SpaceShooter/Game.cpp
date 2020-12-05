@@ -1,5 +1,5 @@
 #include "Game.h"
-#include <exception>
+
 Game::Game() {
 	initWindow();
 	initStates();
@@ -8,12 +8,6 @@ Game::Game() {
 Game::~Game() {
 	std::cout << "\nDELETING GAME\n";
 	std::cout << "\nstack empty?: " << states.empty();
-
-
-
-
-
-
 
 	while (!states.empty()) {
 
@@ -53,7 +47,6 @@ void Game::update() {
 	updateDeltaTime();
 
 
-
 	if (!states.empty())
 		states.top()->update(dt);
 	else {
@@ -66,7 +59,6 @@ void Game::update() {
 			window->close();
 		}
 	}
-
 }
 
 void Game::updateDeltaTime() {

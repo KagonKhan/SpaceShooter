@@ -1,7 +1,10 @@
 #pragma once
+#include <exception>
+
 #include "SFML/Graphics.hpp"
+
 #include "GameState.h"
-#include "AssetManager.h"
+
 
 
 
@@ -15,12 +18,14 @@ class Game {
 
 	float dt;
 
+
 	void initWindow();
 	void initStates();
 
 
 	void update();
 	void updateDeltaTime();
+
 
 	void render();
 

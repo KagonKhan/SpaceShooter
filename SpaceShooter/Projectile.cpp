@@ -1,8 +1,8 @@
 #include "Projectile.h"
-#include "AssetManager.h"
 
-Projectile::Projectile(sf::Vector2f position, float speed, float rotation, int directionY )
-			: projectileSpeed(speed), rotation(rotation), projectileDirection(directionY) {
+// Extend the projectile constructor functionality
+Projectile::Projectile(sf::Vector2f position, float speed, int directionY )
+			: projectileSpeed(speed), projectileDirection(directionY) {
 
 	initVariables();
 	initSprites(position);
@@ -14,10 +14,7 @@ Projectile::Projectile(sf::Vector2f position, float speed, float rotation, int d
 
 
 void Projectile::initVariables() {
-
 	projectileDamage = 20.f;
-	rotate = false;
-
 }
 
 void Projectile::initSprites(sf::Vector2f position) {
@@ -25,7 +22,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-	projectileSprite.setRotation(rotation);
+	projectileSprite.setRotation(static_cast<float>(projectileDirection) * 90.f);
 }
 
 void Projectile::initAnimations() {
@@ -50,12 +47,9 @@ void Projectile::initSounds() {
 
 void Projectile::update(const float& dt) {
 	updateMovement(dt);
-	animator->Update(dt);
-
-
+	updateAnimation(dt);
 
 	sound.setPosition(sf::Vector3f(projectileSprite.getPosition().x, projectileSprite.getPosition().y, 0));
-
 }
 
 void Projectile::updateMovement(const float& dt) {
@@ -85,7 +79,9 @@ void Projectile::updateMovement(const float& dt) {
 	*/
 }
 
-
+void Projectile::updateAnimation(const float& dt) {
+	animator->Update(dt);
+}
 
 
 void Projectile::render(sf::RenderWindow* window) {
@@ -97,19 +93,22 @@ void Projectile::render(sf::RenderWindow* window) {
 
 
 
-sf::Vector2f Projectile::getSize() const {
+
+
+
+const sf::Vector2f Projectile::getSize() const {
 	return sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height);
 }
 
-sf::Vector2f Projectile::getPosition() const {
+const sf::Vector2f Projectile::getPosition() const {
 	return projectileSprite.getPosition();
 }
 
-float Projectile::getDamage() const {
+const float Projectile::getDamage() const {
 	return projectileDamage;
 }
 
-sf::FloatRect Projectile::getBounds() const {
+const sf::FloatRect Projectile::getBounds() const {
 	return projectileSprite.getGlobalBounds();
 }
 

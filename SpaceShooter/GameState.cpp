@@ -1,6 +1,6 @@
 #include "GameState.h"
 
-// TODO
+// ===================================================================  TO DO  ===================================================================
 /*
 	Enemies shoot randomly, not all at once
 	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy?
@@ -21,7 +21,7 @@
 
 	====================================================== TO DO:  CLEAN-UP ==================================================
 	Cleanup projectile class - obsolete functions
-
+	Clean up Entity class - is a bit confusing
 
 */
 
@@ -33,8 +33,6 @@ GameState::GameState(sf::RenderWindow* window, std::stack<State*>* states) : Sta
 
 	nebulisIndex = 0;
 
-
-	view = sf::View(sf::FloatRect(0.f, 0.f, static_cast<float>(window->getSize().x), static_cast<float>(window->getSize().y)));
 
 }
 
@@ -51,29 +49,29 @@ GameState::~GameState() {
 	}
 }
 
+// ================================================================  INITIALIZERS  ================================================================
+
 void GameState::initBackground() {
 	std::string starsPath = "../Resources/art/Stars-Nebulae/Stars.png";
 	std::string nebulis = "../Resources/art/Stars-Nebulae/Nebula";
 
 	for (int i = 0; i < 2; i++) {
-		nebulaeTextures[i].loadFromFile(nebulis + std::to_string(i + 1) + ".png");
-		nebulaeSprites[i].setTexture(nebulaeTextures[i]);
+		nebulaeSprites[i].setTexture(AssetManager::GetTexture("Nebula" + std::to_string(i+1) + ".png", "../Resources/art/backgrounds/"));
 		nebulaeSprites[i].setPosition(0, -700);
 	}
 
 
-	backgroundTexture.loadFromFile(starsPath);
-	backgroundTexture.setRepeated(true);
+	//backgroundTexture.loadFromFile(starsPath);
+	//backgroundTexture.setRepeated(true);
 
-	backgroundSprite.setTexture(backgroundTexture);
-	backgroundSpriteV2.setTexture(backgroundTexture);
+	AssetManager::GetTexture("Stars.png", "../Resources/art/backgrounds/").setRepeated(true);
+	backgroundSprite.setTexture(AssetManager::GetTexture("Stars.png", "../Resources/art/backgrounds/"));
+	backgroundSpriteV2.setTexture(AssetManager::GetTexture("Stars.png", "../Resources/art/backgrounds/"));
 
 	
-
-
-
 	backgroundSprite.setTextureRect({ 0, 0, 2000, 1024});
 	backgroundSpriteV2.setTextureRect({ 0, 0, 2000, 1024});
+
 	backgroundSpriteV2.setPosition(0.f, static_cast<float>(-1 * window->getSize().y));
 	backgroundSpriteV2.setColor(sf::Color::White);
 }
@@ -90,35 +88,34 @@ void GameState::initEnemies() {
 	for (int i = 0; i < 64; i++) {
 		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
 			100, (sf::Vector2f)window->getSize(),
-			sf::Vector2f(static_cast<float>(120 * (i % 16)), static_cast<float>(100 * (i / 16))))
+			sf::Vector2f(static_cast<float>(50 + 120 * (i % 16)), static_cast<float>(60 + 100 * (i / 16))))
 		);
 	}
 }
 
+// ==================================================================  UPDATES  ==================================================================
 
 void GameState::update(const float& dt) {
 
 	updateSFMLEvents();
-	updateBackground();
 	updateMousePosition();
-	checkCollisions();
 
-	for (auto x : enemies)
-		x->update(dt);
+	updateBackground();
+	updatePlayer(dt);
+	updateEnemies(dt);
+	updateLogic(dt);
 
-	player->update(dt);
 }
 
 
-void GameState::updateBackground() {
 
+void GameState::updateBackground() {
 	backgroundSprite.move(0, 1.f);
 	backgroundSpriteV2.move(0, 1.f);
 	nebulaeSprites[nebulisIndex].move(0, 0.5f);
 
 	if (nebulaeSprites[nebulisIndex].getPosition().y > 2000)
 		spawnNebulis();
-
 
 	if (backgroundSprite.getPosition().y > window->getSize().y)
 		backgroundSprite.setPosition(0, -1024);
@@ -127,8 +124,47 @@ void GameState::updateBackground() {
 		backgroundSpriteV2.setPosition(0, -1024);
 }
 
+void GameState::updatePlayer(const float& dt) {
+	player->update(dt);
+}
+
+void GameState::updateEnemies(const float& dt) {
+	for (auto x : enemies)
+		x->update(dt);
+}
+
+void GameState::updateLogic(const float& dt) {
+	checkCollisions();
+}
+
+// ==================================================================  RENDERS  ==================================================================
+
+void GameState::render() {
+	renderBackgrounds();
+	renderPlayer();
+	renderEnemies();
+}
+
+void GameState::renderBackgrounds() {
+	window->draw(backgroundSprite);
+	window->draw(backgroundSpriteV2);
+	window->draw(nebulaeSprites[nebulisIndex]);
+}
+
+void GameState::renderPlayer() {
+	player->render(window);
+}
+
+void GameState::renderEnemies() {
+	for (auto& enemy : enemies)
+		enemy->render(window);
+}
 
 
+
+// ===================================================================  LOGIC  ===================================================================
+
+// Try to find a cleaner solution
 void GameState::spawnNebulis() {
 	srand(static_cast<long int>(time(NULL)));
 	nebulisIndex = rand() % 3;
@@ -139,6 +175,7 @@ void GameState::spawnNebulis() {
 }
 
 //Does not throw exceptions
+// find a way to check player collisions
 void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
 
@@ -157,28 +194,4 @@ void GameState::checkCollisions() {
 					break;
 				}
 		}
-}
-
-
-void GameState::render() {
-
-
-
-	window->draw(backgroundSprite);
-	window->draw(backgroundSpriteV2);
-	window->draw(nebulaeSprites[nebulisIndex]);
-
-
-
-	player->render(window);
-
-
-
-	for (auto& enemy : enemies)
-		enemy->render(window);
-
-
-
-	window->setView(view);
-
 }
