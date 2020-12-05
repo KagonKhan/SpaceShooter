@@ -1,3 +1,5 @@
+#include "pch.h"
+
 #include "Projectile.h"
 
 // Extend the projectile constructor functionality

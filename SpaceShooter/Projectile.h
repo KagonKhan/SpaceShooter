@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Animator.h"
-#include "AssetManager.h"
+
 
 class Projectile {
 

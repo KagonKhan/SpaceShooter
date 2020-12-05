@@ -1,7 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
-#include "AssetManager.h"
-#include <list>
+
 class Animator {
 public:
 	struct Animation {

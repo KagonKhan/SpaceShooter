@@ -1,5 +1,6 @@
-#include "AssetManager.h"
-#include <assert.h>
+#include "pch.h"
+
+
 
 //doesnt change much, just a practice
 AssetManager* AssetManager::sInstance = nullptr;

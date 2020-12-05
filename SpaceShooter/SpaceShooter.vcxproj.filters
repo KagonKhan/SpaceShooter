@@ -25,6 +25,9 @@
     <Filter Include="Projectiles">
       <UniqueIdentifier>{21266094-9ea4-4cd9-8d80-9fe08d845ef8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Precompiled Header">
+      <UniqueIdentifier>{d6bdc543-13fb-4b0b-9955-0376e3dff7fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files\Precompiled Header</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -91,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files\Precompiled Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

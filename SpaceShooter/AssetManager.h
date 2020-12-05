@@ -1,8 +1,5 @@
 #pragma once
 
-#include <map>
-#include "SFML/Graphics.hpp"
-#include "SFML/Audio.hpp"
 
 class AssetManager {
 	std::map <std::string, sf::Texture> m_Textures;

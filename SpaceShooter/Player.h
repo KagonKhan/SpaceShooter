@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <vector>
-
 #include "Entity.h"
 #include "Animator.h"
 

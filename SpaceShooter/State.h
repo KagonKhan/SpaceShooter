@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <stack>
-#include "SFML/Graphics.hpp"
 
 class State {
 protected:

@@ -1,8 +1,7 @@
 #pragma once
-#include "SFML/Graphics.hpp"
 
 #include "Projectile.h"
-#include "AssetManager.h"
+
 
 class Entity {
 private:

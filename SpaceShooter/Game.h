@@ -1,11 +1,5 @@
 #pragma once
-#include <exception>
-
-#include "SFML/Graphics.hpp"
-
 #include "GameState.h"
-
-
 
 
 class Game {
