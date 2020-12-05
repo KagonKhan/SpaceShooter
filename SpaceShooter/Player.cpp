@@ -5,7 +5,7 @@
 // CTRL K S WITH HIGHLIGHTED CODE - SURROUND A BLOCK OF CODE WITH
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 80.f, 100.f, 500.f, 100.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 80.f, 50.f, 900.f, 100.f, position){
 
 	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 
@@ -87,9 +87,9 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, -100.f), 900.f, 270.f));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, 40.f), projectileSpeed, -1));
 
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, -100.f), 900.f, 270.f));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, 40.f), projectileSpeed, -1));
 
 			attackTime = 0.f;
 		}
@@ -158,9 +158,10 @@ void Player::updateProjectiles(const float& dt) {
 	for (unsigned i = 0; i < projectiles.size(); i++) {
 		projectiles[i]->update(dt);
 
-
 		//CLEANING UP PROJECTILES
-		if (projectiles[i]->getPosition().y + projectiles[i]->getSize().y < 0.f) {
+		float position = projectiles[i]->getPosition().y;
+		float size = projectiles[i]->getSize().y;
+		if (position + size < 0.f || position - size > boundaries.y) {
 			delete projectiles[i];
 
 			//CHECK IF NECESSARY i--

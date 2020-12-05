@@ -22,7 +22,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-	projectileSprite.setRotation(static_cast<float>(projectileDirection) * 90.f);
+	projectileSprite.setRotation(static_cast<float>(projectileDirection) * -90.f);
 }
 
 void Projectile::initAnimations() {
@@ -33,7 +33,7 @@ void Projectile::initAnimations() {
 
 void Projectile::initSounds() {
 	sound.setBuffer(AssetManager::GetSoundBuffer("Laser_09.wav", "../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/"));
-	//sound.setVolume(25);
+	sound.setVolume(25);
 	//sBuffer.loadFromFile("../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/Laser_09.wav");
 	//sound.setRelativeToListener(true);
 	//sound.setAttenuation(1);

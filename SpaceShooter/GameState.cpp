@@ -17,7 +17,7 @@
 	//Figure out a better way to position sprites
 
 
-
+	Fix sound, listener, attenuation - mostly 3D issues
 
 	====================================================== TO DO:  CLEAN-UP ==================================================
 	Cleanup projectile class - obsolete functions
@@ -95,6 +95,7 @@ void GameState::initEnemies() {
 
 // ==================================================================  UPDATES  ==================================================================
 
+
 void GameState::update(const float& dt) {
 
 	updateSFMLEvents();
@@ -139,6 +140,7 @@ void GameState::updateLogic(const float& dt) {
 
 // ==================================================================  RENDERS  ==================================================================
 
+
 void GameState::render() {
 	renderBackgrounds();
 	renderPlayer();
@@ -163,6 +165,7 @@ void GameState::renderEnemies() {
 
 
 // ===================================================================  LOGIC  ===================================================================
+
 
 // Try to find a cleaner solution
 void GameState::spawnNebulis() {

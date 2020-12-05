@@ -7,7 +7,7 @@ class Projectile {
 
 	sf::Sprite projectileSprite;
 
-	float projectileRotation, projectileSpeed, projectileDamage, projectileRotation;
+	float projectileRotation, projectileSpeed, projectileDamage;
 	
 	int projectileDirection;
 
