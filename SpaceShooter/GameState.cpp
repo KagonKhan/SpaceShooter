@@ -4,13 +4,11 @@
 
 // ===================================================================  TO DO  ===================================================================
 /*
-	Enemies shoot randomly, not all at once
 	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy?
-	Player bullets get destroyed on hit - DONE
 	Player HP bar, collision
 	Enemy HP bar
 	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
-
+	Add planets, different backgrounds, different galaxies
 
 	Enemies in a list instead of a vector? Compare the performance
 	
@@ -20,6 +18,17 @@
 
 
 	Fix sound, listener, attenuation - mostly 3D issues
+
+
+
+
+
+	Enemies shoot randomly, not all at once - DONE
+	Player bullets get destroyed on hit - DONE
+
+
+
+
 
 	====================================================== TO DO:  CLEAN-UP ==================================================
 	Cleanup projectile class - obsolete functions
@@ -132,9 +141,30 @@ void GameState::updatePlayer(const float& dt) {
 }
 
 void GameState::updateEnemies(const float& dt) {
+
+
 	for (auto x : enemies)
 		x->update(dt);
+
+
+	updateEnemiesForDeletion(dt);
 }
+
+// Enemies live untill the projectiles disappear, as i dont want to have projectile vectors in gamestate
+// Might not be a good idea, will research later.
+void GameState::updateEnemiesForDeletion(const float& dt) {
+
+	//for (unsigned int i = 0; i < enemiesForDeletion.size(); i++) {
+	//	enemiesForDeletion[i]->update(dt);
+
+	//	if (!enemiesForDeletion[i]->areThereProjectilesOnScreen()) {
+	//		delete enemiesForDeletion[i];
+	//		enemiesForDeletion.erase(enemiesForDeletion.begin() + i);
+
+	//	}		
+	//}
+}
+
 
 void GameState::updateLogic(const float& dt) {
 	checkCollisions();
@@ -184,14 +214,46 @@ void GameState::spawnNebulis() {
 void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
 
+
+	for (unsigned int i = 0; i < enemies.size(); i++) {
+
+		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
+		for(unsigned int j = 0; j < enemyProjectiles.size(); j++) {
+
+			if (player->checkHit(*enemyProjectiles[j])) {
+				std::cout << "Player hit\n";
+
+				delete enemyProjectiles[j];
+				enemyProjectiles.erase(enemyProjectiles.begin() + j);
+				break;
+			}
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	for (unsigned int i = 0; i < enemies.size(); i++)
 		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
 			if (enemies[i] && playerProjectiles[j])
 				if (enemies[i]->checkHit(*playerProjectiles[j])) {
-					std::cout << enemies[i]->getHP() << std::endl;
+
+
 					if (enemies[i]->getHP() <= 0) {
-						delete enemies[i];
-						enemies.erase(enemies.begin() + i);
+						enemiesForDeletion.push_back(enemies[i]);
+
+						enemies[i]->setPosition(sf::Vector2f(-9999.f, -9999.f));
+						//enemies.erase(enemies.begin() + i);
 					}
 
 					delete playerProjectiles[j];

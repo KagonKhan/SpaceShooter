@@ -9,7 +9,7 @@ class Enemy : public Entity {
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
 
-	std::vector<Projectile*> enemyProjectile;
+	std::vector<Projectile*> projectiles;
 
 
 public:
@@ -19,7 +19,9 @@ public:
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
 
+	std::vector<Projectile*>* getProjectiles();
 
+	bool areThereProjectilesOnScreen();
 
 
 	float getHP() const;

@@ -36,6 +36,11 @@ void Player::initSprites() {
 	engineSprite.move(-23.f, 32.f);
 
 
+
+
+
+
+	hitbox.setFillColor(sf::Color::Red);
 }
 
 void Player::initAnimation() {
@@ -147,13 +152,15 @@ void Player::updateMovement(const float& dt) {
 
 void Player::updateSprites(const float& dt) {
 	entitySprite.move(movement * dt);
-
+	hitbox.setPosition(entitySprite.getPosition());
 
 	engineSprite2 = engineSprite;
 	engineSprite2.move(46.f, 0.f);
 
 	engineSprite.move(movement * dt);
 	engineSprite2.move(movement * dt);
+
+
 }
 
 void Player::updateProjectiles(const float& dt) {
@@ -196,8 +203,11 @@ void Player::render(sf::RenderWindow* window) {
 	window->draw(entitySprite);
 
 
+	entitySprite.setPosition(window->mapPixelToCoords( sf::Mouse::getPosition(*window)));
+
 	window->draw(engineSprite);
 	window->draw(engineSprite2);
+	window->draw(hitbox);
 
 }
 

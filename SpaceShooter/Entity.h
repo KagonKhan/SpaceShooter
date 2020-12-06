@@ -20,8 +20,9 @@ protected:
 public:
 	//Possibly obsolete
 	bool checkHit(sf::FloatRect boundaries);
-
 	bool checkHit(const Projectile& projectile);
+	void setPosition(sf::Vector2f position);
+
 
 	Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position);
 	virtual ~Entity() {};

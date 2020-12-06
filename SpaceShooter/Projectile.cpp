@@ -10,6 +10,7 @@ Projectile::Projectile(sf::Vector2f position, float speed, int directionY )
 	initSprites(position);
 	initAnimations();
 	initSounds();
+
 }
 
 
@@ -25,6 +26,12 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 	projectileSprite.setRotation(static_cast<float>(projectileDirection) * -90.f);
+
+
+
+
+
+
 }
 
 void Projectile::initAnimations() {
@@ -41,6 +48,7 @@ void Projectile::initSounds() {
 	//sound.setAttenuation(1);
 	//sound.setMinDistance(600);
 	//sound.setPosition(400, 500, 0);
+	sound.setLoop(true);
 	sound.play();
 }
 
@@ -58,7 +66,14 @@ void Projectile::updateMovement(const float& dt) {
 
 	projectileSprite.move(0,projectileDirection * projectileSpeed * dt);
 
+	hitbox.setPosition(projectileSprite.getPosition());
 
+	hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
+
+	hitbox.setOrigin(hitbox.getSize() / 2.f);
+
+
+	hitbox.setFillColor(sf::Color::Red);
 	// CIRCULAR PROJECTILES
 	//projectileSprite.rotate(500* cos(rand() * 10));
 	/*
@@ -89,7 +104,7 @@ void Projectile::updateAnimation(const float& dt) {
 void Projectile::render(sf::RenderWindow* window) {
 //	window->draw(projectileRectangle);
 	window->draw(projectileSprite);
-
+	window->draw(hitbox);
 }
 
 

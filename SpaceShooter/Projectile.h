@@ -16,6 +16,8 @@ class Projectile {
 	Animator* animator;
 
 
+	sf::RectangleShape hitbox;
+
 	void initVariables();
 	void initSprites(sf::Vector2f position);
 	void initSounds();

@@ -15,7 +15,8 @@ class GameState : public State {
 	sf::Sprite backgroundSprite, backgroundSpriteV2;
 	sf::Sprite nebulaeSprites[3];
 
-	std::vector<Enemy*> enemies;
+	std::vector<Enemy*> enemies, enemiesForDeletion;
+
 	Player* player;
 
 
@@ -39,6 +40,8 @@ class GameState : public State {
 
 	void spawnNebulis();
 	void checkCollisions();
+	void updateEnemiesForDeletion(const float& dt);
+
 
 public:
 	GameState(sf::RenderWindow* window, std::stack<State*>* states);

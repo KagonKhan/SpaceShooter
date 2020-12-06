@@ -102,4 +102,7 @@
       <Filter>Source Files\Precompiled Header</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>
