@@ -14,6 +14,9 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 	initSprites();
 	initAnimation();
 	initListener();
+
+
+	projectileType = 0;
 	
 }
 
@@ -88,15 +91,18 @@ void Player::update(const float& dt) {
 void Player::updateAttack(const float& dt) {
 	attackTime += attackSpeed * dt;
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q))
+		projectileType = 1;
+
 	if (attackTime >= 1.f)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, 40.f), projectileSpeed, -1));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, 40.f), projectileSpeed, -1, projectileType));
 
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, 40.f), projectileSpeed, -1));
+			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, 40.f), projectileSpeed, -1, projectileType));
 
 			attackTime = 0.f;
 		}

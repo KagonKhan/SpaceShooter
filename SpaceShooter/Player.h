@@ -12,6 +12,8 @@ class Player : public Entity {
 
 	std::vector<Projectile*> projectiles;
 
+	// I don't like this - find better solutions later
+	int projectileType;
 
 	void initSprites();
 	void initAnimation();

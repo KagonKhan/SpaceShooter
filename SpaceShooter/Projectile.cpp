@@ -2,8 +2,11 @@
 
 #include "Projectile.h"
 
+//use simple enums or maybe have separate classes...
+enum  ProjectileType {straight = 0, swarm = 1};
+
 // Extend the projectile constructor functionality
-Projectile::Projectile(sf::Vector2f position, float speed, int directionY )
+Projectile::Projectile(sf::Vector2f position, float speed, int directionY, int type)
 			: projectileSpeed(speed), projectileDirection(directionY) {
 
 	initVariables();
@@ -11,6 +14,9 @@ Projectile::Projectile(sf::Vector2f position, float speed, int directionY )
 	initAnimations();
 	initSounds();
 
+
+
+	projectileType = type;
 
 	srand(reinterpret_cast<long>(this));
 
@@ -61,23 +67,37 @@ void Projectile::update(const float& dt) {
 }
 
 void Projectile::updateMovement(const float& dt) {
-
 	
-	//projectileSprite.rotate(rand()%12-6);
-	//sf::Vector2f direction(cosf((projectileSprite.getRotation() * 3.1415926 / 180.f)),sinf((projectileSprite.getRotation() * 3.1415926 / 180.f)) );
 
-	projectileSprite.move(0, projectileDirection* projectileSpeed * dt);
+	sf::Vector2f direction;
+
+
+	switch (projectileType) {
+
+	case ProjectileType::straight:
+		direction = sf::Vector2f(0.f, 1.f);
+		projectileSprite.move(direction * static_cast<float>(projectileDirection) * projectileSpeed * dt);
+		
+		break;
+
+	case ProjectileType::swarm:
+			projectileSprite.rotate(static_cast<float>(rand()%13 - 6));
+			direction = sf::Vector2f(sinf((projectileSprite.getRotation() * 3.1415926f / 180.f)), -cosf((projectileSprite.getRotation() * 3.1415926f / 180.f)));
+			projectileSprite.move( direction* projectileSpeed * dt);
+		break;
+
+	default:
+		projectileSprite.move(0.f, static_cast<float>(projectileDirection) * projectileSpeed * dt);
+	}
+	
+	
 
 
 	// CIRCULAR PROJECTILES
 	//projectileSprite.rotate(500* cos(rand() * 10));
 	/*
 
-	//sf::Vector2f direction(sin((projectileRectangle.getRotation() * 3.1415926 / 180.f)), -cos((projectileRectangle.getRotation() * 3.1415926 / 180.f)));
-//projectileRectangle.move(direction * projectileSpeed * dt);
 
-	//SWARM PROJECTILES
-	
 	*/
 }
 
@@ -109,6 +129,8 @@ const sf::Vector2f Projectile::getPosition() const {
 const float Projectile::getDamage() const {
 	return projectileDamage;
 }
+
+
 
 const sf::FloatRect Projectile::getBounds() const {
 	return projectileSprite.getGlobalBounds();
