@@ -7,7 +7,7 @@ enum  ProjectileType {straight = 0, swarm = 1};
 
 // Extend the projectile constructor functionality
 Projectile::Projectile(sf::Vector2f position, float speed, int directionY, int type)
-			: projectileSpeed(speed), projectileDirection(directionY) {
+	: projectileSpeed(speed), projectileDirection(directionY) {
 
 	initVariables();
 	initSprites(position);
@@ -15,11 +15,9 @@ Projectile::Projectile(sf::Vector2f position, float speed, int directionY, int t
 	initSounds();
 
 
-
 	projectileType = type;
 
 	srand(reinterpret_cast<long>(this));
-
 }
 
 
@@ -37,7 +35,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 
-	projectileSprite.setColor(sf::Color::Blue);
+	
 }
 
 void Projectile::initAnimations() {
@@ -45,14 +43,12 @@ void Projectile::initAnimations() {
 	auto& animationShot = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
 	animationShot.AddVerticalFrames(sf::Vector2i(0, 0), sf::Vector2i(68, 95), 3);
 
-	//animator->Update(0.1f);
+	animator->Update(0.1f);
 
-	hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height));
-	hitbox.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-	hitbox.setPosition(projectileSprite.getPosition());
-	hitbox.setFillColor(sf::Color::Red);
-
-
+	//hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height));
+	//hitbox.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
+	//hitbox.setPosition(projectileSprite.getPosition());
+	//hitbox.setFillColor(sf::Color::Red);
 
 	//Lightning
 	//auto& animationLight = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "light.png", sf::seconds(0.75), false);
@@ -125,9 +121,11 @@ void Projectile::updateAnimation(const float& dt) {
 
 
 void Projectile::render(sf::RenderWindow* window) {
+
 //	window->draw(projectileRectangle);
+//window->draw(hitbox);
+
 	window->draw(projectileSprite);
-	window->draw(hitbox);
 }
 
 

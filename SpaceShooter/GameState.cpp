@@ -156,21 +156,20 @@ void GameState::updateEnemies(const float& dt) {
 		x->update(dt);
 
 
-	
+	updateEnemiesForDeletion(dt);
 }
 
 // Enemies live untill the projectiles disappear, as i dont want to have projectile vectors in gamestate
 // Might not be a good idea, will research later.
 void GameState::updateEnemiesForDeletion(const float& dt) {
 
-	for (unsigned int i = 0; i < enemiesForDeletion.size(); i++) {
-		enemiesForDeletion[i]->update(dt);
-		/*if (!enemiesForDeletion[i]->areThereProjectilesOnScreen()) {
+	for (unsigned int i = 0; i < enemiesForDeletion.size(); i++)
+		if (enemiesForDeletion[i]->areThereProjectilesOnScreen() == false) {
+
 			delete enemiesForDeletion[i];
 			enemiesForDeletion.erase(enemiesForDeletion.begin() + i);
-
-		}	*/	
-	}
+		}		
+	
 }
 
 
@@ -251,8 +250,8 @@ void GameState::checkCollisions() {
 			if (player->checkHit(*enemyProjectiles[j])) {
 				std::cout << "Player hit\n";
 
-				//delete enemyProjectiles[j];
-				//enemyProjectiles.erase(enemyProjectiles.begin() + j);
+				delete enemyProjectiles[j];
+				enemyProjectiles.erase(enemyProjectiles.begin() + j);
 				break;
 			}
 		}
