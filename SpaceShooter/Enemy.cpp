@@ -48,7 +48,7 @@ void Enemy::updateProjectiles(const float& dt) {
 
 
 		//CLEANING UP PROJECTILES
-		if (projectiles[i]->getPosition().y - projectiles[i]->getSize().y > boundaries.y || projectiles[i]->getPosition().y < 0) {
+		if (projectiles[i]->getPosition().y - projectiles[i]->getSize().y > boundaries.y || projectiles[i]->getPosition().y < 0 || projectiles[i]->getPosition().x < 0 || projectiles[i]->getPosition().x > boundaries.x) {
 			delete projectiles[i];
 
 			//CHECK IF NECESSARY i--

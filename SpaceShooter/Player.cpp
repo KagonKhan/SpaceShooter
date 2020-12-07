@@ -49,11 +49,11 @@ void Player::initAnimation() {
 
 
 	auto& engineAnimationBACKWARD = animator->CreateAnimation("BACKWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.25), false);
-	engineAnimationBACKWARD.AddFrames(sf::Vector2i(170, 0), sf::Vector2i(34, 64), 3);
+	engineAnimationBACKWARD.AddHorizontalFrames(sf::Vector2i(170, 0), sf::Vector2i(34, 64), 3);
 
 
 	auto& engineAnimationFORWARD = animator->CreateAnimation("FORWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.75), false);
-	engineAnimationFORWARD.AddFrames(sf::Vector2i(0, 0), sf::Vector2i(34, 64), 5);
+	engineAnimationFORWARD.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(34, 64), 5);
 
 
 }
@@ -168,9 +168,9 @@ void Player::updateProjectiles(const float& dt) {
 		projectiles[i]->update(dt);
 
 		//CLEANING UP PROJECTILES
-		float position = projectiles[i]->getPosition().y;
+		sf::Vector2f position = projectiles[i]->getPosition();
 		float size = projectiles[i]->getSize().y;
-		if (position + size < 0.f || position - size > boundaries.y) {
+		if (position.y + size < 0.f || position.y - size > boundaries.y || position.x < 0 || position.x > boundaries.x) {
 			delete projectiles[i];
 
 			//CHECK IF NECESSARY i--
@@ -201,9 +201,6 @@ void Player::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(entitySprite);
-
-
-	entitySprite.setPosition(window->mapPixelToCoords( sf::Mouse::getPosition(*window)));
 
 	window->draw(engineSprite);
 	window->draw(engineSprite2);

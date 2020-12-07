@@ -11,6 +11,9 @@ Projectile::Projectile(sf::Vector2f position, float speed, int directionY )
 	initAnimations();
 	initSounds();
 
+
+	srand(reinterpret_cast<long>(this));
+
 }
 
 
@@ -25,11 +28,6 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-	projectileSprite.setRotation(static_cast<float>(projectileDirection) * -90.f);
-
-
-
-
 
 
 }
@@ -37,7 +35,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 void Projectile::initAnimations() {
 	animator = new Animator(projectileSprite);
 	auto& animation = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
-	animation.AddFrames(sf::Vector2i(0, 0), sf::Vector2i(95, 68), 3);
+	animation.AddVerticalFrames(sf::Vector2i(0, 0), sf::Vector2i(68, 95), 3);
 }
 
 void Projectile::initSounds() {
@@ -64,16 +62,13 @@ void Projectile::update(const float& dt) {
 
 void Projectile::updateMovement(const float& dt) {
 
-	projectileSprite.move(0,projectileDirection * projectileSpeed * dt);
+	
+	//projectileSprite.rotate(rand()%12-6);
+	//sf::Vector2f direction(cosf((projectileSprite.getRotation() * 3.1415926 / 180.f)),sinf((projectileSprite.getRotation() * 3.1415926 / 180.f)) );
 
-	hitbox.setPosition(projectileSprite.getPosition());
-
-	hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
-
-	hitbox.setOrigin(hitbox.getSize() / 2.f);
+	projectileSprite.move(0, projectileDirection* projectileSpeed * dt);
 
 
-	hitbox.setFillColor(sf::Color::Red);
 	// CIRCULAR PROJECTILES
 	//projectileSprite.rotate(500* cos(rand() * 10));
 	/*
@@ -83,16 +78,6 @@ void Projectile::updateMovement(const float& dt) {
 
 	//SWARM PROJECTILES
 	
-
-	//if (projectileRectangle.getPosition().x >= 1890)
-	//	rotate = true;
-
-	//if(rotate)
-	//	projectileRectangle.rotate(-1.f);
-
-	//if (projectileRectangle.getRotation() > -90 || projectileRectangle.getRotation() < 270)
-	//	rotate = false;
-
 	*/
 }
 

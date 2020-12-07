@@ -17,7 +17,7 @@ public:
 			m_Duration(duration), m_Looping(looping) {}
 
 		//Adding horizontal name
-		void AddFrames(const sf::Vector2i& startFrom,
+		void AddHorizontalFrames(const sf::Vector2i& startFrom,
 			const sf::Vector2i& frameSize, unsigned int frames) {
 
 			sf::Vector2i current = startFrom;
@@ -26,6 +26,17 @@ public:
 				m_Frames.push_back(sf::IntRect(current.x, current.y, frameSize.x, frameSize.y));
 
 				current.x += frameSize.x;
+			}
+		}
+		void AddVerticalFrames(const sf::Vector2i& startFrom,
+			const sf::Vector2i& frameSize, unsigned int frames) {
+
+			sf::Vector2i current = startFrom;
+
+			for (unsigned int i = 0; i < frames; i++) {
+				m_Frames.push_back(sf::IntRect(current.x, current.y, frameSize.x, frameSize.y));
+
+				current.y += frameSize.y;
 			}
 		}
 	};
