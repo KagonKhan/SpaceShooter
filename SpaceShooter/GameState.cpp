@@ -4,9 +4,10 @@
 
 // ===================================================================  TO DO  ===================================================================
 /*
-	Enemy bullets stay on the screen, move bullets vector into the game out of the enemy?
-	Player HP bar, collision
-	Enemy HP bar
+	- DONE - Enemy bullets stay on the screen, move bullets vector into the game out of the enemy? 
+	Player HP bar,
+	- DONE - Collision 
+	Enemy HP bar / OR JUST SHOW DAMAGE - DAMAGE OVERLAY? BURNING?
 	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
 	Add planets, different backgrounds, different galaxies
 
@@ -171,7 +172,6 @@ void GameState::updateEnemiesForDeletion(const float& dt) {
 		}		
 	
 }
-
 
 void GameState::updateLogic(const float& dt) {
 	checkCollisions();

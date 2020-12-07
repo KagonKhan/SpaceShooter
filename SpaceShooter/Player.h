@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Animator.h"
+#include "Beam.h"
 
 class Player : public Entity {
 
@@ -12,6 +13,8 @@ class Player : public Entity {
 	float velocity;
 
 	std::vector<Projectile*> projectiles;
+	std::vector<Beam> beams;
+
 
 	// I don't like this - find better solutions later
 	int projectileType;

@@ -7,6 +7,7 @@ class Game {
 	std::stack<State*> states;
 
 	sf::Clock deltaTimeClock;
+	sf::Event sfEvent;
 
 	AssetManager manager;
 
@@ -23,6 +24,7 @@ class Game {
 
 	void render();
 
+	bool pause;
 
 public:
 	Game();

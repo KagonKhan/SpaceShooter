@@ -31,6 +31,9 @@
     <Filter Include="Entity\DontKnow">
       <UniqueIdentifier>{2e652d28-b996-4cc9-ac32-f0d7a15b1568}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Living">
+      <UniqueIdentifier>{40c67aae-39a1-4eb0-bbb1-8cb61ee24c8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -41,12 +44,6 @@
     </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
       <Filter>Entity</Filter>
@@ -72,6 +69,15 @@
     <ClCompile Include="PowerUp.cpp">
       <Filter>Entity\DontKnow</Filter>
     </ClCompile>
+    <ClCompile Include="Beam.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Entity\Living</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Entity\Living</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -82,12 +88,6 @@
     </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Obstacle.h">
       <Filter>Entity</Filter>
@@ -109,6 +109,15 @@
     </ClInclude>
     <ClInclude Include="PowerUp.h">
       <Filter>Entity\DontKnow</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Entity\Living</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Entity\Living</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

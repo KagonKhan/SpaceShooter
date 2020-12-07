@@ -5,6 +5,8 @@
 Game::Game() {
 	initWindow();
 	initStates();
+
+	pause = false;
 }
 
 Game::~Game() {
@@ -46,11 +48,26 @@ void Game::initStates() {
 }
 
 void Game::update() {
+
+	while (window->pollEvent(sfEvent)) {
+		if (sfEvent.type == sf::Event::LostFocus)
+			pause = true;
+		if (sfEvent.type == sf::Event::GainedFocus)
+			pause = false;
+		if (sfEvent.type == sf::Event::Closed) {
+			delete states.top();
+			states.pop();
+		}
+	}
+
+
 	updateDeltaTime();
 
 
-	if (!states.empty())
-		states.top()->update(dt);
+	if (!states.empty()) {
+		if (!pause)
+			states.top()->update(dt);
+	}
 	else {
 		try {
 			throw std::runtime_error("State stack empty!\n");
@@ -92,3 +109,4 @@ void Game::run() {
 		render();
 	}
 }
+  

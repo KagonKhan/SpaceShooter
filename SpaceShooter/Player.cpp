@@ -110,7 +110,7 @@ void Player::updateAttack(const float& dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9))
 		projectileType = 9;
 
-	if (attackTime >= 1.f)
+	if (attackTime >= 1.f) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
 			sf::Vector2f size(10.f, 50.f);
@@ -122,6 +122,15 @@ void Player::updateAttack(const float& dt) {
 
 			attackTime = 0.f;
 		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+
+
+			//Figure out a better way to position sprites
+			beams.push_back(Beam(boundaries, entitySprite.getPosition()));
+			attackTime = 0.f;
+		}
+
+	}
 }
 
 void Player::updateMovement(const float& dt) {
@@ -199,6 +208,17 @@ void Player::updateProjectiles(const float& dt) {
 			projectiles.erase(projectiles.begin() + i--);
 		}
 	}
+
+
+
+	for (int i = 0; i < beams.size(); i++) 	{
+		beams[i].update(dt);
+		if (beams[i].getIsDone()) {
+			beams.erase(beams.begin() + i);
+			break;
+		}
+
+	}
 }
 
 void Player::updateAnimations(const float& dt) {
@@ -222,11 +242,17 @@ void Player::render(sf::RenderWindow* window) {
 	for (auto x : projectiles)
 		x->render(window);
 
+
+	for (auto& x : beams)
+		x.render(window);
+
+
 	window->draw(entitySprite);
 
 	window->draw(engineSprite);
 	window->draw(engineSprite2);
 	window->draw(hitbox);
+
 
 }
 
