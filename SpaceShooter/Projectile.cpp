@@ -31,7 +31,10 @@ void Projectile::initVariables() {
 
 void Projectile::initSprites(sf::Vector2f position) {
 
+
+	//Light attack - seems to difficult for now 
 	projectileSprite.setTexture(AssetManager::GetTexture("spr_bullet_strip02.png", "../Resources/art/projectile/"));
+	projectileSprite.setScale(2.f, 2.f);
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 
@@ -40,8 +43,11 @@ void Projectile::initSprites(sf::Vector2f position) {
 
 void Projectile::initAnimations() {
 	animator = new Animator(projectileSprite);
-	auto& animation = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
-	animation.AddVerticalFrames(sf::Vector2i(0, 0), sf::Vector2i(68, 95), 3);
+//	auto& animationShot = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
+//	animationShot.AddVerticalFrames(sf::Vector2i(0, 0), sf::Vector2i(68, 95), 3);
+
+	auto& animationLight = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "light.png", sf::seconds(0.75), false);
+	animationLight.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(400, 300), 16);
 }
 
 void Projectile::initSounds() {
@@ -52,7 +58,6 @@ void Projectile::initSounds() {
 	//sound.setAttenuation(1);
 	//sound.setMinDistance(600);
 	//sound.setPosition(400, 500, 0);
-	sound.setLoop(true);
 	sound.play();
 }
 
@@ -64,6 +69,9 @@ void Projectile::update(const float& dt) {
 	updateAnimation(dt);
 
 	sound.setPosition(sf::Vector3f(projectileSprite.getPosition().x, projectileSprite.getPosition().y, 0));
+
+	
+
 }
 
 void Projectile::updateMovement(const float& dt) {
@@ -75,8 +83,8 @@ void Projectile::updateMovement(const float& dt) {
 	switch (projectileType) {
 
 	case ProjectileType::straight:
-		direction = sf::Vector2f(0.f, 1.f);
-		projectileSprite.move(direction * static_cast<float>(projectileDirection) * projectileSpeed * dt);
+	//	direction = sf::Vector2f(0.f, 1.f);
+	//	projectileSprite.move(direction * static_cast<float>(projectileDirection) * projectileSpeed * dt);
 		
 		break;
 
