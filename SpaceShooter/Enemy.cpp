@@ -10,6 +10,9 @@ Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector
 }
 
 Enemy::~Enemy() {
+
+	std::cout << "DELETING ENEMY\n";
+
 	for (auto& it : projectiles)
 		delete it;
 }

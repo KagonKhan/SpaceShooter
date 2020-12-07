@@ -9,6 +9,7 @@ class Player : public Entity {
 
 	Animator* animator;
 
+	float velocity;
 
 	std::vector<Projectile*> projectiles;
 
@@ -40,6 +41,7 @@ public:
 	
 	void render(sf::RenderWindow* window);
 	
+	void receiveUpgrade(int type);
 	
 	std::vector<Projectile*>* getProjectiles();
 

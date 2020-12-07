@@ -15,7 +15,7 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 	initAnimation();
 	initListener();
 
-
+	velocity = 0.93f;
 	projectileType = 0;
 	
 }
@@ -125,7 +125,7 @@ void Player::updateAttack(const float& dt) {
 }
 
 void Player::updateMovement(const float& dt) {
-	movement *= 0.93f;
+	movement *= velocity;
 
 	//Normalize movement/????
 
@@ -228,6 +228,29 @@ void Player::render(sf::RenderWindow* window) {
 	window->draw(engineSprite2);
 	window->draw(hitbox);
 
+}
+
+void Player::receiveUpgrade(int type) {
+	switch (type) {
+	case 0:
+		attackSpeed += 10;
+			break;
+	case 1:
+		hp += 10;
+		maxHp += 10;
+		break;
+	case 2:
+		// not sure how to solve this
+		velocity += 0.005f;
+		break;
+	case 3:
+		//will have to fix this
+		projectileType = 5;
+		break;
+	default:
+		break;
+
+	}
 }
 
 

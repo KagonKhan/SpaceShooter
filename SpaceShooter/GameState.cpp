@@ -104,6 +104,12 @@ void GameState::initEnemies() {
 	}
 }
 
+void GameState::initPowerUps() {
+	powerUps.push_back(new PowerUp(static_cast<sf::Vector2f>(window->getSize()), rand() % 4));
+
+	std::cout << powerUps.back()->getUpgradeType() << std::endl;
+}
+
 // ==================================================================  UPDATES  ==================================================================
 
 
@@ -116,6 +122,7 @@ void GameState::update(const float& dt) {
 	updatePlayer(dt);
 	updateEnemies(dt);
 	updateLogic(dt);
+	updatePowerUps(dt);
 
 }
 
@@ -142,10 +149,8 @@ void GameState::updatePlayer(const float& dt) {
 
 void GameState::updateEnemies(const float& dt) {
 
-
 	for (auto x : enemies)
 		x->update(dt);
-
 
 	updateEnemiesForDeletion(dt);
 }
@@ -170,6 +175,15 @@ void GameState::updateLogic(const float& dt) {
 	checkCollisions();
 }
 
+void GameState::updatePowerUps(const float& dt) {
+	if (rand() % 200 == rand() % 200) {
+		initPowerUps();
+
+	}
+	for (auto& x : powerUps)
+		x->update(dt);
+}
+
 // ==================================================================  RENDERS  ==================================================================
 
 
@@ -177,7 +191,10 @@ void GameState::render() {
 	renderBackgrounds();
 	renderPlayer();
 	renderEnemies();
+	renderPowerUps();
 }
+
+
 
 void GameState::renderBackgrounds() {
 	window->draw(backgroundSprite);
@@ -194,6 +211,10 @@ void GameState::renderEnemies() {
 		enemy->render(window);
 }
 
+void GameState::renderPowerUps() {
+	for (auto& x : powerUps)
+		x->render(window);
+}
 
 
 // ===================================================================  LOGIC  ===================================================================
@@ -215,6 +236,7 @@ void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
 
 
+	//CHECKING FOR PLAYER COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 
 		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
@@ -227,33 +249,22 @@ void GameState::checkCollisions() {
 				enemyProjectiles.erase(enemyProjectiles.begin() + j);
 				break;
 			}
-
 		}
-
 	}
 
+	//CHANGE CHECKHIT TO CHECK COLLISSION
 
-
-
-
-
-
-
-
-
-
-
+	//CHECKING FOR ENEMY COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++)
 		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
 			if (enemies[i] && playerProjectiles[j])
 				if (enemies[i]->checkHit(*playerProjectiles[j])) {
 
-
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
 
 						enemies[i]->setPosition(sf::Vector2f(-9999.f, -9999.f));
-						//enemies.erase(enemies.begin() + i);
+						enemies.erase(enemies.begin() + i);
 					}
 
 					delete playerProjectiles[j];
@@ -261,4 +272,18 @@ void GameState::checkCollisions() {
 					break;
 				}
 		}
+
+
+
+
+	//CHECKING FOR POWERUPS COLLISION
+	for (int i = 0; i < powerUps.size(); i++) {
+		if (player->checkHit(powerUps[i]->getBounds())) {
+
+			player->receiveUpgrade(powerUps[i]->getUpgradeType());
+			delete powerUps[i];
+			powerUps.erase(powerUps.begin() + i);
+		}
+
+	}
 }

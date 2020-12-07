@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Precompiled Header">
       <UniqueIdentifier>{d6bdc543-13fb-4b0b-9955-0376e3dff7fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\DontKnow">
+      <UniqueIdentifier>{2e652d28-b996-4cc9-ac32-f0d7a15b1568}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -66,6 +69,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files\Precompiled Header</Filter>
     </ClCompile>
+    <ClCompile Include="PowerUp.cpp">
+      <Filter>Entity\DontKnow</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -100,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Source Files\Precompiled Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUp.h">
+      <Filter>Entity\DontKnow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
