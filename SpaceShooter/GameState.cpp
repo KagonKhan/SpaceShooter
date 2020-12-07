@@ -149,25 +149,28 @@ void GameState::updatePlayer(const float& dt) {
 
 void GameState::updateEnemies(const float& dt) {
 
-	for (auto x : enemies)
+	for (auto& x : enemies)
 		x->update(dt);
 
-	updateEnemiesForDeletion(dt);
+	for (auto& x : enemiesForDeletion)
+		x->update(dt);
+
+
+	
 }
 
 // Enemies live untill the projectiles disappear, as i dont want to have projectile vectors in gamestate
 // Might not be a good idea, will research later.
 void GameState::updateEnemiesForDeletion(const float& dt) {
 
-	//for (unsigned int i = 0; i < enemiesForDeletion.size(); i++) {
-	//	enemiesForDeletion[i]->update(dt);
+	for (unsigned int i = 0; i < enemiesForDeletion.size(); i++) {
+		enemiesForDeletion[i]->update(dt);
+		/*if (!enemiesForDeletion[i]->areThereProjectilesOnScreen()) {
+			delete enemiesForDeletion[i];
+			enemiesForDeletion.erase(enemiesForDeletion.begin() + i);
 
-	//	if (!enemiesForDeletion[i]->areThereProjectilesOnScreen()) {
-	//		delete enemiesForDeletion[i];
-	//		enemiesForDeletion.erase(enemiesForDeletion.begin() + i);
-
-	//	}		
-	//}
+		}	*/	
+	}
 }
 
 
@@ -209,6 +212,9 @@ void GameState::renderPlayer() {
 void GameState::renderEnemies() {
 	for (auto& enemy : enemies)
 		enemy->render(window);
+
+	for (auto& enemy : enemiesForDeletion)
+		enemy->render(window);
 }
 
 void GameState::renderPowerUps() {
@@ -245,8 +251,8 @@ void GameState::checkCollisions() {
 			if (player->checkHit(*enemyProjectiles[j])) {
 				std::cout << "Player hit\n";
 
-				delete enemyProjectiles[j];
-				enemyProjectiles.erase(enemyProjectiles.begin() + j);
+				//delete enemyProjectiles[j];
+				//enemyProjectiles.erase(enemyProjectiles.begin() + j);
 				break;
 			}
 		}
@@ -263,7 +269,9 @@ void GameState::checkCollisions() {
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
 
-						enemies[i]->setPosition(sf::Vector2f(-9999.f, -9999.f));
+
+						//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
+						enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
 						enemies.erase(enemies.begin() + i);
 					}
 

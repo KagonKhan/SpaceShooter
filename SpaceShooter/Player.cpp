@@ -58,7 +58,7 @@ void Player::initAnimation() {
 	auto& engineAnimationFORWARD = animator->CreateAnimation("FORWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.75), false);
 	engineAnimationFORWARD.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(34, 64), 5);
 
-
+	animator->Update(0.0f);
 }
 
 void Player::initListener() {

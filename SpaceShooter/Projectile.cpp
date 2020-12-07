@@ -37,7 +37,7 @@ void Projectile::initSprites(sf::Vector2f position) {
 	projectileSprite.setPosition(position);
 	projectileSprite.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
 
-
+	projectileSprite.setColor(sf::Color::Blue);
 }
 
 void Projectile::initAnimations() {
@@ -45,6 +45,16 @@ void Projectile::initAnimations() {
 	auto& animationShot = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "spr_bullet_strip02.png", sf::seconds(0.75), false);
 	animationShot.AddVerticalFrames(sf::Vector2i(0, 0), sf::Vector2i(68, 95), 3);
 
+	//animator->Update(0.1f);
+
+	hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height));
+	hitbox.setOrigin(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height) / 2.f);
+	hitbox.setPosition(projectileSprite.getPosition());
+	hitbox.setFillColor(sf::Color::Red);
+
+
+
+	//Lightning
 	//auto& animationLight = animator->CreateAnimation("PROJECTILE", "../Resources/art/projectile/", "light.png", sf::seconds(0.75), false);
 	//animationLight.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(400, 300), 16);
 }
@@ -69,7 +79,8 @@ void Projectile::update(const float& dt) {
 
 	sound.setPosition(sf::Vector3f(projectileSprite.getPosition().x, projectileSprite.getPosition().y, 0));
 
-	
+	hitbox.setSize(sf::Vector2f(projectileSprite.getGlobalBounds().width, projectileSprite.getGlobalBounds().height));
+
 
 }
 
@@ -98,7 +109,7 @@ void Projectile::updateMovement(const float& dt) {
 	}
 	
 	
-
+	hitbox.move(0, projectileSpeed*dt);
 
 	// CIRCULAR PROJECTILES
 	//projectileSprite.rotate(500* cos(rand() * 10));

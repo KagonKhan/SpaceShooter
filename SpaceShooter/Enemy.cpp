@@ -13,8 +13,8 @@ Enemy::~Enemy() {
 
 	std::cout << "DELETING ENEMY\n";
 
-	for (auto& it : projectiles)
-		delete it;
+	//for (auto& it : projectiles)
+	//	delete it;
 }
 
 void Enemy::update(const float& dt) {
@@ -52,10 +52,10 @@ void Enemy::updateProjectiles(const float& dt) {
 
 		//CLEANING UP PROJECTILES
 		if (projectiles[i]->getPosition().y - projectiles[i]->getSize().y > boundaries.y || projectiles[i]->getPosition().y < 0 || projectiles[i]->getPosition().x < 0 || projectiles[i]->getPosition().x > boundaries.x) {
-			delete projectiles[i];
+			//delete projectiles[i];
 
 			//CHECK IF NECESSARY i--
-			projectiles.erase(projectiles.begin() + i--);
+			//projectiles.erase(projectiles.begin() + i--);
 		}
 	}
 }
