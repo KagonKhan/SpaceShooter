@@ -54,6 +54,11 @@ bool Entity::checkHit(const Projectile& projectile) {
 	return false;
 }
 
+void Entity::getDamage(float damage) { 
+	std::cout << damage << std::endl;
+	hp -= damage;
+}
+
 void Entity::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
 	hitbox.setPosition(position);

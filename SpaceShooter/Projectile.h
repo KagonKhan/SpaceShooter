@@ -10,6 +10,8 @@ class Projectile {
 	float projectileRotation, projectileSpeed, projectileDamage;
 	int projectileDirection;
 
+
+	sf::SoundBuffer bufer;
 	sf::Sound sound;
 
 	Animator* animator;

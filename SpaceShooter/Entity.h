@@ -21,6 +21,8 @@ public:
 	//Possibly obsolete
 	bool checkHit(sf::FloatRect boundaries);
 	bool checkHit(const Projectile& projectile);
+
+	void getDamage(float damage);
 	void setPosition(sf::Vector2f position);
 
 

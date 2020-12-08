@@ -17,6 +17,8 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 
 	velocity = 0.93f;
 	projectileType = 0;
+
+	blockMovement = blockAttack = false;
 	
 }
 
@@ -110,7 +112,7 @@ void Player::updateAttack(const float& dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9))
 		projectileType = 9;
 
-	if (attackTime >= 1.f) {
+	if (attackTime >= 1.f && !blockAttack) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
 			sf::Vector2f size(10.f, 50.f);
@@ -127,6 +129,8 @@ void Player::updateAttack(const float& dt) {
 
 			//Figure out a better way to position sprites
 			beams.push_back(Beam(boundaries, entitySprite.getPosition()));
+			blockAttack = true;
+			blockMovement = true;
 			attackTime = 0.f;
 		}
 
@@ -179,19 +183,21 @@ void Player::updateMovement(const float& dt) {
 	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height + 40 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
 		movement.y *= 0.f;
 
+
 }
 
 void Player::updateSprites(const float& dt) {
-	entitySprite.move(movement * dt);
-	hitbox.setPosition(entitySprite.getPosition());
+	if (!blockMovement) {
+		entitySprite.move(movement * dt);
+		hitbox.setPosition(entitySprite.getPosition());
 
-	engineSprite2 = engineSprite;
-	engineSprite2.move(46.f, 0.f);
+		engineSprite2 = engineSprite;
+		engineSprite2.move(46.f, 0.f);
 
-	engineSprite.move(movement * dt);
-	engineSprite2.move(movement * dt);
+		engineSprite.move(movement * dt);
+		engineSprite2.move(movement * dt);
 
-
+	}
 }
 
 void Player::updateProjectiles(const float& dt) {
@@ -215,6 +221,7 @@ void Player::updateProjectiles(const float& dt) {
 		beams[i].update(dt);
 		if (beams[i].getIsDone()) {
 			beams.erase(beams.begin() + i);
+			blockAttack = blockMovement = false;
 			break;
 		}
 
@@ -286,6 +293,10 @@ void Player::receiveUpgrade(int type) {
 
 std::vector<Projectile*>* Player::getProjectiles() {
 	return &projectiles;
+}
+
+std::vector<Beam>* Player::getBeams() {
+	return &beams;
 }
 
 

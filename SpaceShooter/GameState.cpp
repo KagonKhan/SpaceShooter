@@ -239,13 +239,13 @@ void GameState::spawnNebulis() {
 // find a way to check player collisions
 void GameState::checkCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
-
+	std::vector<Beam>& playerBeams = *player->getBeams();
 
 	//CHECKING FOR PLAYER COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 
 		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
-		for(unsigned int j = 0; j < enemyProjectiles.size(); j++) {
+		for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
 
 			if (player->checkHit(*enemyProjectiles[j])) {
 				std::cout << "Player hit\n";
@@ -260,7 +260,7 @@ void GameState::checkCollisions() {
 	//CHANGE CHECKHIT TO CHECK COLLISSION
 
 	//CHECKING FOR ENEMY COLLISION
-	for (unsigned int i = 0; i < enemies.size(); i++)
+	for (unsigned int i = 0; i < enemies.size(); i++) {
 		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
 			if (enemies[i] && playerProjectiles[j])
 				if (enemies[i]->checkHit(*playerProjectiles[j])) {
@@ -279,9 +279,35 @@ void GameState::checkCollisions() {
 					break;
 				}
 		}
+	}
 
 
 
+	for (unsigned int j = 0; j < playerBeams.size(); j++) {
+		if (!playerBeams[j].getIsDone()) {
+			for (unsigned int i = 0; i < enemies.size(); i++) {
+				if (enemies[i]->checkHit(playerBeams[j].getBounds())) {
+					enemies[i]->getDamage(playerBeams[j].getDamage());
+
+					if (enemies[i]->getHP() <= 0) {
+						enemiesForDeletion.push_back(enemies[i]);
+
+
+						//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
+						enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
+						enemies.erase(enemies.begin() + i);
+					}
+
+				}
+
+			}
+		}
+		else
+			playerBeams[j].resetTimer();
+	}
+
+	
+	
 
 	//CHECKING FOR POWERUPS COLLISION
 	for (int i = 0; i < powerUps.size(); i++) {
