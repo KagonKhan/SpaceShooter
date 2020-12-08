@@ -6,7 +6,7 @@
 class Beam {
 
 
-	sf::RectangleShape shape;
+	sf::RectangleShape shape, hitbox;
 	void initShape();
 
 
@@ -31,8 +31,8 @@ public:
 
 	void render(sf::RenderWindow* window);
 	void resetTimer();
-	float getDamage();
-	sf::FloatRect getBounds();
+	const float getDamage() const ;
+	const sf::FloatRect getBounds() const ;
 
 	bool getIsDone();
 };

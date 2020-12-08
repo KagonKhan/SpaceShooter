@@ -6,6 +6,14 @@ Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector
 	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, 100.f, position) {
 
 	entitySprite.setOrigin(entitySprite.getGlobalBounds().width / 2.f, entitySprite.getGlobalBounds().height / 2.f);
+	//hitbox.setSize(sf::Vector2f(entitySprite.getGlobalBounds().width, entitySprite.getGlobalBounds().height));
+	//hitbox.setOrigin(hitbox.getSize() / 2.f);
+	//hitbox.setPosition(position);
+	hitbox.setFillColor(sf::Color::Red);
+
+
+
+
 
 }
 
@@ -64,6 +72,7 @@ void Enemy::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(entitySprite);
+	window->draw(hitbox);
 }
 
 std::vector<Projectile*>* Enemy::getProjectiles() {

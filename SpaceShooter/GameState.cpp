@@ -282,12 +282,12 @@ void GameState::checkCollisions() {
 	}
 
 
-
+	// BEAM DAMAGE
 	for (unsigned int j = 0; j < playerBeams.size(); j++) {
 		if (!playerBeams[j].getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
-				if (enemies[i]->checkHit(playerBeams[j].getBounds())) {
-					enemies[i]->getDamage(playerBeams[j].getDamage());
+				if (enemies[i]->checkHit(playerBeams[j])) {
+				
 
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);

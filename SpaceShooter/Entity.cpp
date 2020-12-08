@@ -31,9 +31,9 @@ void Entity::initHitbox() {
 	//set hitbox to 50% size
 	hitbox.setSize(sf::Vector2f(entitySprite.getGlobalBounds().width, entitySprite.getGlobalBounds().height) * 0.5f);
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
-	hitbox.setPosition(entitySprite.getPosition() + hitbox.getSize() / 2.f);
+	hitbox.setPosition(entitySprite.getPosition());
 
-	//hitbox.setFillColor(sf::Color::Red);
+	hitbox.setFillColor(sf::Color::Red);
 }
 
 void Entity::initVariables() {
@@ -43,6 +43,13 @@ void Entity::initVariables() {
 bool Entity::checkHit(sf::FloatRect boundaries) {
 	if (hitbox.getGlobalBounds().intersects(boundaries))
 		return true;
+	return false;
+}
+bool Entity::checkHit(const Beam& beam) {
+	if (hitbox.getGlobalBounds().intersects(beam.getBounds())) {
+		hp -= beam.getDamage();
+		return true;
+	}
 	return false;
 }
 

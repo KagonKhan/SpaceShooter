@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Projectile.h"
-
+#include "Beam.h"
 
 class Entity {
 private:
@@ -21,6 +21,7 @@ public:
 	//Possibly obsolete
 	bool checkHit(sf::FloatRect boundaries);
 	bool checkHit(const Projectile& projectile);
+		bool checkHit(const Beam& beam);
 
 	void getDamage(float damage);
 	void setPosition(sf::Vector2f position);
