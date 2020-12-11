@@ -7,8 +7,10 @@
 Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 
 	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
-	//sound.setPosition(position.x, position.y, 0);
-	sound.setVolume(100);
+	sound.setPosition(position.x, position.y, 0);
+	sound.setVolume(50);
+	sound.setAttenuation(20.f);
+	
 	sound.play();
 
 

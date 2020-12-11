@@ -19,6 +19,8 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 	projectileType = 0;
 
 	blockMovement = blockAttack = false;
+	beamStartCooldown = false;
+	beamCooldownTimer = 50.f;
 	
 }
 
@@ -86,7 +88,7 @@ void Player::update(const float& dt) {
 	updateAnimations(dt);
 
 
-	//sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
+	sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
 
 }
 
@@ -124,11 +126,12 @@ void Player::updateAttack(const float& dt) {
 
 			attackTime = 0.f;
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && beamCooldownTimer > 5.f) {
 
 
 			//Figure out a better way to position sprites
 			beams.push_back(new Beam(boundaries, entitySprite.getPosition()));
+			beamCooldownTimer = 0.f;
 			blockAttack = true;
 			blockMovement = true;
 			attackTime = 0.f;
@@ -215,11 +218,13 @@ void Player::updateProjectiles(const float& dt) {
 		}
 	}
 
-
+	if (beamStartCooldown)
+		beamCooldownTimer += dt;
 
 	for (int i = 0; i < beams.size(); i++) 	{
 		beams[i]->update(dt);
 		if (beams[i]->getIsDone()) {
+			beamStartCooldown = true;
 			delete beams[i];
 			beams.erase(beams.begin() + i);
 			blockAttack = blockMovement = false;

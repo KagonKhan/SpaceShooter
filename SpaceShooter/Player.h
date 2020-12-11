@@ -18,7 +18,10 @@ class Player : public Entity {
 	//or maybe can upgrade to multiple beams
 	std::vector<Beam*> beams;
 
-	bool blockAttack, blockMovement;
+	bool blockAttack, blockMovement, beamStartCooldown;
+	float beamCooldownTimer;
+
+
 
 	// I don't like this - find better solutions later
 	int projectileType;

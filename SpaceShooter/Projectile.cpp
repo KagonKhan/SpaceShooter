@@ -57,7 +57,7 @@ void Projectile::initAnimations() {
 
 void Projectile::initSounds() {
 	sound.setBuffer(AssetManager::GetSoundBuffer("Laser_09.wav", "../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/"));
-	sound.setVolume(25);
+	sound.setVolume(55);
 	//sBuffer.loadFromFile("../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/Laser_09.wav");
 	//sound.setRelativeToListener(true);
 	//sound.setAttenuation(1);
