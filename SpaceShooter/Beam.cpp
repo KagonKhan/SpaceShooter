@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Beam.h"
 
+//CLEAN UP THE CODE 
 // Need to change the principle - rn making a vector of beams. Doesnt seem good.
 //as well as add proper sounds
 Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
@@ -16,9 +17,9 @@ Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 
 
 	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
-	sound.setVolume(25);
-	sound.play();
 	sound.setPosition(position.x,position.y, 0);
+	sound.setVolume(100);
+	sound.play();
 
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
 	hitbox.setPosition(position);
@@ -68,7 +69,7 @@ void Beam::update(const float& dt) {
 
 void Beam::render(sf::RenderWindow* window) {
 	window->draw(shape);
-	window->draw(hitbox);
+	//window->draw(hitbox);
 }
 
 void Beam::resetTimer() {

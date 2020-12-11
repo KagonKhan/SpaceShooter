@@ -72,7 +72,7 @@ void Enemy::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(entitySprite);
-	window->draw(hitbox);
+	//window->draw(hitbox);
 }
 
 std::vector<Projectile*>* Enemy::getProjectiles() {

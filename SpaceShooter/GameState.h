@@ -37,8 +37,9 @@ class GameState : public State {
 	void updateBackground();
 	void updatePlayer(const float& dt);
 	void updateEnemies(const float& dt);
-	void updateLogic(const float& dt);
+	void updateEnemiesForDeletion(const float& dt);
 	void updatePowerUps(const float& dt);
+	void updateLogic(const float& dt);
 
 
 
@@ -52,7 +53,11 @@ class GameState : public State {
 
 	void spawnNebulis();
 	void checkCollisions();
-	void updateEnemiesForDeletion(const float& dt);
+	void checkPlayerCollisions();
+	void checkEnemyCollisions();
+	void checkPowerUpsCollisions();
+	void spawnNewEnemies();
+
 
 
 public:

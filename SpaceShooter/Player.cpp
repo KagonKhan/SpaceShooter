@@ -86,7 +86,7 @@ void Player::update(const float& dt) {
 	updateAnimations(dt);
 
 
-	sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
+	//sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
 
 }
 

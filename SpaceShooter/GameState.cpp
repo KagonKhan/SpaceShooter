@@ -173,8 +173,18 @@ void GameState::updateEnemiesForDeletion(const float& dt) {
 	
 }
 
+void GameState::spawnNewEnemies() {
+	if(enemies.empty())
+		initEnemies();
+	
+}
+
 void GameState::updateLogic(const float& dt) {
 	checkCollisions();
+
+	spawnNewEnemies();
+
+	spawnNewEnemies();
 }
 
 void GameState::updatePowerUps(const float& dt) {
@@ -238,8 +248,15 @@ void GameState::spawnNebulis() {
 //Does not throw exceptions
 // find a way to check player collisions
 void GameState::checkCollisions() {
-	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
-	std::vector<Beam>& playerBeams = *player->getBeams();
+
+	//CHANGE CHECKHIT TO CHECK COLLISSION
+	checkPlayerCollisions();
+	checkEnemyCollisions();
+	checkPowerUpsCollisions();
+
+}
+
+void GameState::checkPlayerCollisions() {
 
 	//CHECKING FOR PLAYER COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
@@ -257,7 +274,12 @@ void GameState::checkCollisions() {
 		}
 	}
 
-	//CHANGE CHECKHIT TO CHECK COLLISSION
+}
+
+void GameState::checkEnemyCollisions() {
+	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+	std::vector<Beam>& playerBeams = *player->getBeams();
+
 
 	//CHECKING FOR ENEMY COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
@@ -287,7 +309,7 @@ void GameState::checkCollisions() {
 		if (!playerBeams[j].getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
 				if (enemies[i]->checkHit(playerBeams[j])) {
-				
+
 
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
@@ -306,11 +328,12 @@ void GameState::checkCollisions() {
 			playerBeams[j].resetTimer();
 	}
 
-	
-	
+}
+
+void GameState::checkPowerUpsCollisions() {
 
 	//CHECKING FOR POWERUPS COLLISION
-	for (int i = 0; i < powerUps.size(); i++) {
+	for (int i = 0; i < powerUps.size(); i++)
 		if (player->checkHit(powerUps[i]->getBounds())) {
 
 			player->receiveUpgrade(powerUps[i]->getUpgradeType());
@@ -318,5 +341,6 @@ void GameState::checkCollisions() {
 			powerUps.erase(powerUps.begin() + i);
 		}
 
-	}
+
 }
+
