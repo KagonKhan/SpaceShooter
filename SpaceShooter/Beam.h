@@ -27,6 +27,8 @@ public:
 	Beam(sf::Vector2f boundaries, sf::Vector2f position);
 	~Beam();
 
+
+	void setRotation(float rotation);
 	void update(const float& dt);
 
 	void render(sf::RenderWindow* window);

@@ -131,6 +131,7 @@ void Player::updateAttack(const float& dt) {
 
 			//Figure out a better way to position sprites
 			beams.push_back(new Beam(boundaries, entitySprite.getPosition()));
+			beams.back()->setRotation(20.f);
 			beamCooldownTimer = 0.f;
 			blockAttack = true;
 			blockMovement = true;

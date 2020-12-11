@@ -30,6 +30,7 @@ Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 	hitbox.setPosition(position);
 	hitbox.setFillColor(sf::Color::Red);
 	hitbox.setSize(shape.getSize());
+
 }
 
 Beam::~Beam() {
@@ -41,6 +42,11 @@ void Beam::initShape() {
 	shape.setSize(sf::Vector2f(50.f, 2.f));
 	shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
 	shape.setFillColor(sf::Color::Blue);
+}
+
+void Beam::setRotation(float rotation) {
+	shape.setRotation(rotation);
+	hitbox.setRotation(rotation);
 }
 
 void Beam::update(const float& dt) {

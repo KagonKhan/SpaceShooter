@@ -78,6 +78,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Entity\Living</Filter>
     </ClCompile>
+    <ClCompile Include="BossEnemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Entity\Living</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEnemy.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
