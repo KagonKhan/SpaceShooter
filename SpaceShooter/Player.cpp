@@ -128,7 +128,7 @@ void Player::updateAttack(const float& dt) {
 
 
 			//Figure out a better way to position sprites
-			beams.push_back(Beam(boundaries, entitySprite.getPosition()));
+			beams.push_back(new Beam(boundaries, entitySprite.getPosition()));
 			blockAttack = true;
 			blockMovement = true;
 			attackTime = 0.f;
@@ -218,8 +218,9 @@ void Player::updateProjectiles(const float& dt) {
 
 
 	for (int i = 0; i < beams.size(); i++) 	{
-		beams[i].update(dt);
-		if (beams[i].getIsDone()) {
+		beams[i]->update(dt);
+		if (beams[i]->getIsDone()) {
+			delete beams[i];
 			beams.erase(beams.begin() + i);
 			blockAttack = blockMovement = false;
 			break;
@@ -251,7 +252,7 @@ void Player::render(sf::RenderWindow* window) {
 
 
 	for (auto& x : beams)
-		x.render(window);
+		x->render(window);
 
 
 	window->draw(entitySprite);
@@ -295,7 +296,7 @@ std::vector<Projectile*>* Player::getProjectiles() {
 	return &projectiles;
 }
 
-std::vector<Beam>* Player::getBeams() {
+std::vector<Beam*>* Player::getBeams() {
 	return &beams;
 }
 

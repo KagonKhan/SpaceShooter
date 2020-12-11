@@ -278,7 +278,7 @@ void GameState::checkPlayerCollisions() {
 
 void GameState::checkEnemyCollisions() {
 	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
-	std::vector<Beam>& playerBeams = *player->getBeams();
+	std::vector<Beam*>& playerBeams = *player->getBeams();
 
 
 	//CHECKING FOR ENEMY COLLISION
@@ -306,9 +306,9 @@ void GameState::checkEnemyCollisions() {
 
 	// BEAM DAMAGE
 	for (unsigned int j = 0; j < playerBeams.size(); j++) {
-		if (!playerBeams[j].getIsDone()) {
+		if (!playerBeams[j]->getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
-				if (enemies[i]->checkHit(playerBeams[j])) {
+				if (enemies[i]->checkHit(*playerBeams[j])) {
 
 
 					if (enemies[i]->getHP() <= 0) {
@@ -325,7 +325,7 @@ void GameState::checkEnemyCollisions() {
 			}
 		}
 		else
-			playerBeams[j].resetTimer();
+			playerBeams[j]->resetTimer();
 	}
 
 }

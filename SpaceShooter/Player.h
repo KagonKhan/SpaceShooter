@@ -16,7 +16,7 @@ class Player : public Entity {
 
 	//No point in having this as a vector - only 1 beam allowed at a time.
 	//or maybe can upgrade to multiple beams
-	std::vector<Beam> beams;
+	std::vector<Beam*> beams;
 
 	bool blockAttack, blockMovement;
 
@@ -51,7 +51,7 @@ public:
 	void receiveUpgrade(int type);
 	
 	std::vector<Projectile*>* getProjectiles();
-	std::vector<Beam>* getBeams();
+	std::vector<Beam*>* getBeams();
 
 };
 

@@ -5,6 +5,13 @@
 // Need to change the principle - rn making a vector of beams. Doesnt seem good.
 //as well as add proper sounds
 Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
+
+	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
+	//sound.setPosition(position.x, position.y, 0);
+	sound.setVolume(100);
+	sound.play();
+
+
 	boundary = boundaries;
 	initShape();
 	a = 255;
@@ -16,10 +23,6 @@ Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 	damageCounter = 0.f;
 
 
-	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
-	sound.setPosition(position.x,position.y, 0);
-	sound.setVolume(100);
-	sound.play();
 
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
 	hitbox.setPosition(position);
