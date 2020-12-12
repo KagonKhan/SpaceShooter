@@ -17,8 +17,7 @@ public:
 			m_Duration(duration), m_Looping(looping) {}
 
 		//Adding horizontal name
-		void AddHorizontalFrames(const sf::Vector2i& startFrom,
-			const sf::Vector2i& frameSize, unsigned int frames) {
+		void AddHorizontalFrames(const sf::Vector2i& startFrom,	const sf::Vector2i& frameSize, unsigned int frames) {
 
 			sf::Vector2i current = startFrom;
 

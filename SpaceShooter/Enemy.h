@@ -23,6 +23,7 @@ public:
 
 	bool areThereProjectilesOnScreen();
 
+	const sf::Sprite& getEnemySprite() const;
 
 	const sf::Sprite& getSprite() const;
 	void receiveDamage(int amount);

@@ -12,8 +12,6 @@
 	Add planets, different backgrounds, different galaxies
 
 	Enemies in a list instead of a vector? Compare the performance
-	
-	IMPLEMENT PIXEL PERFECT COLLISION
 
 	//Figure out a better way to position sprites
 
@@ -257,14 +255,15 @@ void GameState::checkCollisions() {
 }
 
 void GameState::checkPlayerCollisions() {
-
+	
 	//CHECKING FOR PLAYER COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 
 		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
 		for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
-
-			if (player->checkHit(*enemyProjectiles[j])) {
+			if (Collision::PixelPerfectTest(player->getPlayerSprite(), enemyProjectiles[j]->getSprite(),127)) {
+				
+				
 				std::cout << "Player hit\n";
 
 				delete enemyProjectiles[j];
@@ -284,22 +283,21 @@ void GameState::checkEnemyCollisions() {
 	//CHECKING FOR ENEMY COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
-			if (enemies[i] && playerProjectiles[j])
-				if (enemies[i]->checkHit(*playerProjectiles[j])) {
+			if (Collision::PixelPerfectTest(enemies[i]->getEnemySprite(), playerProjectiles[j]->getSprite(), 127)) {
+				enemies[i]->receiveDamage(playerProjectiles[j]->getDamage());
+				if (enemies[i]->getHP() <= 0) {
+					enemiesForDeletion.push_back(enemies[i]);
 
-					if (enemies[i]->getHP() <= 0) {
-						enemiesForDeletion.push_back(enemies[i]);
 
-
-						//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
-						enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
-						enemies.erase(enemies.begin() + i);
-					}
-
-					delete playerProjectiles[j];
-					playerProjectiles.erase(playerProjectiles.begin() + j);
-					break;
+					//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
+					enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
+					enemies.erase(enemies.begin() + i);
 				}
+
+				delete playerProjectiles[j];
+				playerProjectiles.erase(playerProjectiles.begin() + j);
+				break;
+			}
 		}
 	}
 
@@ -308,14 +306,13 @@ void GameState::checkEnemyCollisions() {
 	for (unsigned int j = 0; j < playerBeams.size(); j++) {
 		if (!playerBeams[j]->getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
-				if (Collision::PixelPerfectTest(enemies[i]->getSprite() , player->getBeamSprite(), 127)) {
+				if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getBeamSprite(), 150)) {
 					enemies[i]->receiveDamage(playerBeams.back()->getDamage());
 
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
 
 
-						//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
 						enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
 						enemies.erase(enemies.begin() + i);
 					}
@@ -325,7 +322,7 @@ void GameState::checkEnemyCollisions() {
 			}
 		}
 		else
-			playerBeams[j]->resetTimer();
+			;// playerBeams[j]->resetTimer();
 	}
 
 }

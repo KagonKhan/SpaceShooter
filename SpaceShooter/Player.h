@@ -56,6 +56,7 @@ public:
 	std::vector<Projectile*>* getProjectiles();
 	std::vector<Beam*>* getBeams();
 	const sf::Sprite& getBeamSprite() const ;
-
+	const sf::Sprite& getPlayerSprite() const;
+	void receiveDamage(int amount);
 };
 

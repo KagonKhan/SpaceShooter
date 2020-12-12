@@ -11,10 +11,6 @@ Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector
 	//hitbox.setPosition(position);
 	hitbox.setFillColor(sf::Color::Red);
 
-
-
-
-
 }
 
 Enemy::~Enemy() {
@@ -81,6 +77,11 @@ std::vector<Projectile*>* Enemy::getProjectiles() {
 
 bool Enemy::areThereProjectilesOnScreen() {
 	return !projectiles.empty();
+}
+
+const sf::Sprite& Enemy::getEnemySprite() const {
+
+	return entitySprite;
 }
 
 

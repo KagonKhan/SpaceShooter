@@ -146,6 +146,10 @@ const float Projectile::getDamage() const {
 	return projectileDamage;
 }
 
+const sf::Sprite& Projectile::getSprite() const {
+	return projectileSprite;
+}
+
 
 
 const sf::FloatRect Projectile::getBounds() const {

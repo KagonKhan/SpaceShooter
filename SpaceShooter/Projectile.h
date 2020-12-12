@@ -41,7 +41,7 @@ public:
 	const sf::Vector2f getPosition() const ;
 	const sf::FloatRect getBounds() const ;
 	const float getDamage() const ;
-
+	const sf::Sprite& getSprite() const;
 
 	void render(sf::RenderWindow* window);
 	void update(const float& dt);

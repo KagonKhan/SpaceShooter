@@ -18,10 +18,16 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 	velocity = 0.93f;
 	projectileType = 0;
 
+
 	blockMovement = blockAttack = false;
 	beamStartCooldown = false;
 	beamCooldownTimer = 50.f;
-	
+
+
+
+	// PRELOADING THE TEXTURE SO NO LAG SPIKES
+	Beam::loadBeamTexture();
+
 }
 
 Player::~Player() {
@@ -55,7 +61,7 @@ void Player::initAnimation() {
 	animator = new Animator(engineSprite);
 
 
-	auto& engineAnimationBACKWARD = animator->CreateAnimation("BACKWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.25), false);
+	auto& engineAnimationBACKWARD = animator->CreateAnimation("BACKWARD", "../Resources/art/Engine_exhaust/Exhaust/", "Exhaust_all.png", sf::seconds(0.55), false);
 	engineAnimationBACKWARD.AddHorizontalFrames(sf::Vector2i(170, 0), sf::Vector2i(34, 64), 3);
 
 
@@ -130,12 +136,14 @@ void Player::updateAttack(const float& dt) {
 
 
 			//Figure out a better way to position sprites
-			beams.push_back(new Beam(boundaries, entitySprite.getPosition()));
-			beams.back()->setRotation(20.f);
+			sf::Vector2f position = entitySprite.getPosition() + sf::Vector2f(-5.f, 100.f);
+			beams.push_back(new Beam(boundaries, position));
+
 			beamCooldownTimer = 0.f;
 			blockAttack = true;
 			blockMovement = true;
 			attackTime = 0.f;
+
 		}
 
 	}
@@ -159,7 +167,7 @@ void Player::updateMovement(const float& dt) {
 		movement.y += movementSpeed / 1.5f;
 
 
-
+#pragma region Movement
 
 	if (entitySprite.getPosition().x < 150 && movement.x < 0 || entitySprite.getPosition().x + 150 > boundaries.x && movement.x > 0)
 		movement.x *= 0.85f;
@@ -187,7 +195,7 @@ void Player::updateMovement(const float& dt) {
 	if (entitySprite.getPosition().y > boundaries.y - entitySprite.getGlobalBounds().height + 40 && movement.y > 0 || entitySprite.getPosition().y < 2.5f * boundaries.y / 4.f + 10.f && movement.y < 0)
 		movement.y *= 0.f;
 
-
+#pragma endregion
 }
 
 void Player::updateSprites(const float& dt) {
@@ -308,6 +316,14 @@ std::vector<Beam*>* Player::getBeams() {
 
 const sf::Sprite& Player::getBeamSprite() const {
 	return beams.back()->getBeamSprite();
+}
+
+const sf::Sprite& Player::getPlayerSprite() const {
+	return entitySprite;
+}
+
+void Player::receiveDamage(int amount) {
+	hp -= amount;
 }
 
 
