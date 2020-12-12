@@ -16,7 +16,8 @@ class Beam {
 
 
 	int beamColorVisibily, beamVisibilityThreshold;
-	int beamDamage;
+
+	float beamDamage;
 
 	float beamCounter, beamOnScreenTime, beamDamageCounter;
 	
@@ -50,7 +51,7 @@ public:
 
 	
 
-	const int getDamage() const ;
+	const float getDamage() const ;
 	const sf::FloatRect getBounds() const ;
 	const sf::Sprite& getBeamSprite() const ;
 	bool getIsDone();

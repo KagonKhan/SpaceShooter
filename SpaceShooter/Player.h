@@ -39,13 +39,13 @@ class Player : public Entity {
 	void updateAnimations(const float& dt);
 	void updateSprites(const float& dt);
 
-
+	void renderPlayer(sf::RenderWindow* window);
+	void renderPlayerAttacks(sf::RenderWindow* window);
 
 
 public:
 	Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position);
 	~Player();
-
 
 	void update(const float& dt);
 	
@@ -55,8 +55,8 @@ public:
 	
 	std::vector<Projectile*>* getProjectiles();
 	std::vector<Beam*>* getBeams();
+
 	const sf::Sprite& getBeamSprite() const ;
-	const sf::Sprite& getPlayerSprite() const;
-	void receiveDamage(int amount);
+
 };
 

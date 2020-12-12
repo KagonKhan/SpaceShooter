@@ -34,6 +34,9 @@
     <Filter Include="Entity\Living">
       <UniqueIdentifier>{40c67aae-39a1-4eb0-bbb1-8cb61ee24c8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entity\Living\Enemy">
+      <UniqueIdentifier>{bb48fd9d-9709-40fc-b482-d2a5ea0d7f81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -44,9 +47,6 @@
     </ClCompile>
     <ClCompile Include="GameState.cpp">
       <Filter>States</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Entity</Filter>
@@ -72,17 +72,17 @@
     <ClCompile Include="Beam.cpp">
       <Filter>Projectiles</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Entity\Living</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Entity\Living</Filter>
     </ClCompile>
-    <ClCompile Include="BossEnemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="BossEnemy.cpp">
+      <Filter>Entity\Living\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Entity\Living\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +94,6 @@
     </ClInclude>
     <ClInclude Include="GameState.h">
       <Filter>States</Filter>
-    </ClInclude>
-    <ClInclude Include="Obstacle.h">
-      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entity</Filter>
@@ -119,17 +116,17 @@
     <ClInclude Include="Beam.h">
       <Filter>Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Entity\Living</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Entity\Living</Filter>
     </ClInclude>
-    <ClInclude Include="BossEnemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEnemy.h">
+      <Filter>Entity\Living\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Entity\Living\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

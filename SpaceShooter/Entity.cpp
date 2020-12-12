@@ -40,27 +40,6 @@ void Entity::initVariables() {
 	attackTime = 0.f;
 }
 
-bool Entity::checkHit(sf::FloatRect boundaries) {
-	if (hitbox.getGlobalBounds().intersects(boundaries))
-		return true;
-	return false;
-}
-bool Entity::checkHit(const Beam& beam) {
-	if (hitbox.getGlobalBounds().intersects(beam.getBounds())) {
-		hp -= beam.getDamage();
-		return true;
-	}
-	return false;
-}
-
-bool Entity::checkHit(const Projectile& projectile) {
-	if (hitbox.getGlobalBounds().intersects(projectile.getBounds())) {
-		hp -= projectile.getDamage();
-		return true;
-	}
-	return false;
-}
-
 void Entity::getDamage(float damage) { 
 	std::cout << damage << std::endl;
 	hp -= damage;
@@ -69,6 +48,18 @@ void Entity::getDamage(float damage) {
 void Entity::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
 	hitbox.setPosition(position);
+}
+
+const sf::Sprite& Entity::getSprite() const {
+	return entitySprite;
+}
+
+const float Entity::getHp() const {
+	return hp;
+}
+
+void Entity::receiveDamage(float amount) {
+	hp -= amount;
 }
 
 

@@ -18,14 +18,15 @@ protected:
 	float movementSpeed, attackSpeed, attackTime, projectileSpeed, hp, maxHp;
 
 public:
-	//Possibly obsolete
-	bool checkHit(sf::FloatRect boundaries);
-	bool checkHit(const Projectile& projectile);
-	bool checkHit(const Beam& beam);
 
 	void getDamage(float damage);
 	void setPosition(sf::Vector2f position);
 
+	const sf::Sprite& getSprite() const;
+
+
+	const float getHp() const ;
+	void receiveDamage(float amount);
 
 	Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position);
 	virtual ~Entity() {};

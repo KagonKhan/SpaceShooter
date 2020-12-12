@@ -4,17 +4,12 @@
 
 // ===================================================================  TO DO  ===================================================================
 /*
-	- DONE - Enemy bullets stay on the screen, move bullets vector into the game out of the enemy? 
 	Player HP bar,
-	- DONE - Collision 
 	Enemy HP bar / OR JUST SHOW DAMAGE - DAMAGE OVERLAY? BURNING?
 	Add more projectile types. Maybe different classes depending on x? Or maybe all in one class?
 	Add planets, different backgrounds, different galaxies
 
 	Enemies in a list instead of a vector? Compare the performance
-
-	//Figure out a better way to position sprites
-
 
 	Fix sound, listener, attenuation - mostly 3D issues
 
@@ -28,6 +23,8 @@
 
 
 
+	- DONE - Enemy bullets stay on the screen, move bullets vector into the game out of the enemy? 
+	- DONE - Collision 
 
 	====================================================== TO DO:  CLEAN-UP ==================================================
 	Cleanup projectile class - obsolete functions
@@ -261,7 +258,7 @@ void GameState::checkPlayerCollisions() {
 
 		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
 		for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
-			if (Collision::PixelPerfectTest(player->getPlayerSprite(), enemyProjectiles[j]->getSprite(),127)) {
+			if (Collision::PixelPerfectTest(player->getSprite(), enemyProjectiles[j]->getSprite(),127)) {
 				
 				
 				std::cout << "Player hit\n";
@@ -283,9 +280,9 @@ void GameState::checkEnemyCollisions() {
 	//CHECKING FOR ENEMY COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
-			if (Collision::PixelPerfectTest(enemies[i]->getEnemySprite(), playerProjectiles[j]->getSprite(), 127)) {
+			if (Collision::PixelPerfectTest(enemies[i]->getSprite(), playerProjectiles[j]->getSprite(), 127)) {
 				enemies[i]->receiveDamage(playerProjectiles[j]->getDamage());
-				if (enemies[i]->getHP() <= 0) {
+				if (enemies[i]->getHp() <= 0) {
 					enemiesForDeletion.push_back(enemies[i]);
 
 
@@ -309,7 +306,7 @@ void GameState::checkEnemyCollisions() {
 				if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getBeamSprite(), 150)) {
 					enemies[i]->receiveDamage(playerBeams.back()->getDamage());
 
-					if (enemies[i]->getHP() <= 0) {
+					if (enemies[i]->getHp() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
 
 
@@ -327,16 +324,24 @@ void GameState::checkEnemyCollisions() {
 
 }
 
+
+
+
+
+//PowerUps collisions wont work for now without sprites
 void GameState::checkPowerUpsCollisions() {
 
-	//CHECKING FOR POWERUPS COLLISION
-	for (unsigned int i = 0; i < powerUps.size(); i++)
-		if (player->checkHit(powerUps[i]->getBounds())) {
 
-			player->receiveUpgrade(powerUps[i]->getUpgradeType());
-			delete powerUps[i];
-			powerUps.erase(powerUps.begin() + i);
-		}
+
+
+	//CHECKING FOR POWERUPS COLLISION
+	//for (unsigned int i = 0; i < powerUps.size(); i++)
+	//	if (player->checkHit(powerUps[i]->getBounds())) {
+
+	//		player->receiveUpgrade(powerUps[i]->getUpgradeType());
+	//		delete powerUps[i];
+	//		powerUps.erase(powerUps.begin() + i);
+	//	}
 
 
 }

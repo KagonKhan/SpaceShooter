@@ -3,8 +3,6 @@
 
 class Enemy : public Entity {
 
-
-
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);
@@ -22,13 +20,6 @@ public:
 	std::vector<Projectile*>* getProjectiles();
 
 	bool areThereProjectilesOnScreen();
-
-	const sf::Sprite& getEnemySprite() const;
-
-	const sf::Sprite& getSprite() const;
-	void receiveDamage(int amount);
-
-	float getHP() const;
 
 };
 
