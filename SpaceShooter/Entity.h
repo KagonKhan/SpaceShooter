@@ -6,13 +6,11 @@
 class Entity {
 private:
 	void initSprite(std::string filename, std::string filepath, sf::Vector2f position);
-	void initHitbox();
 	void initVariables();
 
 
 protected:
 	sf::Sprite entitySprite;
-	sf::RectangleShape hitbox;
 	sf::Vector2f movement, boundaries;
 
 	float movementSpeed, attackSpeed, attackTime, projectileSpeed, hp, maxHp;

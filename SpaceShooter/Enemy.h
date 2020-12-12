@@ -3,6 +3,12 @@
 
 class Enemy : public Entity {
 
+
+
+
+	void initSprites();
+
+
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);
 	void updateProjectiles(const float& dt);

@@ -53,7 +53,6 @@ void Player::initSprites() {
 
 
 
-	hitbox.setFillColor(sf::Color::Red);
 }
 
 void Player::initAnimation() {
@@ -201,7 +200,6 @@ void Player::updateMovement(const float& dt) {
 void Player::updateSprites(const float& dt) {
 	if (!blockMovement) {
 		entitySprite.move(movement * dt);
-		hitbox.setPosition(entitySprite.getPosition());
 
 		engineSprite2 = engineSprite;
 		engineSprite2.move(46.f, 0.f);

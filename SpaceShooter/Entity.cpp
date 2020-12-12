@@ -14,7 +14,6 @@ Entity::Entity(std::string fileName, std::string filePath, sf::Vector2f boundari
 
 
 	initSprite(fileName, filePath, position);
-	initHitbox();
 	initVariables();
 }
 
@@ -27,14 +26,6 @@ void Entity::initSprite(std::string filename, std::string filepath, sf::Vector2f
 	entitySprite.setPosition(position);
 }
 
-void Entity::initHitbox() {
-	//set hitbox to 50% size
-	hitbox.setSize(sf::Vector2f(entitySprite.getGlobalBounds().width, entitySprite.getGlobalBounds().height) * 0.5f);
-	hitbox.setOrigin(hitbox.getSize() / 2.f);
-	hitbox.setPosition(entitySprite.getPosition());
-
-	hitbox.setFillColor(sf::Color::Red);
-}
 
 void Entity::initVariables() {
 	attackTime = 0.f;
@@ -47,7 +38,6 @@ void Entity::getDamage(float damage) {
 
 void Entity::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
-	hitbox.setPosition(position);
 }
 
 const sf::Sprite& Entity::getSprite() const {

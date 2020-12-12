@@ -56,8 +56,8 @@ class GameState : public State {
 	void checkPlayerCollisions();
 	void checkEnemyCollisions();
 	void checkPowerUpsCollisions();
+	void checkProjectileCollisions();
 	void spawnNewEnemies();
-
 
 
 public:

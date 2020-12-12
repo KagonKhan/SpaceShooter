@@ -15,8 +15,6 @@ class Projectile {
 	sf::Sound sound;
 
 	Animator* animator;
-	sf::RectangleShape hitbox;
-
 
 
 	int projectileType;

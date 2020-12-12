@@ -5,18 +5,19 @@
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
 	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, 100.f, position) {
 
-	entitySprite.setOrigin(entitySprite.getGlobalBounds().width / 2.f, entitySprite.getGlobalBounds().height / 2.f);
-	//hitbox.setSize(sf::Vector2f(entitySprite.getGlobalBounds().width, entitySprite.getGlobalBounds().height));
-	//hitbox.setOrigin(hitbox.getSize() / 2.f);
-	//hitbox.setPosition(position);
-	hitbox.setFillColor(sf::Color::Red);
+	initSprites();
+
+	srand(static_cast<unsigned int>(reinterpret_cast<int>(this)));
 
 }
 
 Enemy::~Enemy() {
-
 	for (auto& it : projectiles)
 		delete it;
+}
+
+void Enemy::initSprites() {
+	entitySprite.setOrigin(entitySprite.getGlobalBounds().width / 2.f, entitySprite.getGlobalBounds().height / 2.f);
 }
 
 void Enemy::update(const float& dt) {
@@ -25,10 +26,10 @@ void Enemy::update(const float& dt) {
 	updateProjectiles(dt);
 }
 
+
 void Enemy::updateAttack(const float& dt) {
 
 	// Good stuff - to remember
-	srand(static_cast<unsigned int>(reinterpret_cast<int>(this) * dt));
 
 	attackTime += attackSpeed * dt;
 
@@ -68,8 +69,24 @@ void Enemy::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	window->draw(entitySprite);
-	//window->draw(hitbox);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 std::vector<Projectile*>* Enemy::getProjectiles() {
 	return &projectiles;
