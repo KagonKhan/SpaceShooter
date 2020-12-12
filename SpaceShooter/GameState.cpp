@@ -13,7 +13,7 @@
 
 	Enemies in a list instead of a vector? Compare the performance
 	
-
+	IMPLEMENT PIXEL PERFECT COLLISION
 
 	//Figure out a better way to position sprites
 

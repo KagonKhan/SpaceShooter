@@ -1,30 +1,49 @@
 #include "pch.h"
 #include "Beam.h"
 
+
 //CLEAN UP THE CODE 
 // Need to change the principle - rn making a vector of beams. Doesnt seem good.
 //as well as add proper sounds
 Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 
-	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
-	sound.setPosition(position.x, position.y, 0);
-	sound.setVolume(50);
-	sound.setAttenuation(20.f);
-	
-	sound.play();
 
+	initVariables(boundaries);
+	initHitbox(position);
+	initSound(position);
+	initShape(position);
+}
+
+void Beam::initVariables(const sf::Vector2f& boundaries) {
 
 	boundary = boundaries;
-	initShape();
-	a = 255;
+	colorVisibily = 255;
 	counter = 0.f;
-	isDone = false;
-	shape.setPosition(position);
-
 	damage = 110.f;
 	damageCounter = 0.f;
 
+	isDone = false;
 
+}
+
+void Beam::initSprite() {
+
+}
+
+Beam::~Beam() {
+
+}
+
+void Beam::initShape(const sf::Vector2f& position) {
+
+	shape.setSize(sf::Vector2f(50.f, 2.f));
+	shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
+	shape.setFillColor(sf::Color::Blue);
+	shape.setPosition(position);
+
+}
+
+void Beam::initHitbox(const sf::Vector2f& position) {
 
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
 	hitbox.setPosition(position);
@@ -33,15 +52,18 @@ Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 
 }
 
-Beam::~Beam() {
-
+void Beam::initAnimation() {
 }
 
-void Beam::initShape() {
+void Beam::initSound(const sf::Vector2f& position) {
+	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
+	sound.setPosition(position.x, position.y, 0);
+	sound.setVolume(50);
+	sound.setAttenuation(20.f);
 
-	shape.setSize(sf::Vector2f(50.f, 2.f));
-	shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
-	shape.setFillColor(sf::Color::Blue);
+	sound.play();
+
+
 }
 
 void Beam::setRotation(float rotation) {
@@ -53,8 +75,8 @@ void Beam::update(const float& dt) {
 	//MOVEMENT
 	shape.setSize(shape.getSize() + sf::Vector2f(0, 1400.f * dt));
 	shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
-
-	hitbox.setSize(sf::Vector2f(shape.getGlobalBounds().width, shape.getGlobalBounds().height));
+	
+	hitbox.setSize(sf::Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
 
 
@@ -66,8 +88,8 @@ void Beam::update(const float& dt) {
 	}
 
 	if (counter > 1.f) {
-		a -= 9.f;
-		shape.setFillColor(sf::Color(0, 0, 255, a));
+		colorVisibily -= 9.f;
+		shape.setFillColor(sf::Color(0, 0, 255, colorVisibily));
 	}
 
 	if (shape.getFillColor().a < 50.f)
@@ -80,8 +102,30 @@ void Beam::update(const float& dt) {
 
 void Beam::render(sf::RenderWindow* window) {
 	window->draw(shape);
-	//window->draw(hitbox);
+	window->draw(hitbox);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void Beam::resetTimer() {
 	damageCounter = 0.f;
@@ -96,7 +140,7 @@ const float Beam::getDamage() const {
 }
 
 const sf::FloatRect Beam::getBounds() const {
-	return shape.getGlobalBounds();
+	return shape.getLocalBounds();
 }
 
 bool Beam::getIsDone() {

@@ -7,22 +7,27 @@ class Beam {
 
 
 	sf::RectangleShape shape, hitbox;
-	void initShape();
-
-
-	int a;
-	bool isDone;
-
-
-
 	sf::Sound sound;
-
-	int damage;
-	float counter;
-	float damageCounter;
-
-
 	sf::Vector2f boundary;
+
+
+	int colorVisibily, damage;
+	bool isDone;
+	float counter, damageCounter;
+
+
+
+	void initVariables(const sf::Vector2f& boundaries);
+	void initSprite();
+	void initShape(const sf::Vector2f& position);
+	void initHitbox(const sf::Vector2f& position);
+	void initAnimation();
+	void initSound(const sf::Vector2f& position);
+
+
+
+
+
 public:
 	Beam(sf::Vector2f boundaries, sf::Vector2f position);
 	~Beam();
