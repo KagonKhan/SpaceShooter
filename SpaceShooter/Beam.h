@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "Animator.h"
 
 
 class Beam {
@@ -9,6 +9,10 @@ class Beam {
 	sf::RectangleShape shape, hitbox;
 	sf::Sound sound;
 	sf::Vector2f boundary;
+	sf::Sprite beamSprite;
+
+	Animator* animator;
+
 
 
 	int colorVisibily, damage;
@@ -18,7 +22,7 @@ class Beam {
 
 
 	void initVariables(const sf::Vector2f& boundaries);
-	void initSprite();
+	void initSprite(sf::Vector2f position);
 	void initShape(const sf::Vector2f& position);
 	void initHitbox(const sf::Vector2f& position);
 	void initAnimation();
@@ -38,8 +42,12 @@ public:
 
 	void render(sf::RenderWindow* window);
 	void resetTimer();
-	const float getDamage() const ;
+	const int getDamage() const ;
 	const sf::FloatRect getBounds() const ;
+
+
+	const sf::Sprite& getBeamSprite() const ;
+
 
 	bool getIsDone();
 };

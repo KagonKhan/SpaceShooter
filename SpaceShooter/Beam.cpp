@@ -9,9 +9,15 @@ Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
 
 
 	initVariables(boundaries);
-	initHitbox(position);
 	initSound(position);
 	initShape(position);
+	initSprite(position);
+	initHitbox(position);
+//	initAnimation();
+}
+
+Beam::~Beam() {
+
 }
 
 void Beam::initVariables(const sf::Vector2f& boundaries) {
@@ -19,20 +25,13 @@ void Beam::initVariables(const sf::Vector2f& boundaries) {
 	boundary = boundaries;
 	colorVisibily = 255;
 	counter = 0.f;
-	damage = 110.f;
+	damage = 20;
 	damageCounter = 0.f;
 
 	isDone = false;
 
 }
 
-void Beam::initSprite() {
-
-}
-
-Beam::~Beam() {
-
-}
 
 void Beam::initShape(const sf::Vector2f& position) {
 
@@ -48,11 +47,48 @@ void Beam::initHitbox(const sf::Vector2f& position) {
 	hitbox.setOrigin(hitbox.getSize() / 2.f);
 	hitbox.setPosition(position);
 	hitbox.setFillColor(sf::Color::Red);
-	hitbox.setSize(shape.getSize());
+
+	hitbox.setSize(sf::Vector2f(beamSprite.getGlobalBounds().width * 0.75f, beamSprite.getGlobalBounds().height));
+
+
 
 }
 
+void Beam::initSprite(sf::Vector2f position) {
+	//beamSprite.setTexture(AssetManager::GetTexture("laserTest.png", "../Resources/art/projectile/LaserTests/"));
+	beamSprite.setTexture(AssetManager::GetTexture("RedLaser.png", "../Resources/art/projectile/LaserTests/"));
+	initAnimation();
+	
+	
+
+	beamSprite.setPosition(position - sf::Vector2f(7.5f, -50.f));
+	beamSprite.setOrigin(sf::Vector2f(beamSprite.getGlobalBounds().width / 2.f, beamSprite.getGlobalBounds().height ));
+	beamSprite.setScale(2.f, 3.f);
+
+
+
+}
+
+
 void Beam::initAnimation() {
+	animator = new Animator(beamSprite);
+	//auto& animationBeam = animator->CreateAnimation("BEAM", "../Resources/art/projectile/LaserTests/", "laserTest.png", sf::seconds(2.75), true);
+	auto& animationBeam = animator->CreateAnimation("BEAM", "../Resources/art/projectile/LaserTests/", "RedLaser.png", sf::seconds(3.3), true);
+	
+	
+	
+	
+	//animationBeam.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(63, 198), 2);
+	animationBeam.AddHorizontalFrames(sf::Vector2i(0, 0), sf::Vector2i(128, 512), 11);
+	
+	
+	
+	
+	
+	
+	
+	animator->Update(0.1f);
+
 }
 
 void Beam::initSound(const sf::Vector2f& position) {
@@ -62,23 +98,15 @@ void Beam::initSound(const sf::Vector2f& position) {
 	sound.setAttenuation(20.f);
 
 	sound.play();
-
-
 }
 
-void Beam::setRotation(float rotation) {
-	shape.setRotation(rotation);
-	hitbox.setRotation(rotation);
-}
+
 
 void Beam::update(const float& dt) {
-	//MOVEMENT
-	shape.setSize(shape.getSize() + sf::Vector2f(0, 1400.f * dt));
-	shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
-	
-	hitbox.setSize(sf::Vector2f(shape.getLocalBounds().width, shape.getLocalBounds().height));
-	hitbox.setOrigin(hitbox.getSize() / 2.f);
-
+	////MOVEMENT
+	//shape.setSize(shape.getSize() + sf::Vector2f(0, 1400.f * dt));
+	//shape.setOrigin(shape.getSize().x / 2.f, shape.getSize().y);
+	//
 
 	//std::cout << -shape.getPosition().y + shape.getSize().y << std::endl;
 
@@ -88,11 +116,13 @@ void Beam::update(const float& dt) {
 	}
 
 	if (counter > 1.f) {
-		colorVisibily -= 9.f;
-		shape.setFillColor(sf::Color(0, 0, 255, colorVisibily));
+		colorVisibily -= 9;
+		sf::Color beamColor = beamSprite.getColor();
+		beamColor.a -= 9;
+		beamSprite.setColor(beamColor);
 	}
 
-	if (shape.getFillColor().a < 50.f)
+	if (beamSprite.getColor().a < 50.f)
 		isDone = true;
 
 
@@ -101,7 +131,8 @@ void Beam::update(const float& dt) {
 }
 
 void Beam::render(sf::RenderWindow* window) {
-	window->draw(shape);
+	//window->draw(shape);
+	window->draw(beamSprite);
 	window->draw(hitbox);
 }
 
@@ -122,7 +153,10 @@ void Beam::render(sf::RenderWindow* window) {
 
 
 
-
+void Beam::setRotation(float rotation) {
+	//beamSprite.setRotation(rotation);
+	//hitbox.setRotation(rotation);
+}
 
 
 
@@ -132,7 +166,7 @@ void Beam::resetTimer() {
 }
 
 
-const float Beam::getDamage() const {
+const int Beam::getDamage() const {
 	if (damageCounter > 1.f)
 		return damage;
 	else
@@ -140,7 +174,11 @@ const float Beam::getDamage() const {
 }
 
 const sf::FloatRect Beam::getBounds() const {
-	return shape.getLocalBounds();
+	return beamSprite.getGlobalBounds();
+}
+
+const sf::Sprite& Beam::getBeamSprite() const {
+	return beamSprite;
 }
 
 bool Beam::getIsDone() {

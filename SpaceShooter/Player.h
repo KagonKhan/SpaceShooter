@@ -55,6 +55,7 @@ public:
 	
 	std::vector<Projectile*>* getProjectiles();
 	std::vector<Beam*>* getBeams();
+	const sf::Sprite& getBeamSprite() const ;
 
 };
 

@@ -23,7 +23,7 @@ sf::Texture& AssetManager::GetTexture(const std::string& filename, const std::st
         return pairFound->second;
     else {
         auto& texture = textureMap[filename];
-        textureMap[filename].loadFromFile(filepath + filename);
+        Collision::CreateTextureAndBitmask(textureMap[filename], filepath + filename);
         return texture;
     }
 }

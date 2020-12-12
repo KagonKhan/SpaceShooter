@@ -84,6 +84,14 @@ bool Enemy::areThereProjectilesOnScreen() {
 }
 
 
+const sf::Sprite& Enemy::getSprite() const {
+	return entitySprite;
+}
+
+void Enemy::receiveDamage(int amount) {
+	hp -= amount;
+}
+
 float Enemy::getHP() const {
 	return hp;
 }

@@ -6,6 +6,7 @@
 
 #include "AssetManager.h"
 
+#include "Collision.h"
 
 
 #include <iostream>

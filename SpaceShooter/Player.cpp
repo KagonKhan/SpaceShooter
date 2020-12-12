@@ -126,7 +126,7 @@ void Player::updateAttack(const float& dt) {
 
 			attackTime = 0.f;
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && beamCooldownTimer > 5.f) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && beamCooldownTimer > 0.f) {
 
 
 			//Figure out a better way to position sprites
@@ -222,7 +222,7 @@ void Player::updateProjectiles(const float& dt) {
 	if (beamStartCooldown)
 		beamCooldownTimer += dt;
 
-	for (int i = 0; i < beams.size(); i++) 	{
+	for (unsigned int i = 0; i < beams.size(); i++) 	{
 		beams[i]->update(dt);
 		if (beams[i]->getIsDone()) {
 			beamStartCooldown = true;
@@ -304,6 +304,10 @@ std::vector<Projectile*>* Player::getProjectiles() {
 
 std::vector<Beam*>* Player::getBeams() {
 	return &beams;
+}
+
+const sf::Sprite& Player::getBeamSprite() const {
+	return beams.back()->getBeamSprite();
 }
 
 

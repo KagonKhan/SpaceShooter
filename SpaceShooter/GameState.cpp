@@ -201,8 +201,8 @@ void GameState::updatePowerUps(const float& dt) {
 
 void GameState::render() {
 	renderBackgrounds();
-	renderPlayer();
 	renderEnemies();
+	renderPlayer();
 	renderPowerUps();
 }
 
@@ -308,8 +308,8 @@ void GameState::checkEnemyCollisions() {
 	for (unsigned int j = 0; j < playerBeams.size(); j++) {
 		if (!playerBeams[j]->getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
-				if (enemies[i]->checkHit(*playerBeams[j])) {
-
+				if (Collision::PixelPerfectTest(enemies[i]->getSprite() , player->getBeamSprite(), 127)) {
+					enemies[i]->receiveDamage(playerBeams.back()->getDamage());
 
 					if (enemies[i]->getHP() <= 0) {
 						enemiesForDeletion.push_back(enemies[i]);
@@ -333,7 +333,7 @@ void GameState::checkEnemyCollisions() {
 void GameState::checkPowerUpsCollisions() {
 
 	//CHECKING FOR POWERUPS COLLISION
-	for (int i = 0; i < powerUps.size(); i++)
+	for (unsigned int i = 0; i < powerUps.size(); i++)
 		if (player->checkHit(powerUps[i]->getBounds())) {
 
 			player->receiveUpgrade(powerUps[i]->getUpgradeType());

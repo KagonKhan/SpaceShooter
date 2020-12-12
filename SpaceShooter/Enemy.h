@@ -24,6 +24,9 @@ public:
 	bool areThereProjectilesOnScreen();
 
 
+	const sf::Sprite& getSprite() const;
+	void receiveDamage(int amount);
+
 	float getHP() const;
 
 };
