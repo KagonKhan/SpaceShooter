@@ -42,7 +42,7 @@ BossEnemy::~BossEnemy()
 }
 
 void BossEnemy::update(const float& dt) {
-	std::cout << hpBar.getSize().x << std::endl;
+
 	float percentage = hp / maxHp;
 
 	if (hpBar.getSize().x < 700.f)

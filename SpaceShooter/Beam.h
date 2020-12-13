@@ -51,7 +51,7 @@ public:
 
 	
 
-	const float getDamage() const ;
+	const float getDamage() ;
 	const sf::FloatRect getBounds() const ;
 	const sf::Sprite& getBeamSprite() const ;
 	bool getIsDone();

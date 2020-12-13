@@ -31,7 +31,7 @@ void Beam::initVariables(const sf::Vector2f& boundaries) {
 	beamOnScreenTime = 2.f;
 	beamDamageCounter = beamCounter = 0.f;
 		
-	beamDamage = 20.f;
+	beamDamage = 2000.f;
 
 	isBeamDone = false;
 }
@@ -155,9 +155,11 @@ void Beam::resetTimer() {
 }
 
 
-const float Beam::getDamage() const {
-	if (beamDamageCounter > 1.f)
+const float Beam::getDamage() {
+	if (beamDamageCounter > 0.1f) {
+		beamDamageCounter = 0.f;
 		return beamDamage;
+	}
 	else
 		return 0.f;
 }
