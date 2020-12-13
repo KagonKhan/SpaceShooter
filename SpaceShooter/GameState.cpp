@@ -31,7 +31,7 @@
 	along with "soon to be dead enemies", which cant be later accessed resulting in 
 	uninteractable projectiles
 
-
+	Laser beams don't start dealing damage untill late into their existence - no idea why for now. Let's call it a feature
 
 
 ====================================================== TO DO:  CLEAN-UP ==================================================
