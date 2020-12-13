@@ -5,7 +5,7 @@ class Enemy : public Entity {
 
 
 
-
+protected:
 	void initSprites();
 
 
@@ -17,8 +17,9 @@ class Enemy : public Entity {
 
 
 public:
+
 	Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position);
-	~Enemy();
+	virtual ~Enemy();
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);

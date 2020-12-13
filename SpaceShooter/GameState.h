@@ -2,6 +2,7 @@
 #include "State.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "BossEnemy.h"
 #include "PowerUp.h"
 
 

@@ -47,8 +47,7 @@ public:
 	Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position);
 	~Player();
 
-	void update(const float& dt);
-	
+	void update(const float& dt);	
 	void render(sf::RenderWindow* window);
 	
 	void receiveUpgrade(int type);

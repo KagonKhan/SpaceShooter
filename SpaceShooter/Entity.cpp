@@ -50,6 +50,7 @@ const float Entity::getHp() const {
 
 void Entity::receiveDamage(float amount) {
 	hp -= amount;
+	//std::cout << amount << std::endl;
 }
 
 

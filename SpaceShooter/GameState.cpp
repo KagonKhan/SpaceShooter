@@ -16,7 +16,6 @@
 	Maybe add projectiles HP, so that they can penetrate / be destroyed based on damage deal to them
 
 
-
 	Enemies shoot randomly, not all at once - DONE
 	Player bullets get destroyed on hit - DONE
 
@@ -26,7 +25,16 @@
 	- DONE - Enemy bullets stay on the screen, move bullets vector into the game out of the enemy? 
 	- DONE - Collision 
 
-	====================================================== TO DO:  CLEAN-UP ==================================================
+
+===================================================================	  BUGS   ===================================================================
+	Ghost projectiles - when enemies die, projectiles are moved onto a separate containers
+	along with "soon to be dead enemies", which cant be later accessed resulting in 
+	uninteractable projectiles
+
+
+
+
+====================================================== TO DO:  CLEAN-UP ==================================================
 	Cleanup projectile class - obsolete functions
 	Clean up Entity class - is a bit confusing
 
@@ -92,12 +100,18 @@ void GameState::initPlayer() {
 
 void GameState::initEnemies() {
 
-	for (int i = 0; i < 64; i++) {
-		enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
-			100, (sf::Vector2f)window->getSize(),
-			sf::Vector2f(static_cast<float>(50 + 120 * (i % 16)), static_cast<float>(60 + 100 * (i / 16))))
-		);
-	}
+	//for (int i = 0; i < 64; i++) {
+	//	enemies.push_back(new Enemy("Alien-Scout.png", "../Resources/art/Alien-Ships/",
+	//		100, (sf::Vector2f)window->getSize(),
+	//		sf::Vector2f(static_cast<float>(50 + 120 * (i % 16)), static_cast<float>(60 + 100 * (i / 16))))
+	//	);
+	//}	
+
+
+	enemies.push_back(new BossEnemy("9B.png", "../Resources/art/Alien-Ships/",
+		99000.f, (sf::Vector2f)window->getSize(), sf::Vector2f(static_cast<float>(window->getSize().x/2.f), static_cast<float>(200.f)))
+	);
+	
 }
 
 void GameState::initPowerUps() {

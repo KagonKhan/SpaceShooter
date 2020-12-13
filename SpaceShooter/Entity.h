@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Projectile.h"
+#include "Projectile.h" 
 #include "Beam.h"
 
 class Entity {
@@ -25,6 +25,12 @@ public:
 
 	const float getHp() const ;
 	void receiveDamage(float amount);
+
+
+	virtual void render(sf::RenderWindow* window) = 0;
+	virtual void update(const float& dt) = 0;
+
+
 
 	Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries, float movementSpeed, float attackSpeed, float projectileSpeed, float maxHp, sf::Vector2f position);
 	virtual ~Entity() {};
