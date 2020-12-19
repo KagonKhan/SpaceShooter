@@ -308,6 +308,10 @@ void Player::receiveUpgrade(int type) {
 	}
 }
 
+const sf::Vector2f Player::getPosition() const {
+	return entitySprite.getPosition();
+}
+
 
 
 

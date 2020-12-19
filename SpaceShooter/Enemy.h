@@ -9,9 +9,9 @@ protected:
 	void initSprites();
 
 
-	void updateAttack(const float& dt);
-	void updateMovement(const float& dt);
-	void updateProjectiles(const float& dt);
+	virtual void updateAttack(const float& dt);
+	virtual void updateMovement(const float& dt);
+	virtual void updateProjectiles(const float& dt);
 
 	std::vector<Projectile*> projectiles;
 

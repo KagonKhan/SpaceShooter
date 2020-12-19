@@ -52,6 +52,8 @@ public:
 	
 	void receiveUpgrade(int type);
 	
+	const sf::Vector2f getPosition() const ;
+
 	std::vector<Projectile*>* getProjectiles();
 	std::vector<Beam*>* getBeams();
 

@@ -31,7 +31,10 @@
 	along with "soon to be dead enemies", which cant be later accessed resulting in 
 	uninteractable projectiles
 
-	Laser beams don't start dealing damage untill late into their existence - no idea why for now. Let's call it a feature
+
+	Collision detection vs tanky objects - if holding a shot, and then moving into an enemy the hit is registered on a wrong y level
+
+	FIXED - Laser beams don't start dealing damage untill late into their existence - no idea why for now. Let's call it a feature
 
 
 ====================================================== TO DO:  CLEAN-UP ==================================================
@@ -158,11 +161,16 @@ void GameState::updatePlayer(const float& dt) {
 
 void GameState::updateEnemies(const float& dt) {
 
-	for (auto& x : enemies)
+	for (auto& x : enemies) {
+		x->update(dt);
+		dynamic_cast<BossEnemy*>(x)->sendPlayerPosition(player->getPosition());
+
+	}
+
+	for (auto& x : enemiesForDeletion) {
 		x->update(dt);
 
-	for (auto& x : enemiesForDeletion)
-		x->update(dt);
+	}
 
 
 	updateEnemiesForDeletion(dt);

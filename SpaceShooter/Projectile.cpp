@@ -82,8 +82,8 @@ void Projectile::updateMovement(const float& dt) {
 	switch (projectileType) {
 
 	case ProjectileType::straight:
-		direction = sf::Vector2f(0.f, 1.f);
-		projectileSprite.move(direction * static_cast<float>(projectileDirection) * projectileSpeed * dt);
+		direction = sf::Vector2f(sinf((projectileSprite.getRotation() * 3.1415926f / 180.f)), -cosf((projectileSprite.getRotation() * 3.1415926f / 180.f)));
+		projectileSprite.move(-direction * static_cast<float>(projectileDirection) * projectileSpeed * dt);
 		
 		break;
 
@@ -140,6 +140,10 @@ const float Projectile::getDamage() const {
 
 const sf::Sprite& Projectile::getSprite() const {
 	return projectileSprite;
+}
+
+void Projectile::setRotation(float rotation) {
+	projectileSprite.setRotation(rotation);
 }
 
 

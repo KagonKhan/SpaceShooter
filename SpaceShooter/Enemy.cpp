@@ -7,6 +7,8 @@ Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector
 
 	initSprites();
 
+	// Good stuff - to remember
+
 	srand(static_cast<unsigned int>(reinterpret_cast<int>(this)));
 
 }
@@ -28,8 +30,6 @@ void Enemy::update(const float& dt) {
 
 
 void Enemy::updateAttack(const float& dt) {
-
-	// Good stuff - to remember
 
 	attackTime += attackSpeed * dt;
 

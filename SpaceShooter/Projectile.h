@@ -41,6 +41,10 @@ public:
 	const float getDamage() const ;
 	const sf::Sprite& getSprite() const;
 
+
+	void setRotation(float rotation);
+
+
 	void render(sf::RenderWindow* window);
 	void update(const float& dt);
 
