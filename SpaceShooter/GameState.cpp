@@ -287,7 +287,7 @@ void GameState::checkPlayerCollisions() {
 			if (Collision::PixelPerfectTest(player->getSprite(), enemyProjectiles[j]->getSprite(), 127)) {
 				
 				
-				std::cout << "Player hit\n";
+				//std::cout << "Player hit\n";
 
 				delete enemyProjectiles[j];
 				enemyProjectiles.erase(enemyProjectiles.begin() + j);

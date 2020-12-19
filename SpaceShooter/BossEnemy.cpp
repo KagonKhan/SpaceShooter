@@ -72,6 +72,14 @@ void BossEnemy::update(const float& dt) {
 	
 	
 	
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		missiles.push_back(new Missile(currentPlayerPosition, entitySprite.getPosition(), 30.f));
+	}
+
+	for (auto& x : missiles) {
+		x->setTargetPosition(currentPlayerPosition);
+		x->update(dt);
+	}
 	
 	updateAttack(dt);
 	updateMovement(dt);
@@ -148,6 +156,8 @@ void BossEnemy::render(sf::RenderWindow* window) {
 	for (auto& x : projectiles)
 		x->render(window);
 
+	for (auto& x : missiles)
+		x->render(window);
 
 	for (int i = 0; i < 5; i++) {
 		window->draw(turretSprites[i]);

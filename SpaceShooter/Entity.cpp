@@ -4,6 +4,11 @@
 #include "Entity.h"
 
 
+sf::Vector2f Entity::getPosition()
+{
+	return entitySprite.getPosition();
+}
+
 // this is so ugly ...
 Entity::Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries,
 				float movementSpeed, float attackSpeed, float projectileSpeed, 

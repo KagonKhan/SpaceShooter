@@ -84,6 +84,12 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Entity\Living\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>Projectiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Entity\Living\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
