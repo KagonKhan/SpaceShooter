@@ -22,9 +22,6 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{2e734430-4634-4bf4-9d1c-7cd0a79ae47a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Projectiles">
-      <UniqueIdentifier>{21266094-9ea4-4cd9-8d80-9fe08d845ef8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Precompiled Header">
       <UniqueIdentifier>{d6bdc543-13fb-4b0b-9955-0376e3dff7fa}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,15 @@
     </Filter>
     <Filter Include="Entity\Living\Enemy">
       <UniqueIdentifier>{bb48fd9d-9709-40fc-b482-d2a5ea0d7f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapon">
+      <UniqueIdentifier>{e6f06e3b-1e00-490a-9398-3dbf3a0ad7f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapon\Ammunition">
+      <UniqueIdentifier>{21266094-9ea4-4cd9-8d80-9fe08d845ef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapon\Ammunition\Types">
+      <UniqueIdentifier>{1a615990-a3d9-45da-b9b0-9ff055db3c06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +63,6 @@
     <ClCompile Include="Animator.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Projectiles</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Header Files</Filter>
     </ClCompile>
@@ -68,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="PowerUp.cpp">
       <Filter>Entity\DontKnow</Filter>
-    </ClCompile>
-    <ClCompile Include="Beam.cpp">
-      <Filter>Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Entity\Living</Filter>
@@ -84,11 +84,20 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Entity\Living\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Projectiles</Filter>
+    <ClCompile Include="Ammunition.cpp">
+      <Filter>Weapon\Ammunition</Filter>
+    </ClCompile>
+    <ClCompile Include="Beam.cpp">
+      <Filter>Weapon\Ammunition\Types</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
-      <Filter>Projectiles</Filter>
+      <Filter>Weapon\Ammunition\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Weapon\Ammunition\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,17 +119,11 @@
     <ClInclude Include="Animator.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Projectiles</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Source Files\Precompiled Header</Filter>
     </ClInclude>
     <ClInclude Include="PowerUp.h">
       <Filter>Entity\DontKnow</Filter>
-    </ClInclude>
-    <ClInclude Include="Beam.h">
-      <Filter>Projectiles</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Entity\Living</Filter>
@@ -134,11 +137,20 @@
     <ClInclude Include="Enemy.h">
       <Filter>Entity\Living\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Projectiles</Filter>
+    <ClInclude Include="Ammunition.h">
+      <Filter>Weapon\Ammunition</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Weapon\Ammunition\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam.h">
+      <Filter>Weapon\Ammunition\Types</Filter>
     </ClInclude>
     <ClInclude Include="Missile.h">
-      <Filter>Projectiles</Filter>
+      <Filter>Weapon\Ammunition\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

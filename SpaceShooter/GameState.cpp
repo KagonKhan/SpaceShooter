@@ -282,7 +282,7 @@ void GameState::checkPlayerCollisions() {
 	//CHECKING FOR PLAYER COLLISION
 	for (unsigned int i = 0; i < enemies.size(); i++) {
 
-		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
+		std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
 		for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
 			if (Collision::PixelPerfectTest(player->getSprite(), enemyProjectiles[j]->getSprite(), 127)) {
 				
@@ -300,7 +300,7 @@ void GameState::checkPlayerCollisions() {
 
 
 void GameState::checkEnemyCollisions() {
-	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+	std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
 	std::vector<Beam*>& playerBeams = *player->getBeams();
 
 
@@ -331,7 +331,7 @@ void GameState::checkEnemyCollisions() {
 	for (unsigned int j = 0; j < playerBeams.size(); j++) {
 		if (!playerBeams[j]->getIsDone()) {
 			for (unsigned int i = 0; i < enemies.size(); i++) {
-				if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getBeamSprite(), 150)) {
+			//	if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getSprite(), 150)) {
 					enemies[i]->receiveDamage(playerBeams.back()->getDamage());
 
 					if (enemies[i]->getHp() <= 0) {
@@ -344,7 +344,7 @@ void GameState::checkEnemyCollisions() {
 
 				}
 
-			}
+			//}
 		}
 		else
 			;// playerBeams[j]->resetTimer();
@@ -371,14 +371,14 @@ void GameState::checkPowerUpsCollisions() {
 }
 
 void GameState::checkProjectileCollisions() {
-	std::vector<Projectile*>& playerProjectiles = *player->getProjectiles();
+	std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
 	std::vector<Beam*>& playerBeams = *player->getBeams();
 
 
 
 	/*/Accumulate all enemy projectiles (only from enemy vector)
 	for (unsigned int i = 0; i < enemies.size(); i++) {
-		std::vector<Projectile*>& enemyProjectiles = *enemies[i]->getProjectiles();
+		std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
 
 		allEnemiesProjectiles.insert(allEnemiesProjectiles.end(),
 			std::make_move_iterator(enemyProjectiles.begin()),
@@ -393,7 +393,7 @@ void GameState::checkProjectileCollisions() {
 
 	//Go thru all enemies
 	for (unsigned int enemyIndex = 0; enemyIndex < enemies.size(); enemyIndex++) {
-		std::vector<Projectile*>& enemyProjectiles = *enemies[enemyIndex]->getProjectiles();
+		std::vector<Bullet*>& enemyProjectiles = *enemies[enemyIndex]->getProjectiles();
 
 		//Go thru all enemy projectiles
 		for (unsigned int enemyProjectileIndex = 0; enemyProjectileIndex < enemyProjectiles.size(); enemyProjectileIndex++) {
@@ -411,7 +411,7 @@ void GameState::checkProjectileCollisions() {
 			}
 			//Go thru all player beams
 			for (unsigned int beamIndex = 0; beamIndex < playerBeams.size(); beamIndex++) {
-				if (Collision::PixelPerfectTest(playerBeams[beamIndex]->getBeamSprite(), enemyProjectiles[enemyProjectileIndex]->getSprite(), 127)) {
+				if (Collision::PixelPerfectTest(playerBeams[beamIndex]->getSprite(), enemyProjectiles[enemyProjectileIndex]->getSprite(), 127)) {
 					delete enemyProjectiles[enemyProjectileIndex];
 					enemyProjectiles.erase(enemyProjectiles.begin() + enemyProjectileIndex);
 					return;

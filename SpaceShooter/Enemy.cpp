@@ -39,7 +39,6 @@ void Enemy::updateAttack(const float& dt) {
 		if (attackTime >= 1.f) {
 			sf::Vector2f position(entitySprite.getPosition().x,	entitySprite.getPosition().y);
 
-			projectiles.push_back(new Projectile(position, 500.f, 1));
 			attackTime = 0.f;
 		}
 }
@@ -88,7 +87,7 @@ void Enemy::render(sf::RenderWindow* window) {
 
 
 
-std::vector<Projectile*>* Enemy::getProjectiles() {
+std::vector<Bullet*>* Enemy::getProjectiles() {
 	return &projectiles;
 }
 

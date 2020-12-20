@@ -30,20 +30,7 @@ BossEnemy::BossEnemy(std::string fileName, std::string filePath, float maxhp, sf
 
 
 
-
-	for (int i = 0; i < 5; i++) {
-		turretSprites.push_back(sf::Sprite());
-		turretSprites.back().setTexture(AssetManager::GetTexture("turrettest.png", "../Resources/art/projectile/turrets/"));
-		turretSprites.back().setOrigin(turretSprites.back().getGlobalBounds().width / 2.f, turretSprites.back().getGlobalBounds().height / 2.f);
-		turretSprites.back().setPosition(entitySprite.getPosition() - sf::Vector2f((i - 2) * 100.f, (i - 2) * 100.f));
-		turretSprites.back().setScale(2.f, 2.f);
-
-	
-	}
-
-
-
-
+	initWeapons();
 
 
 
@@ -73,7 +60,7 @@ void BossEnemy::update(const float& dt) {
 	
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		missiles.push_back(new Missile(currentPlayerPosition, entitySprite.getPosition(), 30.f));
+
 	}
 
 	for (auto& x : missiles) {
@@ -89,24 +76,22 @@ void BossEnemy::update(const float& dt) {
 }
 
 
+void BossEnemy::initWeapons() {
+
+
+	for (int i = 0; i < 5; i++) {
+		weapons.push_back(Weapon("turrettest.png", "../Resources/art/projectile/turrets/", 1, 
+			(entitySprite.getPosition() - sf::Vector2f((i - 2) * 100.f, (i - 2) * 100.f)), 1));
+	}
+}
+
 void BossEnemy::updateAttack(const float& dt) {
 	attackTime += attackSpeed * dt;
 
 	bool attack = rand()%10 == 1;
 
 	if (attack) {
-		for (int i = 0; i < 4; i++) {
-			if (attackTime >= 1.f) {
-				sf::Vector2f position(turretSprites[i].getPosition());
 
-				projectiles.push_back(new Projectile(position - sf::Vector2f(20.f, -20.f), 500.f, 1));
-				projectiles.back()->setRotation(turretSprites[i].getRotation());
-				projectiles.push_back(new Projectile(position + sf::Vector2f(20.f, 20.f), 500.f, 1));
-				projectiles.back()->setRotation(turretSprites[i].getRotation());
-
-			}
-		}
-		attackTime = 0.f;
 	}
 }
 
@@ -128,22 +113,9 @@ void BossEnemy::updateProjectiles(const float& dt) {
 		}
 	}
 }
+
 void BossEnemy::updateTurretsRotation(const float& dt) {
 
-
-	for (int i = 0; i < 5; i++) {
-		float x = turretSprites[i].getPosition().x - currentPlayerPosition.x  ;
-		float y = turretSprites[i].getPosition().y - currentPlayerPosition.y  ;
-
-		float alpha = 0.f;
-	
-			alpha = atan2f(y, x);
-
-
-		alpha *= 180 / 3.14159;
-
-		turretSprites[i].setRotation(alpha + 90.f);
-	}
 }
 
 void BossEnemy::render(sf::RenderWindow* window) {
@@ -160,7 +132,7 @@ void BossEnemy::render(sf::RenderWindow* window) {
 		x->render(window);
 
 	for (int i = 0; i < 5; i++) {
-		window->draw(turretSprites[i]);
+		weapons[i].render(window);
 	}
 }
 

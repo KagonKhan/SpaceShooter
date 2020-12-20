@@ -1,19 +1,30 @@
 #include "pch.h"
 #include "Weapon.h"
+#include "Ammunition.h"
 
+Weapon::Weapon(std::string filename, std::string filepath, int type, sf::Vector2f position, int shootingDirection) {
 
-Weapon::Weapon(std::string filename, std::string filepath, std::string type, sf::Vector2f position, int shootingDirection) {
-	weaponSprite.setTexture(AssetManager::GetTexture(filename, filepath));
-	weaponSprite.setOrigin(weaponSprite.getGlobalBounds().width / 2.f, weaponSprite.getGlobalBounds().height / 2.f);
-	weaponSprite.setPosition(position);
+	initSprite(filename, filepath, position);
 
-
-	//missile
-	weaponType = 1;
+	initWeaponType(type);
 }
 
 Weapon::~Weapon() {
+
 }
+
+
+void Weapon::initSprite(std::string filename, std::string filepath, sf::Vector2f position) {
+	weaponSprite.setTexture(AssetManager::GetTexture(filename, filepath));
+	weaponSprite.setOrigin(weaponSprite.getGlobalBounds().width / 2.f, weaponSprite.getGlobalBounds().height / 2.f);
+	weaponSprite.setPosition(position);
+}
+
+void Weapon::initWeaponType(int type) {
+	type % 3 + 1;
+	weaponType = type;
+}
+
 
 void Weapon::update(const float& dt) {
 
@@ -28,28 +39,40 @@ void Weapon::lockOnTarget(Entity* target) {
 	this->target = target;
 }
 
+void Weapon::lockOnTargetPosition(sf::Vector2f position) {
+	targetPosition = position;
+}
+
 void Weapon::lockOff() {
 	target = nullptr;
+}
+
+Ammunition* Weapon::shoot() {
+	switch (weaponType) {
+	case 1:
+		return launchProjectile();
+		break;
+	case 2:
+		return launchMissile();
+		break;	
+	case 3:
+		return launchBeam();
+		break;
+	
+	}
 }
 
 
 
 
+Missile* Weapon::launchMissile() {
+	return nullptr;
+}
 
+Bullet* Weapon::launchProjectile() {
+	return nullptr;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Weapon::updateMissile(const float& dt) {
+Beam* Weapon::launchBeam() {
+	return nullptr;
 }

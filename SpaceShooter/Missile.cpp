@@ -1,33 +1,31 @@
 #include "pch.h"
 #include "Missile.h"
+#include "Animator.h"
 
-Missile::Missile(sf::Vector2f targetPosition, sf::Vector2f position, float initialRotation) {
+Missile::Missile(std::string spriteFilename, std::string spriteFilepath,
+	std::string soundFilename, std::string soundFilepath,
+	sf::Vector2f position, float speed, float damage, float rotation) :
 
-	missile.setSize(sf::Vector2f(20, 100));
-	missile.setOrigin(missile.getSize()/2.f);
-	missile.setRotation(initialRotation);
-	missile.setPosition(position);
+	Ammunition(spriteFilename, spriteFilepath, soundFilename, soundFilepath, position, speed, damage, rotation)
 
+{
 
+	target = nullptr;
+	angularVelocity = 350.f;
 
-	angularVelocity = 150.f;
-
-	std::cout << "Missile Spawned\n";
 }
 
 Missile::~Missile() {
+
 }
 
 void Missile::setTargetPosition(sf::Vector2f targetPosition) {
 	this->targetPosition = targetPosition;
 }
 
-
-
-
-
-
-
+void Missile::setTargetEntity(Entity* target) {
+	this->target = target;
+}
 
 
 
@@ -41,33 +39,19 @@ void Missile::update(const float& dt) {
 }
 
 void Missile::render(sf::RenderWindow* window) {
-	window->draw(missile);
+	window->draw(ammoSprite);
 }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void Missile::updateMissileMovement(const float& dt) {
-	sf::Vector2f direction(sinf((missile.getRotation() * 3.1415926f / 180.f)), -cosf((missile.getRotation() * 3.1415926f / 180.f)));
+	sf::Vector2f direction(sinf((ammoSprite.getRotation() * 3.1415926f / 180.f)), -cosf((ammoSprite.getRotation() * 3.1415926f / 180.f)));
 
-	missileVelocity = direction * 800.f * dt;
+	missileVelocity = direction * ammoSpeed * dt;
 
-	missile.move(missileVelocity);
+	ammoSprite.move(missileVelocity);
 }
 
 
@@ -75,22 +59,23 @@ void Missile::updateMissileMovement(const float& dt) {
 void Missile::updateMissileRotation(const float& dt) {
 
 	sf::Vector2f A(missileVelocity);
-	sf::Vector2f B(targetPosition - missile.getPosition());
+	sf::Vector2f B(targetPosition - ammoSprite.getPosition());
 
 	float perpDotValue = PerpendicularDotProduct(A, B);
 
 	if (perpDotValue < 0) {
-		missile.rotate(-angularVelocity * dt);
+		ammoSprite.rotate(-angularVelocity * dt);
 	}
 	else if (perpDotValue > 0) {
-		missile.rotate(angularVelocity * dt);
+		ammoSprite.rotate(angularVelocity * dt);
 	}
 	else {
 		if (DotProduct(A, B) < 0)
 			missileVelocity.y *= -1;
 	}
 
-
+	if(angularVelocity > 20)
+		angularVelocity -= 2;
 }
 
 

@@ -26,7 +26,7 @@ Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBo
 
 
 	// PRELOADING THE TEXTURE SO NO LAG SPIKES
-	Beam::loadBeamTexture();
+
 
 }
 
@@ -125,9 +125,6 @@ void Player::updateAttack(const float& dt) {
 			sf::Vector2f size(10.f, 50.f);
 
 			//Figure out a better way to position sprites
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(-15.f, 40.f), projectileSpeed, -1, projectileType));
-
-			projectiles.push_back(new Projectile(entitySprite.getPosition() + sf::Vector2f(+15.f, 40.f), projectileSpeed, -1, projectileType));
 
 			attackTime = 0.f;
 		}
@@ -136,7 +133,6 @@ void Player::updateAttack(const float& dt) {
 
 			//Figure out a better way to position sprites
 			sf::Vector2f position = entitySprite.getPosition() + sf::Vector2f(-5.f, 100.f);
-			beams.push_back(new Beam(boundaries, position));
 
 			beamCooldownTimer = 0.f;
 			blockAttack = true;
@@ -317,14 +313,10 @@ const sf::Vector2f Player::getPosition() const {
 
 
 
-std::vector<Projectile*>* Player::getProjectiles() {
+std::vector<Bullet*>* Player::getProjectiles() {
 	return &projectiles;
 }
 
 std::vector<Beam*>* Player::getBeams() {
 	return &beams;
-}
-
-const sf::Sprite& Player::getBeamSprite() const {
-	return beams.back()->getBeamSprite();
 }

@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Projectile.h" 
-#include "Beam.h"
-
 class Entity {
 private:
 	void initSprite(std::string filename, std::string filepath, sf::Vector2f position);

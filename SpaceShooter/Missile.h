@@ -1,10 +1,8 @@
 #pragma once
 #include "Entity.h"
-class Missile {
+#include "Ammunition.h"
 
-	sf::Sprite missileSprite;
-
-	sf::RectangleShape missile;
+class Missile : public Ammunition {
 
 
 	float PerpendicularDotProduct(const sf::Vector2f A, const sf::Vector2f B);
@@ -21,10 +19,14 @@ class Missile {
 	float angularVelocity;
 
 public:
-	Missile(sf::Vector2f targetPosition, sf::Vector2f position, float initialRotation);
+	Missile(std::string spriteFilename, std::string spriteFilepath,
+		std::string soundFilename, std::string soundFilepath,
+		sf::Vector2f position, float speed, float damage, float rotation);
+
 	~Missile();
 
 	void setTargetPosition(sf::Vector2f targetPosition);
+	void setTargetEntity(Entity* target);
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);

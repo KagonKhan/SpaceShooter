@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "Animator.h"
-#include "Beam.h"
+#include "Weapon.h"
 
 class Player : public Entity {
 
@@ -12,7 +12,7 @@ class Player : public Entity {
 
 	float velocity;
 
-	std::vector<Projectile*> projectiles;
+	std::vector<Bullet*> projectiles;
 
 	//No point in having this as a vector - only 1 beam allowed at a time.
 	//or maybe can upgrade to multiple beams
@@ -54,7 +54,7 @@ public:
 	
 	const sf::Vector2f getPosition() const ;
 
-	std::vector<Projectile*>* getProjectiles();
+	std::vector<Bullet*>* getProjectiles();
 	std::vector<Beam*>* getBeams();
 
 	const sf::Sprite& getBeamSprite() const ;

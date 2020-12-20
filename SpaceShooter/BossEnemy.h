@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
-#include "Missile.h"
+#include "Weapon.h"
+
 class BossEnemy : public Enemy {
 
 	sf::RectangleShape hpBar, hpBarBG;
@@ -12,10 +13,10 @@ class BossEnemy : public Enemy {
 	std::vector<Missile*> missiles;
 
 
-	std::vector<sf::Sprite> turretSprites;
+	std::vector<Weapon> weapons;
 
 
-
+	void initWeapons();
 
 	void updateAttack(const float& dt);
 	void updateMovement(const float& dt);

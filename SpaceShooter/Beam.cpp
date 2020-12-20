@@ -5,51 +5,45 @@
 //CLEAN UP THE CODE 
 // Need to change the principle - rn making a vector of beams. Doesnt seem good.
 //as well as add proper sounds
-Beam::Beam(sf::Vector2f boundaries, sf::Vector2f position) {
+Beam::Beam(std::string spriteFilename, std::string spriteFilepath,
+	std::string soundFilename, std::string soundFilepath,
+	sf::Vector2f position, float speed, float damage, float rotation) :
 
-	initVariables(boundaries);
+		Ammunition(spriteFilename, spriteFilepath, soundFilename, soundFilepath, position, speed, damage, rotation)
+{
+
+	initVariables();
+	initSprite();
 	initSound(position);
-	initSprite(position);
-
 }
 
 Beam::~Beam() {
 
 }
 
-void Beam::loadBeamTexture() {
-	AssetManager::GetTexture("BlueLaser.png", "../Resources/art/projectile/LaserTests/");
-}
 
+void Beam::initVariables() {
 
-void Beam::initVariables(const sf::Vector2f& boundaries) {
-
-	boundary = boundaries;
 	beamColorVisibily = 10;
 	beamVisibilityThreshold = 20.f;
 
 	beamOnScreenTime = 2.f;
 	beamDamageCounter = beamCounter = 0.f;
 		
-	beamDamage = 2000.f;
+	ammoDamage = 2000.f;
 
 	isBeamDone = false;
 }
 
-void Beam::initSprite(sf::Vector2f position) {
-	//beamSprite.setTexture(AssetManager::GetTexture("laserTest.png", "../Resources/art/projectile/LaserTests/"));
-	beamSprite.setTexture(AssetManager::GetTexture("BlueLaser.png", "../Resources/art/projectile/LaserTests/"));
+void Beam::initSprite() {
+
 	initAnimation();
 	
-
-	beamSprite.setPosition(position);
-	beamSprite.setOrigin(sf::Vector2f(beamSprite.getGlobalBounds().width / 2.f, beamSprite.getGlobalBounds().height ));
-	beamSprite.setScale(1.5f, 2.5f);
-
+	ammoSprite.setScale(1.5f, 2.5f);
 }
 
 void Beam::initAnimation() {
-	animator = new Animator(beamSprite);
+	animator = new Animator(ammoSprite);
 
 	auto& animationBeam = animator->CreateAnimation("BEAM", "../Resources/art/projectile/LaserTests/", "RedLaser.png", sf::seconds(0.5), true);
 	
@@ -67,13 +61,11 @@ void Beam::initAnimation() {
 }
 
 void Beam::initSound(const sf::Vector2f& position) {
-	sound.setBuffer(AssetManager::GetSoundBuffer("playerLaser.wav", "../Resources/sounds/big_laser/"));
-	sound.setMinDistance(2000.f);
-	sound.setPosition(position.x, position.y, 0);
-	sound.setVolume(50);
-	sound.setAttenuation(20.f);
-
-	sound.play();
+	ammoSound.setMinDistance(2000.f);
+	ammoSound.setPosition(position.x, position.y, 0);
+	ammoSound.setVolume(50);
+	ammoSound.setAttenuation(20.f);
+	ammoSound.play();
 }
 
 
@@ -105,14 +97,14 @@ void Beam::updateAnimation(const float& dt) {
 
 void Beam::updateBeamColor() {
 	if (beamCounter > beamOnScreenTime) {
-		sf::Color beamColor = beamSprite.getColor();
+		sf::Color beamColor = ammoSprite.getColor();
 		beamColor.a -= beamColorVisibily;
-		beamSprite.setColor(beamColor);
+		ammoSprite.setColor(beamColor);
 	}
 }
 
 void Beam::updateIsDone() {
-	if (beamSprite.getColor().a < beamVisibilityThreshold)
+	if (ammoSprite.getColor().a < beamVisibilityThreshold)
 		isBeamDone = true;
 
 }
@@ -120,31 +112,14 @@ void Beam::updateIsDone() {
 
 
 
-
 void Beam::render(sf::RenderWindow* window) {
-	window->draw(beamSprite);
+	window->draw(ammoSprite);
 }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-void Beam::setRotation(float rotation) {
-	beamSprite.setRotation(rotation);
-}
 
 
 
@@ -154,22 +129,15 @@ void Beam::resetTimer() {
 	std::cout << "RESET\t";
 }
 
-
 const float Beam::getDamage() {
 	if (beamDamageCounter > 0.1f) {
 		beamDamageCounter = 0.f;
-		return beamDamage;
+		return ammoDamage;
 	}
-	else
+	else {
 		return 0.f;
-}
 
-const sf::FloatRect Beam::getBounds() const {
-	return beamSprite.getGlobalBounds();
-}
-
-const sf::Sprite& Beam::getBeamSprite() const {
-	return beamSprite;
+	}
 }
 
 bool Beam::getIsDone() {

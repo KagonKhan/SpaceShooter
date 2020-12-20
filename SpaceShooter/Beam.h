@@ -1,23 +1,15 @@
 #pragma once
 
-#include "Animator.h"
+#include "Ammunition.h"
 
+class Beam : public Ammunition {
 
-class Beam {
-
-
-	sf::RectangleShape shape;
-	sf::Sound sound;
 	sf::Vector2f boundary;
-	sf::Sprite beamSprite;
 
 	Animator* animator;
 
 
-
 	int beamColorVisibily, beamVisibilityThreshold;
-
-	float beamDamage;
 
 	float beamCounter, beamOnScreenTime, beamDamageCounter;
 	
@@ -26,8 +18,8 @@ class Beam {
 
 	
 
-	void initVariables(const sf::Vector2f& boundaries);
-	void initSprite(sf::Vector2f position);
+	void initVariables();
+	void initSprite();
 	void initAnimation();
 	void initSound(const sf::Vector2f& position);
 
@@ -40,25 +32,20 @@ class Beam {
 
 
 public:
-	Beam(sf::Vector2f boundaries, sf::Vector2f position);
+	Beam(std::string spriteFilename, std::string spriteFilepath,
+		std::string soundFilename, std::string soundFilepath,
+		sf::Vector2f position, float speed, float damage, float rotation);
 	~Beam();
 
 	void update(const float& dt);
 	void render(sf::RenderWindow* window);
-
-	void setRotation(float rotation);
-
-
 	
 
-	const float getDamage() ;
-	const sf::FloatRect getBounds() const ;
-	const sf::Sprite& getBeamSprite() const ;
+	const float getDamage();
 	bool getIsDone();
 
 	void resetTimer();
 
-	static void loadBeamTexture();
 
 };
 
