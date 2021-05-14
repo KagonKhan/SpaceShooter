@@ -38,7 +38,6 @@ BossEnemy::BossEnemy(std::string fileName, std::string filePath, float maxhp, sf
 
 	srand(static_cast<unsigned int>(reinterpret_cast<int>(this)));
 
-	attackSpeed = 50.f;
 }
 
 BossEnemy::~BossEnemy() {
@@ -86,7 +85,7 @@ void BossEnemy::initWeapons() {
 }
 
 void BossEnemy::updateAttack(const float& dt) {
-	attackTime += attackSpeed * dt;
+
 
 	bool attack = rand()%10 == 1;
 

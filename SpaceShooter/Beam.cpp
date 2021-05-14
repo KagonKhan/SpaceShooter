@@ -12,9 +12,13 @@ Beam::Beam(std::string spriteFilename, std::string spriteFilepath,
 		Ammunition(spriteFilename, spriteFilepath, soundFilename, soundFilepath, position, speed, damage, rotation)
 {
 
+	std::cout << "beam";
+
 	initVariables();
 	initSprite();
 	initSound(position);
+
+
 }
 
 Beam::~Beam() {
@@ -36,9 +40,8 @@ void Beam::initVariables() {
 }
 
 void Beam::initSprite() {
-
 	initAnimation();
-	
+	this->ammoSprite.setOrigin(getSize().x / 2.f, getSize().y);
 	ammoSprite.setScale(1.5f, 2.5f);
 }
 
@@ -118,12 +121,6 @@ void Beam::render(sf::RenderWindow* window) {
 
 
 
-
-
-
-
-
-
 void Beam::resetTimer() {
 	beamDamageCounter = 0.f;
 	std::cout << "RESET\t";
@@ -138,6 +135,10 @@ const float Beam::getDamage() {
 		return 0.f;
 
 	}
+}
+
+const sf::Vector2f& Beam::getPosition() const {
+	return ammoSprite.getPosition();
 }
 
 bool Beam::getIsDone() {

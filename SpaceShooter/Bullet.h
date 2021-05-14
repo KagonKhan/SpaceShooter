@@ -32,6 +32,6 @@ public:
 	void render(sf::RenderWindow* window);
 	void update(const float& dt);
 
-	~Bullet() {};
+	~Bullet();
 };
 

@@ -13,7 +13,7 @@
 
 	Fix sound, listener, attenuation - mostly 3D issues
 
-	Maybe add projectiles HP, so that they can penetrate / be destroyed based on damage deal to them
+	Maybe add projectiles HP, so that they can penetrate / be destroyed based on damage dealt to them
 
 
 	Enemies shoot randomly, not all at once - DONE
@@ -126,6 +126,8 @@ void GameState::initPowerUps() {
 
 
 void GameState::update(const float& dt) {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+		this->states->pop();
 
 	updateSFMLEvents();
 	updateMousePosition();
@@ -278,77 +280,77 @@ void GameState::checkCollisions() {
 
 
 void GameState::checkPlayerCollisions() {
-	
-	//CHECKING FOR PLAYER COLLISION
-	for (unsigned int i = 0; i < enemies.size(); i++) {
+	//
+	////CHECKING FOR PLAYER COLLISION
+	//for (unsigned int i = 0; i < enemies.size(); i++) {
 
-		std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
-		for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
-			if (Collision::PixelPerfectTest(player->getSprite(), enemyProjectiles[j]->getSprite(), 127)) {
-				
-				
-				//std::cout << "Player hit\n";
+	//	std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
+	//	for (unsigned int j = 0; j < enemyProjectiles.size(); j++) {
+	//		if (Collision::PixelPerfectTest(player->getSprite(), enemyProjectiles[j]->getSprite(), 127)) {
+	//			
+	//			
+	//			//std::cout << "Player hit\n";
 
-				delete enemyProjectiles[j];
-				enemyProjectiles.erase(enemyProjectiles.begin() + j);
-				break;
-			}
-		}
-	}
+	//			delete enemyProjectiles[j];
+	//			enemyProjectiles.erase(enemyProjectiles.begin() + j);
+	//			break;
+	//		}
+	//	}
+	//}
 
 }
 
 
 void GameState::checkEnemyCollisions() {
-	std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
-	std::vector<Beam*>& playerBeams = *player->getBeams();
+	//std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
+	//std::vector<Beam*>& playerBeams = *player->getBeams();
 
 
-	//CHECKING FOR ENEMY COLLISION
-	for (unsigned int i = 0; i < enemies.size(); i++) {
-		for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
-			if (Collision::PixelPerfectTest(enemies[i]->getSprite(), playerProjectiles[j]->getSprite(), 127)) {
+	////CHECKING FOR ENEMY COLLISION
+	//for (unsigned int i = 0; i < enemies.size(); i++) {
+	//	for (unsigned int j = 0; j < playerProjectiles.size(); j++) {
+	//		if (Collision::PixelPerfectTest(enemies[i]->getSprite(), playerProjectiles[j]->getSprite(), 127)) {
 
-				enemies[i]->receiveDamage(playerProjectiles[j]->getDamage());
+	//			enemies[i]->receiveDamage(playerProjectiles[j]->getDamage());
 
-				if (enemies[i]->getHp() <= 0) {
-					enemiesForDeletion.push_back(enemies[i]);
+	//			if (enemies[i]->getHp() <= 0) {
+	//				enemiesForDeletion.push_back(enemies[i]);
 
-					//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
-					enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
-					enemies.erase(enemies.begin() + i);
-				}
+	//				//ENEMIES ERASE CAUSES PROJECTILES TO DISAPPEAR
+	//				enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
+	//				enemies.erase(enemies.begin() + i);
+	//			}
 
-				delete playerProjectiles[j];
-				playerProjectiles.erase(playerProjectiles.begin() + j);
-				break;
-			}
-		}
-	}
-
-
-	// BEAM DAMAGE
-	for (unsigned int j = 0; j < playerBeams.size(); j++) {
-		if (!playerBeams[j]->getIsDone()) {
-			for (unsigned int i = 0; i < enemies.size(); i++) {
-			//	if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getSprite(), 150)) {
-					enemies[i]->receiveDamage(playerBeams.back()->getDamage());
-
-					if (enemies[i]->getHp() <= 0) {
-						enemiesForDeletion.push_back(enemies[i]);
+	//			delete playerProjectiles[j];
+	//			playerProjectiles.erase(playerProjectiles.begin() + j);
+	//			break;
+	//		}
+	//	}
+	//}
 
 
-						enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
-						enemies.erase(enemies.begin() + i);
-					}
+	//// BEAM DAMAGE
+	//for (unsigned int j = 0; j < playerBeams.size(); j++) {
+	//	if (!playerBeams[j]->getIsDone()) {
+	//		for (unsigned int i = 0; i < enemies.size(); i++) {
+	//		//	if (Collision::PixelPerfectTest(enemies[i]->getSprite(), player->getSprite(), 150)) {
+	//				enemies[i]->receiveDamage(playerBeams.back()->getDamage());
 
-				}
+	//				if (enemies[i]->getHp() <= 0) {
+	//					enemiesForDeletion.push_back(enemies[i]);
 
-			//}
-		}
-		else
-			;// playerBeams[j]->resetTimer();
-	}
+
+	//					enemies[i]->setPosition(sf::Vector2f(-9999, -99999.f));
+	//					enemies.erase(enemies.begin() + i);
+	//				}
+
+	//			}
+
+	//		//}
+	//	}
+	//	else
+	//		;// playerBeams[j]->resetTimer();
+	//}
 
 }
 
@@ -371,55 +373,55 @@ void GameState::checkPowerUpsCollisions() {
 }
 
 void GameState::checkProjectileCollisions() {
-	std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
-	std::vector<Beam*>& playerBeams = *player->getBeams();
+	//std::vector<Bullet*>& playerProjectiles = *player->getProjectiles();
+	//std::vector<Beam*>& playerBeams = *player->getBeams();
 
 
 
-	/*/Accumulate all enemy projectiles (only from enemy vector)
-	for (unsigned int i = 0; i < enemies.size(); i++) {
-		std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
+	///*/Accumulate all enemy projectiles (only from enemy vector)
+	//for (unsigned int i = 0; i < enemies.size(); i++) {
+	//	std::vector<Bullet*>& enemyProjectiles = *enemies[i]->getProjectiles();
 
-		allEnemiesProjectiles.insert(allEnemiesProjectiles.end(),
-			std::make_move_iterator(enemyProjectiles.begin()),
-			std::make_move_iterator(enemyProjectiles.end())
-		);
+	//	allEnemiesProjectiles.insert(allEnemiesProjectiles.end(),
+	//		std::make_move_iterator(enemyProjectiles.begin()),
+	//		std::make_move_iterator(enemyProjectiles.end())
+	//	);
 
-	}*/
+	//}*/
 
-	
+	//
 
-	//OH LAWD WHAT HAPPENED HERE - research a better solution
+	////OH LAWD WHAT HAPPENED HERE - research a better solution
 
-	//Go thru all enemies
-	for (unsigned int enemyIndex = 0; enemyIndex < enemies.size(); enemyIndex++) {
-		std::vector<Bullet*>& enemyProjectiles = *enemies[enemyIndex]->getProjectiles();
+	////Go thru all enemies
+	//for (unsigned int enemyIndex = 0; enemyIndex < enemies.size(); enemyIndex++) {
+	//	std::vector<Bullet*>& enemyProjectiles = *enemies[enemyIndex]->getProjectiles();
 
-		//Go thru all enemy projectiles
-		for (unsigned int enemyProjectileIndex = 0; enemyProjectileIndex < enemyProjectiles.size(); enemyProjectileIndex++) {
+	//	//Go thru all enemy projectiles
+	//	for (unsigned int enemyProjectileIndex = 0; enemyProjectileIndex < enemyProjectiles.size(); enemyProjectileIndex++) {
 
-			//Go thru all player Projectiles
-			for (unsigned int playerProjectileIndex = 0; playerProjectileIndex < playerProjectiles.size(); playerProjectileIndex++) {
-				if (Collision::PixelPerfectTest(enemyProjectiles[enemyProjectileIndex]->getSprite(), playerProjectiles[playerProjectileIndex]->getSprite(), 127)) {
-					delete enemyProjectiles[enemyProjectileIndex];
-					enemyProjectiles.erase(enemyProjectiles.begin() + enemyProjectileIndex);
+	//		//Go thru all player Projectiles
+	//		for (unsigned int playerProjectileIndex = 0; playerProjectileIndex < playerProjectiles.size(); playerProjectileIndex++) {
+	//			if (Collision::PixelPerfectTest(enemyProjectiles[enemyProjectileIndex]->getSprite(), playerProjectiles[playerProjectileIndex]->getSprite(), 127)) {
+	//				delete enemyProjectiles[enemyProjectileIndex];
+	//				enemyProjectiles.erase(enemyProjectiles.begin() + enemyProjectileIndex);
 
-					delete playerProjectiles[playerProjectileIndex];
-					playerProjectiles.erase(playerProjectiles.begin() + playerProjectileIndex);
-					return;
-				}
-			}
-			//Go thru all player beams
-			for (unsigned int beamIndex = 0; beamIndex < playerBeams.size(); beamIndex++) {
-				if (Collision::PixelPerfectTest(playerBeams[beamIndex]->getSprite(), enemyProjectiles[enemyProjectileIndex]->getSprite(), 127)) {
-					delete enemyProjectiles[enemyProjectileIndex];
-					enemyProjectiles.erase(enemyProjectiles.begin() + enemyProjectileIndex);
-					return;
-				}
-			}
-		}
+	//				delete playerProjectiles[playerProjectileIndex];
+	//				playerProjectiles.erase(playerProjectiles.begin() + playerProjectileIndex);
+	//				return;
+	//			}
+	//		}
+	//		//Go thru all player beams
+	//		for (unsigned int beamIndex = 0; beamIndex < playerBeams.size(); beamIndex++) {
+	//			if (Collision::PixelPerfectTest(playerBeams[beamIndex]->getSprite(), enemyProjectiles[enemyProjectileIndex]->getSprite(), 127)) {
+	//				delete enemyProjectiles[enemyProjectileIndex];
+	//				enemyProjectiles.erase(enemyProjectiles.begin() + enemyProjectileIndex);
+	//				return;
+	//			}
+	//		}
+	//	}
 
-	}
+	//}
 
 
 

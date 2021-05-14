@@ -1,43 +1,41 @@
 #include "pch.h"
-
 #include "Player.h"
-#include "Animator.h"
+
 
 // CTRL M O  /  CTRL M P - collapse open all
 // CTRL K S WITH HIGHLIGHTED CODE - SURROUND A BLOCK OF CODE WITH
 
 Player::Player(std::string fileName, std::string filePath, sf::Vector2f windowBoundaries, sf::Vector2f position)
-	:	Entity(fileName, filePath, windowBoundaries, 80.f, 50.f, 900.f, 100.f, position){
+	:	Entity(fileName, filePath, windowBoundaries, 80.f, 50.f, 100.f, position) {
 
 	entitySprite.setPosition(position - sf::Vector2f(0, 50));
 
+	initVariables();
 	initSprites();
 	initAnimation();
 	initListener();
-	
-	velocity = 0.93f;
-	projectileType = 0;
-
-
-	blockMovement = blockAttack = false;
-	beamStartCooldown = false;
-	beamCooldownTimer = 50.f;
-
-
-
-	// PRELOADING THE TEXTURE SO NO LAG SPIKES
+	initWeapons();
 
 
 }
 
 Player::~Player() {
-	for (auto& it : projectiles)
-		delete it;
+
+}
+
+
+
+void Player::initVariables() {
+
+	velocity = 0.93f;
+
+	blockMovement = blockAttack = false;
+	beamStartCooldown = false;
+	beamCooldownTimer = 50.f;
+
 }
 
 void Player::initSprites() {
-	//Test a bit with origins 
-	entitySprite.setOrigin(sf::Vector2f(entitySprite.getGlobalBounds().width, entitySprite.getGlobalBounds().height) / 2.f);
 
 	engineSprite.setTexture(AssetManager::GetTexture("Exhaust_all.png", "../Resources/art/Engine_exhaust/Exhaust/"));
 
@@ -47,11 +45,6 @@ void Player::initSprites() {
 	engineSprite.setOrigin(sf::Vector2f(34.f, 0.f) / 2.f); // ugly, but rn don't know a better solution
 	engineSprite.setPosition(entitySprite.getPosition());
 	engineSprite.move(-23.f, 32.f);
-
-
-
-
-
 
 }
 
@@ -77,6 +70,19 @@ void Player::initListener() {
 	//sf::Listener::setDirection(0, 1, -1);
 }
 
+void Player::initWeapons() {
+
+	bulletWeapons.push_back(Weapon("turrettest.png", "../Resources/art/projectile/turrets/", 1, entitySprite.getPosition(), 1));
+	bulletWeapons.push_back(Weapon("turrettest.png", "../Resources/art/projectile/turrets/", 1, entitySprite.getPosition(), 1));
+	bulletWeapons[0].scaleSprite(2, 2);
+	bulletWeapons[1].scaleSprite(2, 2);
+
+	beamWeapon = Weapon("Cannon3.png", "../Resources/art/projectile/turrets/towers/PNG/", 3, entitySprite.getPosition() , 1);
+	
+	beamWeapon.scaleSprite(0.2f, 0.5f);
+
+}
+
 
 
 
@@ -88,66 +94,59 @@ void Player::update(const float& dt) {
 
 	updateSprites(dt);
 
-	updateProjectiles(dt);
+	updateAmmunition(dt);
 
 	updateAnimations(dt);
 
+	updateWeapons(dt);
 
 	sf::Listener::setPosition(sf::Vector3f(entitySprite.getPosition().x, entitySprite.getPosition().y, 0));
 
 }
 
 void Player::updateAttack(const float& dt) {
-	attackTime += attackSpeed * dt;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1))
 		projectileType = 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2))
 		projectileType = 2;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3))
-		projectileType = 3;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4))
-		projectileType = 4;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5))
-		projectileType = 5;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num6))
-		projectileType = 6;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num7))
-		projectileType = 7;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num8))
-		projectileType = 8;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num9))
-		projectileType = 9;
 
-	if (attackTime >= 1.f && !blockAttack) {
+	if (!blockAttack) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 
-			sf::Vector2f size(10.f, 50.f);
+			for (unsigned int i = 0; i < bulletWeapons.size(); i++) {
+				if (bulletWeapons[i].isWeaponReadyToShoot()) {
+					Ammunition* temp = bulletWeapons[i].shoot();
+					bullets.push_back(temp);
+				}
+			}
 
-			//Figure out a better way to position sprites
 
-			attackTime = 0.f;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && beamCooldownTimer > 0.f) {
 
-
-			//Figure out a better way to position sprites
-			sf::Vector2f position = entitySprite.getPosition() + sf::Vector2f(-5.f, 100.f);
-
+			beam = dynamic_cast<Beam*>(beamWeapon.shoot());
 			beamCooldownTimer = 0.f;
 			blockAttack = true;
 			blockMovement = true;
-			attackTime = 0.f;
 
 		}
 
 	}
 }
 
+void Player::updateWeapons(const float& dt) {
+	for (unsigned int i = 0; i < bulletWeapons.size(); i++)
+		bulletWeapons[i].update(dt);
+
+	if(beam)
+		beamWeapon.update(dt);
+}
+
 void Player::updateMovement(const float& dt) {
 	movement *= velocity;
 
-	//Normalize movement/????
+	//Normalize movement/?
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		movement.x -= movementSpeed;
@@ -197,45 +196,52 @@ void Player::updateSprites(const float& dt) {
 	if (!blockMovement) {
 		entitySprite.move(movement * dt);
 
+
+
+		// TODO most likely bad solution, unoptimized
 		engineSprite2 = engineSprite;
 		engineSprite2.move(46.f, 0.f);
 
 		engineSprite.move(movement * dt);
 		engineSprite2.move(movement * dt);
 
+		// TODO make this more intuitive - remembering how much tio shift sucks
+		bulletWeapons[0].setPosition(entitySprite.getPosition() + sf::Vector2f(50,0));
+		bulletWeapons[1].setPosition(entitySprite.getPosition() + sf::Vector2f(-50, 0));
+
+		beamWeapon.setPosition(entitySprite.getPosition());
 	}
 }
 
+void Player::updateAmmunition(const float& dt) {
 
-void Player::updateProjectiles(const float& dt) {
-	for (unsigned i = 0; i < projectiles.size(); i++) {
-		projectiles[i]->update(dt);
+	for (unsigned i = 0; i < bullets.size(); i++) {
+		bullets[i]->update(dt);
 
-		//CLEANING UP PROJECTILES
-		sf::Vector2f position = projectiles[i]->getPosition();
-		float size = projectiles[i]->getSize().y;
+
+		sf::Vector2f position = bullets[i]->getPosition();
+		float size = bullets[i]->getSize().y;
+
 		if (position.y + size < 0.f || position.y - size > boundaries.y || position.x < 0 || position.x > boundaries.x) {
-			delete projectiles[i];
-
-			//CHECK IF NECESSARY i--
-			projectiles.erase(projectiles.begin() + i--);
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
 		}
 	}
 
 	if (beamStartCooldown)
 		beamCooldownTimer += dt;
 
-	for (unsigned int i = 0; i < beams.size(); i++) 	{
-		beams[i]->update(dt);
-		if (beams[i]->getIsDone()) {
-			beamStartCooldown = true;
-			delete beams[i];
-			beams.erase(beams.begin() + i);
-			blockAttack = blockMovement = false;
-			break;
-		}
+	if (beam) {
+		beam->update(dt);
 
+		if (beam->getIsDone()) {
+			beamStartCooldown = true;
+			delete beam;
+			beam = nullptr;
+			blockAttack = blockMovement = false;
+		}
 	}
+
 }
 
 void Player::updateAnimations(const float& dt) {
@@ -251,72 +257,34 @@ void Player::updateAnimations(const float& dt) {
 
 
 
-
-
-
-
 void Player::render(sf::RenderWindow* window) {
 	renderPlayerAttacks(window);
 	renderPlayer(window);
 }
 
-
 void Player::renderPlayerAttacks(sf::RenderWindow* window) {
-	for (auto x : projectiles)
+	for (auto x : bullets)
 		x->render(window);
 
-	for (auto& x : beams)
-		x->render(window);
+	if (beam)
+		beam->render(window);
 }
 
 void Player::renderPlayer(sf::RenderWindow* window) {
 
+	if (beam) {
+		
+	}
+
+
 	window->draw(engineSprite);
 	window->draw(engineSprite2);
 	window->draw(entitySprite);
+	window->draw(beamWeapon.getSprite());
+
+	for (const auto& x : bulletWeapons)
+		window->draw(x.getSprite());
 }
 
 
 
-
-
-
-void Player::receiveUpgrade(int type) {
-	switch (type) {
-	case 0:
-		attackSpeed += 10;
-			break;
-	case 1:
-		hp += 10;
-		maxHp += 10;
-		break;
-	case 2:
-		// not sure how to solve this
-		velocity += 0.005f;
-		break;
-	case 3:
-		//will have to fix this
-		projectileType = 5;
-		break;
-	default:
-		break;
-
-	}
-}
-
-const sf::Vector2f Player::getPosition() const {
-	return entitySprite.getPosition();
-}
-
-
-
-
-
-
-std::vector<Bullet*>* Player::getProjectiles() {
-	return &projectiles;
-}
-
-std::vector<Beam*>* Player::getBeams() {
-	return &beams;
-}

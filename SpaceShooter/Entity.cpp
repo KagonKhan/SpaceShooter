@@ -1,22 +1,16 @@
 #include "pch.h"
-
-
 #include "Entity.h"
 
 
-sf::Vector2f Entity::getPosition()
-{
-	return entitySprite.getPosition();
-}
-
 // this is so ugly ...
 Entity::Entity(std::string fileName, std::string filePath, sf::Vector2f boundaries,
-				float movementSpeed, float attackSpeed, float projectileSpeed, 
+				float movementSpeed, float attackSpeed, 
 				float maxHp, sf::Vector2f position)	:
-		boundaries(boundaries), movementSpeed(movementSpeed), 
-		attackSpeed(attackSpeed), projectileSpeed(projectileSpeed), 
-		hp(maxHp), maxHp(maxHp), attackTime(0.f) {
 
+		boundaries(boundaries), movementSpeed(movementSpeed), 
+		hp(maxHp), maxHp(maxHp)
+
+{
 
 	initSprite(fileName, filePath, position);
 	initVariables();
@@ -33,30 +27,30 @@ void Entity::initSprite(std::string filename, std::string filepath, sf::Vector2f
 
 
 void Entity::initVariables() {
-	attackTime = 0.f;
 }
 
-void Entity::getDamage(float damage) { 
-	std::cout << damage << std::endl;
-	hp -= damage;
-}
 
 void Entity::setPosition(sf::Vector2f position) {
 	entitySprite.setPosition(position);
 }
 
+
 const sf::Sprite& Entity::getSprite() const {
 	return entitySprite;
 }
 
-const float Entity::getHp() const {
+const float& Entity::getHp() const {
 	return hp;
 }
 
+const sf::Vector2f& Entity::getPosition() const {
+	return entitySprite.getPosition();
+}
+
+
+
 void Entity::receiveDamage(float amount) {
 	hp -= amount;
-	if(amount)
-	std::cout << amount << std::endl;
 }
 
 

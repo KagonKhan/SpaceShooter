@@ -13,14 +13,23 @@ Bullet::Bullet(std::string spriteFilename, std::string spriteFilepath,
 	Ammunition(spriteFilename, spriteFilepath, soundFilename, soundFilepath, position, speed, damage, rotation)
 {
 
+
+
+
 	initAnimations();
 	initSounds();
 
 	projectileType = type;
+	std::cout << " : " << position.x << ", " << position.y << std::endl;
 
+	this->ammoSprite.setOrigin(getSize().x / 2.f, getSize().y);
+	this->ammoSprite.setPosition(position);
 	srand(reinterpret_cast<long>(this));
 }
 
+Bullet::~Bullet() {
+	delete animator;
+}
 
 void Bullet::initAnimations() {
 	animator = new Animator(ammoSprite);
@@ -35,7 +44,7 @@ void Bullet::initAnimations() {
 }
 
 void Bullet::initSounds() {
-	ammoSound.setVolume(55);
+	ammoSound.setVolume(35);
 	//sBuffer.loadFromFile("../Resources/sounds/Sci-Fi Sound Library/Sci-Fi Sound Library/Wav/Laser/Laser_09.wav");
 	//sound.setRelativeToListener(true);
 	//sound.setAttenuation(1);
@@ -53,26 +62,25 @@ void Bullet::update(const float& dt) {
 
 	ammoSound.setPosition(sf::Vector3f(ammoSprite.getPosition().x, ammoSprite.getPosition().y, 0));
 
-
 }
+
 
 void Bullet::updateMovement(const float& dt) {
 	
 
-	sf::Vector2f direction;
+	sf::Vector2f direction = getDirection();
 
 
 	switch (projectileType) {
 
 	case ProjectileType::straight:
-		direction = getDirection();
 		ammoSprite.move(-direction * ammoSpeed * dt);
 		
 		break;
 
 	case ProjectileType::swarm:
-		ammoSprite.rotate(static_cast<float>(rand()%13 - 6));
-		direction = getDirection();
+		//ammoSprite.rotate(static_cast<float>(rand()%13 - 6));
+
 		ammoSprite.move(direction * ammoSpeed * dt);
 		break;
 

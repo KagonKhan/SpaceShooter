@@ -12,30 +12,34 @@ class Player : public Entity {
 
 	float velocity;
 
-	std::vector<Bullet*> projectiles;
-
-	//No point in having this as a vector - only 1 beam allowed at a time.
-	//or maybe can upgrade to multiple beams
-	std::vector<Beam*> beams;
 
 	bool blockAttack, blockMovement, beamStartCooldown;
 	float beamCooldownTimer;
 
 
+	//Figure out a better solution
+	std::vector<Ammunition*> bullets, missiles;
+	Beam* beam;
+
+	std::vector<Weapon> bulletWeapons, missileWeapons;
+	Weapon beamWeapon;
+
 
 	// I don't like this - find better solutions later
 	int projectileType;
 
+	void initVariables();
 	void initSprites();
 	void initAnimation();
 	void initListener();
-
+	void initWeapons();
 
 
 
 	void updateAttack(const float& dt);
+	void updateWeapons(const float& dt);
 	void updateMovement(const float& dt);
-	void updateProjectiles(const float& dt);
+	void updateAmmunition(const float& dt);
 	void updateAnimations(const float& dt);
 	void updateSprites(const float& dt);
 
@@ -50,14 +54,6 @@ public:
 	void update(const float& dt);	
 	void render(sf::RenderWindow* window);
 	
-	void receiveUpgrade(int type);
-	
-	const sf::Vector2f getPosition() const ;
-
-	std::vector<Bullet*>* getProjectiles();
-	std::vector<Beam*>* getBeams();
-
-	const sf::Sprite& getBeamSprite() const ;
 
 };
 

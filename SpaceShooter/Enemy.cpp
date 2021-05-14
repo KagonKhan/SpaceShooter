@@ -3,7 +3,7 @@
 
 
 Enemy::Enemy(std::string fileName, std::string filePath, float maxhp, sf::Vector2f windowBoundaries, sf::Vector2f position) :
-	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, 400.f, maxhp, position) {
+	Entity(fileName, filePath, windowBoundaries, 75.f, 1.f, maxhp, position) {
 
 	initSprites();
 
@@ -31,16 +31,11 @@ void Enemy::update(const float& dt) {
 
 void Enemy::updateAttack(const float& dt) {
 
-	attackTime += attackSpeed * dt;
+
 
 	bool attack = rand() % 100 == rand() % 200;
 
-	if(attack)
-		if (attackTime >= 1.f) {
-			sf::Vector2f position(entitySprite.getPosition().x,	entitySprite.getPosition().y);
 
-			attackTime = 0.f;
-		}
 }
 
 void Enemy::updateMovement(const float& dt) {

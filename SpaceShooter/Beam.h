@@ -42,6 +42,10 @@ public:
 	
 
 	const float getDamage();
+	const sf::Vector2f& getPosition() const;
+
+
+
 	bool getIsDone();
 
 	void resetTimer();
